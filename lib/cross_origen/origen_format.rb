@@ -491,9 +491,9 @@ module CrossOrigen
       end
       if options[:class_name]
         if object_hierarchy.empty?
-          object_hierarchy[options[:class_name]] = "class"
+          object_hierarchy[options[:class_name]] = 'class'
         else
-          object_hierarchy["#{object_hierarchy.keys.last}::#{options[:class_name]}"] = "class"
+          object_hierarchy["#{object_hierarchy.keys.last}::#{options[:class_name]}"] = 'class'
         end
       end
       object_hierarchy

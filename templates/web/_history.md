@@ -371,7 +371,7 @@ to upload local documentation to docato.
 Will fully document in due course, but basically:
 
 ~~~ruby
-include RosettaStone
+include CrossOrigen
 
 def generate\_block\_guide
   my\_method\_to\_generate\_xml
@@ -383,7 +383,7 @@ A method is also provided to automatically return a path to the current user's
 sandbox on docato:
 
 ~~~ruby
-include RosettaStone
+include CrossOrigen
 
 def generate\_block\_guide
   my\_method\_to\_generate\_xml

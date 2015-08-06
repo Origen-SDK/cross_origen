@@ -2,7 +2,7 @@ require 'origen'
 require_relative '../config/application.rb'
 require_relative '../config/environment.rb'
 
-module RosettaStone
+module CrossOrigen
   if RUBY_VERSION < '2.0.0'
     require 'scrub_rb'
   end

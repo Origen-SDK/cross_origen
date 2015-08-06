@@ -44,7 +44,7 @@ most formats should follow this basic structure...
 
 #### Data Import  
 
-When the <code>RosettaStone</code> module is included in a class it gets access
+When the <code>CrossOrigen</code> module is included in a class it gets access
 to an <code>rs_import</code> method.
 This will automatically detect the type of the given file and select the appropriate
 import rules.
@@ -57,7 +57,7 @@ Supported repositories are shown in the example below.
 ~~~ruby
 class D_IP_ANA_TEST_ANNEX_SYN
 
-  include RosettaStone
+  include CrossOrigen
 
   def initialize
     # Import from a local file
@@ -78,7 +78,7 @@ conventions) version of the attribute name.
 
 #### Data Export
 
-The <code>RosettaStone</code> module adds some methods to export the given object
+The <code>CrossOrigen</code> module adds some methods to export the given object
 as a string in the given format, for example a <code>to_sidsc</code> method is available
 to generate an SIDSC XML representation of an object.
 

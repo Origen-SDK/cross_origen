@@ -10,8 +10,8 @@
 # this would be used to load some dummy classes to instantiate
 # your objects so that they can be tested and/or interacted with
 # in the console.
-module RosettaStone
+module CrossOrigen
   module Test
-    autoload :DUT, "rosetta_stone/test/dut"
+    autoload :DUT, "cross_origen/test/dut"
   end
 end

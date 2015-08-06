@@ -7,7 +7,7 @@
 # here to be visible throughout your application code.
 
 #$tester = Origen::Tester::J750.new  # Set the tester to the Origen J750 model
-$dut = RosettaStone::Test::DUT.new             # Instantiate an SoC instance
+$dut = CrossOrigen::Test::DUT.new             # Instantiate an SoC instance
 
 # You can also perform global configuration here, e.g. 
 # $dut.do_something_before_every_job

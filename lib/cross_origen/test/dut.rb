@@ -1,9 +1,9 @@
-module RosettaStone
+module CrossOrigen
   module Test
     # Simple DUT class used for testing
     class DUT
       include Origen::TopLevel
-      include RosettaStone
+      include CrossOrigen
 
       def initialize
         @path = :hidden
@@ -23,7 +23,7 @@ module RosettaStone
 
       class D_IP_ANA_TEST_ANNEX_SYN # rubocop:disable ClassAndModuleCamelCase
         include Origen::Model
-        include RosettaStone
+        include CrossOrigen
 
         def initialize
           # http://ssds.freescale.net:8080/docato-composer/getXMLResourceView.do?id=336182&xml=true&versionId=37

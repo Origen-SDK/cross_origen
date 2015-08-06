@@ -12,32 +12,6 @@ module Origen
   module Users
     def users
       @users ||= [
-
-        # Admins - Notified on every tag
-        User.new("Stephen McGinty", "r49409", :admin),
-        User.new("Thao Huynh", "r6aanf", :admin),
-        User.new("Daniel Hadad", "ra6854", :admin),
-        User.new("Mike Bertram", "rgpj20", :admin),
-        User.new("Ronnie Lajaunie", "b01784", :admin),
-        User.new("Priyavadan Kumar", "b21094", :admin),
-        User.new("Wendy Malloch", "ttz231", :admin),
-        User.new("Chris Hume", "r20984", :admin),
-        User.new("Chris Nappi", "ra5809", :admin),
-        User.new("Brian Caquelin", "b07507", :admin),
-        User.new("Aaron Burgmeier", "ra4905", :admin),
-        User.new("Jiang Liu", "b20251", :admin),
-        User.new("Melody Caron", "b45830", :admin),
-        User.new("Stephen Traynor", "r28728", :admin),
-	User.new("Elissavet Papadima", "b50264", :admin),
-        User.new("b49009", :admin), # Will Forfang
-
-        # Users - Notified on official release tags only
-        #User.new("Stephen McGinty", "r49409"),
-        # The r-number attribute can be anything that can be prefixed to an 
-        # @freescale.com email address, so you can add mailing list references
-        # as well like this:
-        #User.new("Origen Users", "origen"),  # The Origen mailing list
-        
       ]
     end
   end

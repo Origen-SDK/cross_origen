@@ -6,12 +6,12 @@ describe "Export to Ruby .rb files" do
     Origen.load_target('debug')
     $dut.to_origen(path: "#{Origen.root}/output/exported", class_name: "ExportedDUT")
     load "#{Origen.root}/output/exported/top_level.rb"
-    $dut = RosettaStone::Test::ExportedDUT.new
+    $dut = CrossOrigen::Test::ExportedDUT.new
   end
 
   describe 'Query the static ruby files created' do
     it "Queries the top level registers based on the loaded Ruby files" do
-      $dut.class.should == RosettaStone::Test::ExportedDUT
+      $dut.class.should == CrossOrigen::Test::ExportedDUT
       $dut.regs.size.should == 2
       $dut.dut_top_level_reg.size.should == 32
       $dut.dut_top_level_reg.bits(:pls_work).access.should == :rw
@@ -19,14 +19,14 @@ describe "Export to Ruby .rb files" do
     end
 
     it "Queries the AM0 sub_block based on the loaded Ruby files" do
-      $dut.class.should == RosettaStone::Test::ExportedDUT
+      $dut.class.should == CrossOrigen::Test::ExportedDUT
       $dut.sub_blocks.size.should == 1
       $dut.am0.regs.empty?.should == true
       $dut.am0.sub_blocks.size.should == 2
     end
 
     it "Queries some of the attributes from the lowest level sub-blocks" do
-      $dut.class.should == RosettaStone::Test::ExportedDUT
+      $dut.class.should == CrossOrigen::Test::ExportedDUT
       # These have all just been copied from the IP-XACT spec, to verify that
       # what we have exported out and back in again is the same
       $dut.am0.sub_blocks.size.should == 2 # These are memory maps

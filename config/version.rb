@@ -1,4 +1,4 @@
-module RosettaStone
+module CrossOrigen
   MAJOR = 0
   MINOR = 3
   BUGFIX = 0

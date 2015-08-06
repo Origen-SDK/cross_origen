@@ -33,9 +33,9 @@ At the output path the following files are created:
 * bom.rb: models the Origen BoM made up of sub_block objects
 
 ~~~ruby
-# This file is created by Origen, RosettaStone::RubyFileCreator#meta_to_rb, and is read-only
+# This file is created by Origen, CrossOrigen::RubyFileCreator#meta_to_rb, and is read-only
 require_relative 'sub_blocks'
-module RosettaStone
+module CrossOrigen
   module Test
     class DUT
       include Origen::Model
@@ -52,7 +52,7 @@ end
 * sub_blocks.rb: include file for the sub_block class files
 
 ~~~ruby
-# This file is created by Origen, RosettaStone::RubyFileCreator#meta_to_rb, and is read-only
+# This file is created by Origen, CrossOrigen::RubyFileCreator#meta_to_rb, and is read-only
 require_relative 'import/atx.rb'
 require_relative ...
 ~~~
@@ -61,9 +61,9 @@ require_relative ...
 
 ~~~ruby
 # -*- encoding : utf-8 -*-
-# This file is created by Origen, RosettaStone::RubyFileCreator#meta_to_rb, and is read-only.
+# This file is created by Origen, CrossOrigen::RubyFileCreator#meta_to_rb, and is read-only.
 # If you need to make changes, re-open the class
-module RosettaStone
+module CrossOrigen
   module Test
     class DUT
       class ATX # rubocop:disable ClassLength

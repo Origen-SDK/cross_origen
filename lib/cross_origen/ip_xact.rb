@@ -1,4 +1,4 @@
-module RosettaStone
+module CrossOrigen
   class IpXact < XMLDoc
     AddressSpace = Struct.new(:name, :range, :width)
 

@@ -1,7 +1,7 @@
 require 'kramdown'
 require 'sanitize'
 
-module RosettaStone
+module CrossOrigen
   # This is the base class of all doc formats that are
   # XML based
   class XMLDoc
@@ -54,7 +54,7 @@ module RosettaStone
       transformers: HTML_TRANSFORMER
     }
 
-    # Returns the object that included the RosettaStone module
+    # Returns the object that included the CrossOrigen module
     attr_reader :owner
 
     def initialize(owner)

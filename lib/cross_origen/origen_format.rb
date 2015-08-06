@@ -1,4 +1,4 @@
-module RosettaStone
+module CrossOrigen
   class OrigenFormat
     require 'nokogiri'
 
@@ -17,8 +17,8 @@ module RosettaStone
     }
 
     FILE_COMMENTS = {
-      class: "\# This file is created by Origen via RosettaStone::OrigenFormat#models_to_rb, and is read-only.\n\# If you need to make changes, re-open the class\n",
-      incl:  "\# This file is created by Origen via RosettaStone::OrigenFormat#models_to_rb, and is read-only"
+      class: "\# This file is created by Origen via CrossOrigen::OrigenFormat#models_to_rb, and is read-only.\n\# If you need to make changes, re-open the class\n",
+      incl:  "\# This file is created by Origen via CrossOrigen::OrigenFormat#models_to_rb, and is read-only"
     }
 
     attr_reader :obj, :top_level_class, :top_level_hierarchy, :output_dir, :top_level_path, :incl_path, :incl_dir, :file_content

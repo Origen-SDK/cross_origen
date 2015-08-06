@@ -1,4 +1,4 @@
-class RosettaStoneApplication < Origen::Application
+class CrossOrigenApplication < Origen::Application
 
   # See http://origen.freescale.net/origen/latest/api/Origen/Application/Configuration.html
   # for a full list of the configuration options available

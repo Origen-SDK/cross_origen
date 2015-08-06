@@ -1,6 +1,6 @@
-module RosettaStone
+module CrossOrigen
   class Headers
-    # Returns the object that included the RosettaStone module
+    # Returns the object that included the CrossOrigen module
     attr_reader :owner
 
     def initialize(owner)

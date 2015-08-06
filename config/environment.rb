@@ -24,12 +24,12 @@
 #      this case your must use required and supply a full path (to distinguish
 #      it from the one in the parent application):
 #require "#{Origen.root}/c90_top_level/p2"
-module RosettaStone
-  autoload :XMLDoc,       "rosetta_stone/xml_doc"
-  autoload :Headers,      "rosetta_stone/headers"
-  autoload :Ralf,         "rosetta_stone/ralf"
-  autoload :IpXact,       "rosetta_stone/ip_xact"
-  autoload :DesignSync,   "rosetta_stone/design_sync"
-  autoload :OrigenFormat, "rosetta_stone/origen_format"
+module CrossOrigen
+  autoload :XMLDoc,       "cross_origen/xml_doc"
+  autoload :Headers,      "cross_origen/headers"
+  autoload :Ralf,         "cross_origen/ralf"
+  autoload :IpXact,       "cross_origen/ip_xact"
+  autoload :DesignSync,   "cross_origen/design_sync"
+  autoload :OrigenFormat, "cross_origen/origen_format"
 end
-require "rosetta_stone"
+require "cross_origen"

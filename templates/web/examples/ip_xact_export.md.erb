@@ -1,0 +1,30 @@
+% render "layouts/basic.html", tab: :examples do
+
+## IP-XACT Export
+
+This page shows IP-XACT formatted XML that has been generated from an RGen
+representation of a module.
+
+The RGen model itself was populated by the SIDSC import
+code shown in the 
+[SIDSC Import](<%= path "examples/sidsc_import" %>) example.
+
+The exporter has the following options:
+
+* **:format** - nil by default, can be set to :uvm to include the associated vendor
+  extentions
+* **:include_bit_field_values** - true by default, when false the bit field values 
+  fields will not be output
+
+The code to generate this page was simply:
+
+~~~eruby
+<%= "<" + "%= $dut.to_ip_xact format: :uvm %" + ">" %>
+~~~
+
+~~~xml
+% $dut.sidsc_module # Instantiate the sub-block
+<%= $dut.to_ip_xact format: :uvm %>
+~~~
+
+% end

@@ -1,0 +1,18 @@
+% full_name = rs_try(:full_name, :ip_name, :name, :pdm_part_name) || self.class.to_s
+//---------------------------------------------------------------------------------------------
+// <%= full_name %> Registers Memory Map
+//---------------------------------------------------------------------------------------------
+% regs.each do |name, reg|
+#define <%= name.to_s.upcase.ljust(30) %>                     (REG<%= reg.size %>(0x<%= reg.address.to_s(16).upcase %>))
+% end
+
+//---------------------------------------------------------------------------------------------
+// <%= full_name %> Registers Bit Definition
+//---------------------------------------------------------------------------------------------
+% regs.each do |reg_name, reg|
+// <%= reg_name.to_s.upcase %>
+%   reg.named_bits do |name, bits|
+#define <%= "#{reg_name}_#{name}".upcase.ljust(30) %>         (<%= bits.sort_by{ |bit| bit.position }.reverse.map{ |bit| "BIT#{bit.position}"}.join(" + ") %>)
+%   end
+
+% end

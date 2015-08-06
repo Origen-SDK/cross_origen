@@ -1,0 +1,1634 @@
+<a class="anchor release_tag" name="v0_3_0_pre19"></a>
+<h2><a href="#v0_3_0_pre19">Tag: v0.3.0.pre19</a></h2>
+
+##### Branch: 'Trunk'
+
+##### by Stephen Traynor on 21-Jul-2015 08:36AM
+
+
+Fixed some minor formatting in the memory\_map.rb file
+
+<a class="anchor release_tag" name="v0_3_0_pre18"></a>
+<h2><a href="#v0_3_0_pre18">Tag: v0.3.0.pre18</a></h2>
+
+##### Branch: 'Trunk'
+
+##### by Jiang Liu on 06-Jul-2015 11:15AM
+
+
+CRR exporter has now been added. 'crr.xml' that's been checked into approved directory has
+a couple of mismatches in the hiearchy information when compared to the original file,
+this is due to the information being incorrectly extracted by the existing CRR importer.
+Once the bugs are fixed in the importer, these mis-matches should go away.
+
+CRR exporter currently supports export of an address block (ip block) or the entire
+instance file containing multiple instances and address blocks. AGEN parameters are
+currently not supported.
+
+<a class="anchor release_tag" name="v0_3_0_pre17"></a>
+<h2><a href="#v0_3_0_pre17">Tag: v0.3.0.pre17</a></h2>
+
+##### Branch: 'Trunk'
+
+##### by Aaron J Burgmeier on 23-Jun-2015 14:46PM
+
+
+Added an additional check for PinTool XML files that were not built with a finalized
+ballmap file.
+Ensures that USB pins are formatted with the correct suffix (e.g. \_p, \_m)
+Example 1:  usb1\_dp  -->  usb1\_d\_p
+Example 2:  usb1\_rxm  -->  usb1\_rx\_m
+
+<a class="anchor release_tag" name="v0_3_0_pre16"></a>
+<h2><a href="#v0_3_0_pre16">Tag: v0.3.0.pre16</a></h2>
+
+##### Branch: 'Trunk'
+
+##### by Aaron J Burgmeier on 23-Jun-2015 10:54AM
+
+
+Added check for PinTool XML files that do not have ballmap pin names (e.g. pin names are
+RTL-based)
+Ensures that indexed pins with suffixes (e.g. \_b, \_p, \_n) have the index number prior to
+the suffix.
+Example 1:  ifc\_cs\_b0 -->  ifc\_cs0\_b
+Example 2:  sd1\_rx\_n7 -->  sd1\_rx7\_n
+
+
+<a class="anchor release_tag" name="v0_3_0_pre15"></a>
+<h2><a href="#v0_3_0_pre15">Tag: v0.3.0.pre15</a></h2>
+
+##### Branch: 'Trunk'
+
+##### by Aaron J Burgmeier on 07-May-2015 15:26PM
+
+
+Updated PinTool importer to handle the case where the XML does not yet have ballmap
+information,
+(ball locations are all TBD).  In this case the importer will assign the location as the
+pin ID,
+without the trailing underscore.
+
+<a class="anchor release_tag" name="v0_3_0_pre14"></a>
+<h2><a href="#v0_3_0_pre14">Tag: v0.3.0.pre14</a></h2>
+
+##### Branch: 'Trunk'
+
+##### by Aaron J Burgmeier on 02-May-2015 09:13AM
+
+
+Added pintool handler for assigning pin-direction if the XML content is poorly authored
+
+<a class="anchor release_tag" name="v0_3_0_pre13"></a>
+<h2><a href="#v0_3_0_pre13">Tag: v0.3.0.pre13</a></h2>
+
+##### Branch: 'Trunk'
+
+##### by Aaron J Burgmeier on 24-Apr-2015 09:42AM
+
+
+Updated PinTool importer to inlude preconditioning of pins prior to adding them into the
+RGen model:
+  * Utilizes updates to the RGen pins model so that pin attributes are scoped to pin
+function rather than :configuration or :mode
+  * Allows the option to sanitize pin information prior to instantiation
+    * declaring differential pins and pingroups
+    * ensuring TestPort pin naming conventions are met
+    * ensuring that pin group indexing (e.g. # of significant digits) is consistent
+    * predefining logical pin groups based on bus notation
+    * assigning pin attributes:  type (digital/analog), supply, ext\_pullup, ext\_pulldown,
+open\_drain, ip\_block
+
+<a class="anchor release_tag" name="v0_3_0_pre12"></a>
+<h2><a href="#v0_3_0_pre12">Tag: v0.3.0.pre12</a></h2>
+
+##### Branch: 'Trunk'
+
+##### by Brian Caquelin on 23-Mar-2015 09:24AM
+
+
+updated gemspec to use >= for rgen-core version
+
+<a class="anchor release_tag" name="v0_3_0_pre11"></a>
+<h2><a href="#v0_3_0_pre11">Tag: v0.3.0.pre11</a></h2>
+
+##### Branch: 'Trunk'
+
+##### by Brian Caquelin on 21-Mar-2015 07:49AM
+
+
+* Changed SpecML importer to use simple hash for Spec.notes
+
+* Removed references to RGen::Datasheet as this has been removed from rgen\_core gem
+
+<a class="anchor release_tag" name="v0_3_0_pre10"></a>
+<h2><a href="#v0_3_0_pre10">Tag: v0.3.0.pre10</a></h2>
+
+##### Branch: 'Trunk'
+
+##### by Brian Caquelin on 19-Mar-2015 15:04PM
+
+
+* Added in spec tests for the IP-XACT importer
+
+~~~ruby
+# Here is a few examples of the new IP-XACT spec tests
+    it 'pulls sub\_block info' do
+      $dut.debug\_apb.path.should == 'debug\_apb'
+      $dut.debug\_apb.cpu1\_debug.base\_address.should == 0x110000
+      $dut.debug\_apb.cpu1\_debug.lau.should == 32
+      $dut.debug\_apb.cpu1\_debug.range.should == 65536
+      $dut.debug\_apb.cpu1\_debug.byte\_order.nil?.should == true # Not available in XML
+source
+    end
+
+    it 'imports all registers' do
+      $dut.debug\_apb.cpu1\_debug.regs.size.should == 69
+      $dut.gic\_cpu\_regs.gic\_virtual\_cpu\_if.regs.size.should == 15
+    end
+
+    it 'pulls the register address' do
+      $dut.debug\_apb.cpu1\_debug.dbgwcr0\_el1.address.should == 0x110808
+    end
+~~~
+
+<a class="anchor release_tag" name="v0_3_0_pre9"></a>
+<h2><a href="#v0_3_0_pre9">Tag: v0.3.0.pre9</a></h2>
+
+##### Branch: 'Trunk'
+
+##### by Brian Caquelin on 19-Mar-2015 05:47AM
+
+
+* Removed the datasheet library as this feature belongs in an application.  The rgen\_core
+has the required specifications models to build a datasheet.
+
+* Converted all the code I own from debug/puts to the new RGen logger
+
+<a class="anchor release_tag" name="v0_3_0_pre8"></a>
+<h2><a href="#v0_3_0_pre8">Tag: v0.3.0.pre8</a></h2>
+
+##### Branch: 'Trunk'
+
+##### by Brian Caquelin on 18-Mar-2015 17:56PM
+
+
+* Added in preliminary IP-XACT importer using latest DNG arm 3rd party IP as test XML file
+
+* TODO:
+
+1. Extract description attributes from XML comments
+2. Add support for bus interface, verilog file, and parameter import
+
+Here is an example of accessing a register using their IP hierarchy:
+
+~~~text
+[1] pry(#<RosettaStone::IpXact>)> owner.gic\_cpu\_regs.gic\_cpu\_if.regs
+=> {:gicc\_ctlr=>
+
+0x0 - :gicc\_ctlr
+ 
+==========================================================================================
+======================
+  |     31      |     30      |     29      |     28      |     27      |     26      |   
+25      |     24      |
+  |             |             |             |             |             |             |   
+|             |
+  |             |             |             |             |             |             |   
+|             |
+ 
+------------------------------------------------------------------------------------------
+----------------------
+  |     23      |     22      |     21      |     20      |     19      |     18      |   
+17      |     16      |
+  |             |             |             |             |             |             |   
+|             |
+  |             |             |             |             |             |             |   
+|             |
+ 
+------------------------------------------------------------------------------------------
+----------------------
+  |     15      |     14      |     13      |     12      |     11      |     10      |   
+9      |      8      |
+  |             |             |             |             |             | :eoimodens  | 
+:eoimodes  |:irqbypdisgrp|
+  |             |             |             |             |             |      0      |   
+0      |      0      |
+ 
+------------------------------------------------------------------------------------------
+----------------------
+  |      7      |      6      |      5      |      4      |      3      |      2      |   
+1      |      0      |
+  |:fiqbypdisgrp|:irqbypdisgrp|:fiqbypdisgrp|    :cbpr    |   :fiqen    |   :ackctl   |
+:enablegrp1 | :enablegrp0 |
+  |      0      |      0      |      0      |      0      |      0      |      0      |   
+0      |      0      |
+ 
+------------------------------------------------------------------------------------------
+----------------------,
+~~~
+
+<a class="anchor release_tag" name="v0_3_0_pre7"></a>
+<h2><a href="#v0_3_0_pre7">Tag: v0.3.0.pre7</a></h2>
+
+##### Branch: 'Trunk'
+
+##### by Melody Caron on 24-Feb-2015 12:25PM
+
+
+Updates to SIDSC. 'ip-version' tag defaults to a date stamp if the version lookup fails.
+Ex: <ip-version>2015.02.24</ip-version>
+
+<a class="anchor release_tag" name="v0_3_0_pre6"></a>
+<h2><a href="#v0_3_0_pre6">Tag: v0.3.0.pre6</a></h2>
+
+##### Branch: 'Trunk'
+
+##### by Brian Caquelin on 20-Feb-2015 13:11PM
+
+
+* updated trace matrix file creation and separated from SpecML import
+
+<a class="anchor release_tag" name="v0_3_0_pre5"></a>
+<h2><a href="#v0_3_0_pre5">Tag: v0.3.0.pre5</a></h2>
+
+##### Branch: 'Trunk'
+
+##### by Brian Caquelin on 29-Jan-2015 16:47PM
+
+
+* Updated SpecML importer to work with v0.6+
+
+* Added a nil check in Pintool for rtl\_name attribute extract from XML
+
+* Added in TraceMatrix module that creates a 'trace matrix' Excel file for tracking all
+specs found in an object (typically $dut)
+
+<a class="anchor release_tag" name="v0_3_0_pre4"></a>
+<h2><a href="#v0_3_0_pre4">Tag: v0.3.0.pre4</a></h2>
+
+##### Branch: 'Trunk'
+
+##### by Brian Caquelin on 16-Jan-2015 12:06PM
+
+
+- Added in new modeling Ruby files created by models\_to\_ruby code to the approved
+directory
+
+<a class="anchor release_tag" name="v0_3_0_pre3"></a>
+<h2><a href="#v0_3_0_pre3">Tag: v0.3.0.pre3</a></h2>
+
+##### Branch: 'Trunk'
+
+##### by Brian Caquelin on 16-Jan-2015 11:59AM
+
+
+- updated the CRR importer and the models\_to\_ruby code to use the latest best known method
+for register and bit instantiation
+
+~~~ruby
+reg :porsr1, 0x0, size: 32, bit\_order: :lsb0 do |reg|
+  reg.bit 31..23, :rcw\_src, reset: 0b0, access: :ro
+end
+~~~
+
+<a class="anchor release_tag" name="v0_3_0_pre2"></a>
+<h2><a href="#v0_3_0_pre2">Tag: v0.3.0.pre2</a></h2>
+
+##### Branch: 'Trunk'
+
+##### by Brian Caquelin on 14-Jan-2015 11:06AM
+
+
+- fixed bug where top level register code blocks were not being closed correctly in the
+models\_to\_ruby method
+- disabled specML import until the new API is released in a future RGen release
+
+<a class="anchor release_tag" name="v0_3_0_pre1"></a>
+<h2><a href="#v0_3_0_pre1">Tag: v0.3.0.pre1</a></h2>
+
+##### Branch: 'Trunk'
+
+##### by Stephen Traynor on 14-Jan-2015 04:03AM
+
+
+adding fix to only include register bit order when creating register ruby files if the
+bit\_order is not missing from the register model. Fix made to models\_to\_ruby.rb file.
+Updated regex in memory\_map.rb file to get subblock's base address from Treerunner
+mem\_map.h file.
+
+
+<a class="anchor release_tag" name="v0_3_0_pre0"></a>
+<h2><a href="#v0_3_0_pre0">Tag: v0.3.0.pre0</a></h2>
+
+##### Branch: 'Trunk'
+
+##### by Brian Caquelin on 09-Jan-2015 14:53PM
+
+
+* Updated the CRR importer after validating it with the full LS2085 content
+
+<a class="anchor release_tag" name="v0_2_0"></a>
+<h1><a href="#v0_2_0">Tag: v0.2.0</a></h1>
+
+##### Branch: 'Trunk'
+
+##### by Brian Caquelin on 08-Jan-2015 13:05PM
+
+
+* Re-wrote CRR import and implemented a more realistic object namespace
+
+~~~text
+
+PREVIOUS NAMESPACE: $dut.ddrc1\_ccsr $dut.ddrc1.dcsr
+
+NEW NAMSPACE: $dut.ddrc1.ccsr $dut.ddrc1.dcsr
+
+~~~
+
+* Re-wrote ruby meta models to ruby file export module to accept any object as the default
+starting object and it can handle any level of namespace hierarchy
+
+
+<a class="anchor release_tag" name="v0_2_0_pre4"></a>
+<h2><a href="#v0_2_0_pre4">Tag: v0.2.0.pre4</a></h2>
+
+##### Branch: 'Trunk'
+
+##### by Brian Caquelin on 06-Jan-2015 11:19AM
+
+
+* Added Pin#rtl\_name extraction to Pintool import
+
+* Changed Pintool XMl file from T4240 product to LS2085 to ensure latest Pintool schema is
+covered
+
+
+<a class="anchor release_tag" name="v0_2_0_pre3"></a>
+<h2><a href="#v0_2_0_pre3">Tag: v0.2.0.pre3</a></h2>
+
+##### Branch: 'Trunk'
+
+##### by Brian Caquelin on 05-Jan-2015 14:13PM
+
+
+* Added in specML XML import that works with v0.6
+
+<a class="anchor release_tag" name="v0_2_0_pre2"></a>
+<h2><a href="#v0_2_0_pre2">Tag: v0.2.0.pre2</a></h2>
+
+##### Branch: 'Trunk'
+
+##### by Brian Caquelin on 05-Dec-2014 13:15PM
+
+
+* Removed all require 'pry' statements that prevent running on Windows.  Tested on Windows
+(passes specs).
+
+<a class="anchor release_tag" name="v0_2_0_pre1"></a>
+<h2><a href="#v0_2_0_pre1">Tag: v0.2.0.pre1</a></h2>
+
+##### Branch: 'Trunk'
+
+##### by Brian Caquelin on 05-Dec-2014 12:30PM
+
+
+* Made the scrub\_rb gem conditional on Ruby version so this plug-in can work on Ruby 1.9.3
+
+<a class="anchor release_tag" name="v0_2_0_pre0"></a>
+<h2><a href="#v0_2_0_pre0">Tag: v0.2.0.pre0</a></h2>
+
+##### Branch: 'Trunk'
+
+##### by Brian Caquelin on 04-Dec-2014 09:09AM
+
+
+* Fixed bug where exception was caused if a meta-model had a nil attr
+
+* Removed scrub\_rb gem as this function is native to String in Ruby 2.1.5
+
+* Fixed some odd lint errors due to Windows encoding
+
+* Put in code framework for new 'specML' importer
+
+
+<a class="anchor release_tag" name="v0_1_1"></a>
+<h1><a href="#v0_1_1">Tag: v0.1.1</a></h1>
+
+##### Branch: 'Trunk'
+
+##### by Stephen McGinty on 01-Dec-2014 11:11AM
+
+
+DesignSync wins the prize for the worst revision control system. Unlike 'dssc mvfile' which moves
+files in a way that preserves the location for existing tags, 'dssc mvfolder' (as used in the last
+release to move lib/configuration to lib/rosetta\_stone/configuration) apparently moves it across the
+entire history of the project.
+
+This release has put it back, moved the files individually and then re-tagged. Hopefully this has
+resolved everything and not broken the world.
+
+<a class="anchor release_tag" name="v0_1_0"></a>
+<h1><a href="#v0_1_0">Tag: v0.1.0</a></h1>
+
+##### Branch: 'Trunk'
+
+##### by Stephen McGinty on 01-Dec-2014 10:25AM
+
+
+Upgraded to a gem.
+
+Moved all Configuration module files to lib/rosetta/stone and properly namespaced them all.
+
+Commented out the spec test "Datasheet data integrity has correct spec information" from
+spec/datasheet\_spec.rb, believe this has been broken by recent (datasheet related) changes
+to RGen core.
+
+<a class="anchor release_tag" name="v0_0_0_dev78"></a>
+<h2><a href="#v0_0_0_dev78">Tag: v0.0.0.dev78</a></h2>
+
+##### Branch: 'Trunk'
+
+##### by Aaron J Burgmeier on 25-Nov-2014 10:09AM
+
+
+added method for extracting several additional attributes from pintool XML sources:
+io voltage supply, open-drain, ext. pullup, ext. pulldown, analog/digital
+for use in creating DC collateral for pins and program objects
+
+<a class="anchor release_tag" name="v0_0_0_dev77"></a>
+<h2><a href="#v0_0_0_dev77">Tag: v0.0.0.dev77</a></h2>
+
+##### Branch: 'Trunk'
+
+##### by Brian Caquelin on 17-Nov-2014 12:46PM
+
+
+changed byte\_order and bit\_order to use symbols for values
+
+<a class="anchor release_tag" name="v0_0_0_dev76"></a>
+<h2><a href="#v0_0_0_dev76">Tag: v0.0.0.dev76</a></h2>
+
+##### Branch: 'Trunk'
+
+##### by Brian Caquelin on 13-Nov-2014 07:46AM
+
+
+Updated CRR audit file name to include XML file creation info.
+
+crr\_rgen\_audit\_#{author}\_#{version}.xlsx
+
+
+<a class="anchor release_tag" name="v0_0_0_dev75"></a>
+<h2><a href="#v0_0_0_dev75">Tag: v0.0.0.dev75</a></h2>
+
+##### Branch: 'Trunk'
+
+##### by Brian Caquelin on 12-Nov-2014 13:43PM
+
+
+* Added CRR audit file creation to import
+
+* Added IP version attribute import to CRR
+
+* Fixed bug in Ruby file exporter where nil attributes were mistakenly being written to
+.rb files
+
+* Updated RGen min version to take advantage of the new 'debug' print method
+
+
+<a class="anchor release_tag" name="v0_0_0_dev74"></a>
+<h2><a href="#v0_0_0_dev74">Tag: v0.0.0.dev74</a></h2>
+
+##### Branch: 'Trunk'
+
+##### by Stephen Traynor on 12-Nov-2014 07:11AM
+
+
+added '--full\_access\_bits' switch to allow memory map imported register bits to have
+access
+overwritten to RW privelage.
+
+<a class="anchor release_tag" name="v0_0_0_dev73"></a>
+<h2><a href="#v0_0_0_dev73">Tag: v0.0.0.dev73</a></h2>
+
+##### Branch: 'Trunk'
+
+##### by Stephen Traynor on 11-Nov-2014 06:55AM
+
+
+update mem map importer to organise importer registers into subblocks with common base
+addresses
+
+<a class="anchor release_tag" name="v0_0_0_dev72"></a>
+<h2><a href="#v0_0_0_dev72">Tag: v0.0.0.dev72</a></h2>
+
+##### Branch: 'Trunk'
+
+##### by Brian Caquelin on 06-Nov-2014 09:25AM
+
+
+Fixed bug where register size was not being written to the .rb files correctly in the
+method 'rs\_to\_rb'
+
+<a class="anchor release_tag" name="v0_0_0_dev71"></a>
+<h2><a href="#v0_0_0_dev71">Tag: v0.0.0.dev71</a></h2>
+
+##### Branch: 'Trunk'
+
+##### by Aaron J Burgmeier on 06-Nov-2014 09:08AM
+
+
+Updated pin\_tool extract\_pins method to define DFT-mode pins as aliases of the primary
+pin,
+rather than defining them as 'modes'
+
+<a class="anchor release_tag" name="v0_0_0_dev70"></a>
+<h2><a href="#v0_0_0_dev70">Tag: v0.0.0.dev70</a></h2>
+
+##### Branch: 'Trunk'
+
+##### by Stephen Traynor on 04-Nov-2014 04:46AM
+
+
+BE AWARE !!!
+"memory\_map.rb" is under development, to consume memory\_map sv file register descriptions.
+
+**** This update at the moment will write the FULL register address to the OFFSET space as
+a
+temporary work around in memory\_map.rb only ***
+
+Detail...
+* Update only to memory\_map importer, to assign the full address to the offset address
+when defining the registers. This is to allow Treerunner ips override atp generator
+to continue debug and allow its atp output file to be compared to the test bench output.
+This is a workaround.
+
+* Continuing in parallel to develop a proper implementation where each register base
+address
+will have a class, and that class will contain the definitions of the registers sharing
+the
+base address.
+
+<a class="anchor release_tag" name="v0_0_0_dev69"></a>
+<h2><a href="#v0_0_0_dev69">Tag: v0.0.0.dev69</a></h2>
+
+##### Branch: 'Trunk'
+
+##### by Chris P Nappi on 31-Oct-2014 16:35PM
+
+
+Added ability to import from SSDS URL instead of ID.
+Example:
+ rs\_import(ssds\_path:
+'http://ssds.freescale.net:8080/docato-composer/getRepositoryViewByUri.do?uri=/projects/Mo
+dules/D\_IP\_RGPIOC\_SYN/dil/FGPIO', version: 9)
+
+<a class="anchor release_tag" name="v0_0_0_dev68"></a>
+<h2><a href="#v0_0_0_dev68">Tag: v0.0.0.dev68</a></h2>
+
+##### Branch: 'Trunk'
+
+##### by Stephen Traynor on 27-Oct-2014 11:32AM
+
+
+minor update to allow the Treerunner ips override xls registers to be consumed
+
+<a class="anchor release_tag" name="v0_0_0_dev67"></a>
+<h2><a href="#v0_0_0_dev67">Tag: v0.0.0.dev67</a></h2>
+
+##### Branch: 'Trunk'
+
+##### by Stephen Traynor on 27-Oct-2014 05:02AM
+
+
+Adding capability to Rosetta stone plug in via two new modules to workaround missing
+information at XML level. Now able to consume, and write/read the registers importer in
+Rgen using
+- ‘memory\_map’ . Instantiates all the registers in the Treerunner mem\_map.h file from the
+test bench, these registers are a subset of customised test-bench registers used  by TE to
+develop tests
+- 'ips\_bypass\_reg\_xls’. Consumes and creates registers based on the new ips/tcu register
+formats described for Treerunner.
+
+<a class="anchor release_tag" name="v0_0_0_dev66"></a>
+<h2><a href="#v0_0_0_dev66">Tag: v0.0.0.dev66</a></h2>
+
+##### Branch: 'Trunk'
+
+##### by Stephen McGinty on 21-Oct-2014 06:14AM
+
+
+Bumped the min RGen version. Some of the gems used by this plugin require access to GCC
+to install them and this caused issues for some users who did not otherwise have this in
+their PATH. Latest RGen now includes GCC in its tools policy to deal with this.
+
+<a class="anchor release_tag" name="v0_0_0_dev65"></a>
+<h2><a href="#v0_0_0_dev65">Tag: v0.0.0.dev65</a></h2>
+
+##### Branch: 'Trunk'
+
+##### by Stephen McGinty on 20-Oct-2014 06:08AM
+
+
+Improvements to the to\_markdown method which can be used to cleanly import register or
+other descriptions.
+This was found to crash when faced with some 'interesting' markup that is present in some
+real life cases, in such a case the importer will now handle it gracefully and simply
+return a string saying that the real description could not be imported.
+
+A test case was added for the specific fail in question and some additional sanitization
+and transformation was added to deal with this specific case, more can be aded as
+required as more real life cases are found.
+
+<a class="anchor release_tag" name="v0_0_0_dev64"></a>
+<h2><a href="#v0_0_0_dev64">Tag: v0.0.0.dev64</a></h2>
+
+##### Branch: 'Trunk'
+
+##### by Brian Caquelin on 16-Oct-2014 14:20PM
+
+
+removed call to 'to\_markdown' for CRR bit field desriptions
+
+<a class="anchor release_tag" name="v0_0_0_dev63"></a>
+<h2><a href="#v0_0_0_dev63">Tag: v0.0.0.dev63</a></h2>
+
+##### Branch: 'Trunk'
+
+##### by Brian Caquelin on 16-Oct-2014 12:48PM
+
+
+fixed but ig method 'to\_html' for xml\_doc.rb
+found a register description that fails 'to\_kramdown' method so had to revert CRR importer
+to previous method of scrubbing text.
+updated CRR XML importer with new DDR IP
+
+<a class="anchor release_tag" name="v0_0_0_dev62"></a>
+<h2><a href="#v0_0_0_dev62">Tag: v0.0.0.dev62</a></h2>
+
+##### Branch: 'Trunk'
+
+##### by Brian Caquelin on 10-Oct-2014 09:18AM
+
+
+Added 'to\_markdown' sanitize for CRR register and bit field descriptions.
+Changed file\_utils.rb to export\_file\_utils.rb to match module name
+
+<a class="anchor release_tag" name="v0_0_0_dev61"></a>
+<h2><a href="#v0_0_0_dev61">Tag: v0.0.0.dev61</a></h2>
+
+##### Branch: 'Trunk'
+
+##### by Stephen McGinty on 10-Oct-2014 08:13AM
+
+
+Added to\_markdown method in XML doc class for converting html fragments to markdown.
+
+This will screen any unusual tags or other markup which will not convert cleanly to markdown
+and which may given RGen problems when it comes to rendering descriptions containing
+illegal markup.
+
+The SIDSC importer will now pass all register and bit descriptions through this screen,
+the owners of CRR and similar importers should consider incorporating this to.
+
+<a class="anchor release_tag" name="v0_0_0_dev60"></a>
+<h2><a href="#v0_0_0_dev60">Tag: v0.0.0.dev60</a></h2>
+
+##### Branch: 'Trunk'
+
+##### by Brian Caquelin on 08-Oct-2014 12:41PM
+
+
+added in 'scrub\_rb' gem which is a monkey patch for removing unwanted encoding characters
+in a String.  The scrub and scrub! methods
+are part of Ruby 2.1 be default.
+
+~~~ruby
+register\_desc = reg\_description(register)
+                register\_desc.scrub! if register\_desc.is\_a? String
+~~~
+
+
+<a class="anchor release_tag" name="v0_0_0_dev59"></a>
+<h2><a href="#v0_0_0_dev59">Tag: v0.0.0.dev59</a></h2>
+
+##### Branch: 'Trunk'
+
+##### by Brian Caquelin on 07-Oct-2014 12:56PM
+
+
+Changed CRR importer to ignore any bit field with access == 'RU'.
+
+Added in check for register bit order to determine reset value but not checked on real
+'msb0' register yet.
+
+Do not use this revision unless you part of Digital Networking.  The next revision will be
+coupled to a new RGen
+
+core release.
+
+
+<a class="anchor release_tag" name="v0_0_0_dev58"></a>
+<h2><a href="#v0_0_0_dev58">Tag: v0.0.0.dev58</a></h2>
+
+##### Branch: 'Trunk'
+
+##### by Brian Caquelin on 05-Oct-2014 11:12AM
+
+
+Changed bit field access syntax from ':rw' to :rw to match RGen release notes
+
+~~~ruby
+reg :reg1, 0x0 do
+  bit 5, :bitx, access: :w1c
+  bit 3, :bity, access: :ro
+end
+~~~
+
+
+<a class="anchor release_tag" name="v0_0_0_dev57"></a>
+<h2><a href="#v0_0_0_dev57">Tag: v0.0.0.dev57</a></h2>
+
+##### Branch: 'Trunk'
+
+##### by Brian Caquelin on 05-Oct-2014 09:17AM
+
+
+Fixed bug where byte and bit order attributes were symbolized.
+Shortened the CRR XML import file
+Put in more robust class variable type checks for file export module
+
+<a class="anchor release_tag" name="v0_0_0_dev56"></a>
+<h2><a href="#v0_0_0_dev56">Tag: v0.0.0.dev56</a></h2>
+
+##### Branch: 'Trunk'
+
+##### by Brian Caquelin on 04-Oct-2014 09:25AM
+
+
+Added in support for lau, byte\_order, and bit\_order for ruby file exporter.  changed the
+sidsc importer attr 'bits\_in\_lau' to 'lau' to match CRR.
+
+<a class="anchor release_tag" name="v0_0_0_dev55"></a>
+<h2><a href="#v0_0_0_dev55">Tag: v0.0.0.dev55</a></h2>
+
+##### Branch: 'Trunk'
+
+##### by Brian Caquelin on 03-Oct-2014 17:47PM
+
+
+changed 'address' attribute to 'base\_address' and removed blank lines and extra whitespace
+from register description.
+updated CRR specs to account for importer changes.
+
+<a class="anchor release_tag" name="v0_0_0_dev54"></a>
+<h2><a href="#v0_0_0_dev54">Tag: v0.0.0.dev54</a></h2>
+
+##### Branch: 'Trunk'
+
+##### by Brian Caquelin on 03-Oct-2014 14:37PM
+
+
+added in CRR support for byte\_order, bit\_order, and lau (least addressable unit).
+Byte order possibilities: big\_endian | little\_endian
+Bit order possibilities: lsb0 | msb0
+lau is an integer (1..32)
+
+byte\_order and lau are sub\_block attributes that registers need to inherit.
+bit\_order is a register attribute that bit\_fields need to inherit.
+
+
+<a class="anchor release_tag" name="v0_0_0_dev53"></a>
+<h2><a href="#v0_0_0_dev53">Tag: v0.0.0.dev53</a></h2>
+
+##### Branch: 'Trunk'
+
+##### by Brian Caquelin on 03-Oct-2014 10:47AM
+
+
+Added in workaround when there is no hardware\_info element for a particular instance.
+Converted address\_block name to snakecase if it has to be used for a sub\_block name
+when the address\_block nickname is missing.
+
+~~~xml
+  <instance name="ddrc52\_bist\_inst\_mbist\_sb" module="ddrc52\_bist\_inst\_mbist\_sb">
+    <instance name="ddrc52\_bist\_inst\_mbist" module="ddrc52\_bist\_inst\_mbist">
+      <hardware\_info>
+        <path>ddrc52\_bist\_inst\_mbist</path>
+      </hardware\_info>
+      <register\_defs>
+        <address\_block name="BIST block ddrc52\_bist\_inst\_mbist" byte\_order="bigEndian"
+lau="32">
+~~~
+
+<a class="anchor release_tag" name="v0_0_0_dev52"></a>
+<h2><a href="#v0_0_0_dev52">Tag: v0.0.0.dev52</a></h2>
+
+##### Branch: 'Trunk'
+
+##### by Brian Caquelin on 02-Oct-2014 15:50PM
+
+
+fixed bit ordering bug for .rb files created from XML import
+
+<a class="anchor release_tag" name="v0_0_0_dev51"></a>
+<h2><a href="#v0_0_0_dev51">Tag: v0.0.0.dev51</a></h2>
+
+##### Branch: 'Trunk'
+
+##### by Brian Caquelin on 30-Sep-2014 13:30PM
+
+
+added datasheet back in to RS with spec tests enabled
+
+<a class="anchor release_tag" name="v0_0_0_dev50"></a>
+<h2><a href="#v0_0_0_dev50">Tag: v0.0.0.dev50</a></h2>
+
+##### Branch: 'Trunk'
+
+##### by Brian Caquelin on 30-Sep-2014 07:53AM
+
+
+Added in export capability to ruby for all sub\_blocks and associated registers.
+
+<a class="anchor release_tag" name="v0_0_0_dev49"></a>
+<h2><a href="#v0_0_0_dev49">Tag: v0.0.0.dev49</a></h2>
+
+##### Branch: 'Trunk'
+
+##### by Brian Caquelin on 23-Sep-2014 16:01PM
+
+
+added 'bist\_sets' to FSLBIST configuration XML import
+
+<a class="anchor release_tag" name="v0_0_0_dev48"></a>
+<h2><a href="#v0_0_0_dev48">Tag: v0.0.0.dev48</a></h2>
+
+##### Branch: 'Trunk'
+
+##### by Stephen Traynor on 23-Sep-2014 11:11AM
+
+
+Updated sidsc.rb file to avoid importing Reserved registers from XML files, as it
+causes duplicate regsiter errors with Automotive register imports.
+Added conditional line to only progress with registers not named 'Reserved' or 'reserved'.
+       if register\_name !~ /^[Rr]eserved$/
+
+Updated the Rgen core required minor revision number to 111, after seeing 'examples' error
+when using minor revision 101.
+
+<a class="anchor release_tag" name="v0_0_0_dev47"></a>
+<h2><a href="#v0_0_0_dev47">Tag: v0.0.0.dev47</a></h2>
+
+##### Branch: 'Trunk'
+
+##### by Brian Caquelin on 22-Sep-2014 09:24AM
+
+
+Fixed register address double counting bug
+
+<a class="anchor release_tag" name="v0_0_0_dev46"></a>
+<h2><a href="#v0_0_0_dev46">Tag: v0.0.0.dev46</a></h2>
+
+##### Branch: 'Trunk'
+
+##### by Melody Caron on 08-Sep-2014 15:35PM
+
+
+Modifications to SIDSC. Added WORZ (write only, read zeros) access. Fixed issues with
+compress\_empty bits method.
+
+<a class="anchor release_tag" name="v0_0_0_dev45"></a>
+<h2><a href="#v0_0_0_dev45">Tag: v0.0.0.dev45</a></h2>
+
+##### Branch: 'Trunk'
+
+##### by Melody Caron on 04-Sep-2014 15:37PM
+
+
+Updated SIDSC to properly format write-only registers and registers with special bit reset
+values "x" and "m".
+
+<a class="anchor release_tag" name="v0_0_0_dev44"></a>
+<h2><a href="#v0_0_0_dev44">Tag: v0.0.0.dev44</a></h2>
+
+##### Branch: 'Trunk'
+
+##### by Brian Caquelin on 03-Sep-2014 15:10PM
+
+
+Fixed pintool bug where arch-spec definitions in the bus definitions caused duplicate pin
+refs.
+Enchanced crr importer to work with v1.10
+
+<a class="anchor release_tag" name="v0_0_0_dev43"></a>
+<h2><a href="#v0_0_0_dev43">Tag: v0.0.0.dev43</a></h2>
+
+##### Branch: 'Trunk'
+
+##### by Brian Caquelin on 02-Sep-2014 14:04PM
+
+
+Added rgen require\_gem statement for nokogiri happymapper gem
+
+<a class="anchor release_tag" name="v0_0_0_dev42"></a>
+<h2><a href="#v0_0_0_dev42">Tag: v0.0.0.dev42</a></h2>
+
+##### Branch: 'Trunk'
+
+##### by Brian Caquelin on 01-Sep-2014 14:59PM
+
+
+Added more flexibility to rs\_import configuration file filter
+
+<a class="anchor release_tag" name="v0_0_0_dev41"></a>
+<h2><a href="#v0_0_0_dev41">Tag: v0.0.0.dev41</a></h2>
+
+##### Branch: 'Trunk'
+
+##### by Brian Caquelin on 01-Sep-2014 12:07PM
+
+
+Fixed require file name case issue hidden by doing development on Windows, shame on me!
+
+<a class="anchor release_tag" name="v0_0_0_dev40"></a>
+<h2><a href="#v0_0_0_dev40">Tag: v0.0.0.dev40</a></h2>
+
+##### Branch: 'Trunk'
+
+##### by Brian Caquelin on 01-Sep-2014 11:27AM
+
+
+Added FSLBIST and Serdes configuration data XML importers and added some more error
+checking on the CRR importer.  Need to do peer review of the datasheet importer ASAP to
+get it included in next release.
+
+<a class="anchor release_tag" name="v0_0_0_dev39"></a>
+<h2><a href="#v0_0_0_dev39">Tag: v0.0.0.dev39</a></h2>
+
+##### Branch: 'Trunk'
+
+##### by Christopher Hume on 19-Aug-2014 16:18PM
+
+
+Updated SIDSC conversion to key off of a "multiple\_instances" attribute from a register's owner module, if the method exists.  This allows register names to be made unique if a register map is instantiated multiple times within a module/configuration.
+
+For example, in C40TFS, we have multiple instances of "Core" registers:
+
+~~~ ruby
+        def initialize(options = {})
+          # Set some flag to tell XML generation to uniquify the register names
+          # with the owning component's name, ie: CORE\_ALL\_CORE\_CFG0, CORE0\_CORE\_CFG0
+          @multiple\_instances = true
+
+          # ** Core Config 0**
+          reg :core\_cfg0, 0x0000, size: 8 do
+            # **Senseamp Timing Options**
+            bits 7..4, :satime
+            # **Read Timing Options**
+            bits 3..0, :readt
+          end
+        end
+~~~
+
+When converted to XML via sidsc.rb, any core\_cfg0 registers will have unique registerName attributes (their register id had already been made unique for SSDS reasons):
+
+~~~xml
+      <register id="sidsc\_core0\_CORE\_CFG0">
+        <registerName>CORE0\_CORE\_CFG0</registerName>
+...
+      <register id="sidsc\_core1\_CORE\_CFG0">
+        <registerName>CORE1\_CORE\_CFG0</registerName>
+...
+~~~
+
+If a register group does not have the "multiple\_instances" method, register names come through as-is, without modification.
+
+<a class="anchor release_tag" name="v0_0_0_dev38"></a>
+<h2><a href="#v0_0_0_dev38">Tag: v0.0.0.dev38</a></h2>
+
+##### Branch: 'Trunk'
+
+##### by Brian Caquelin on 06-Aug-2014 07:27AM
+
+
+Minor house-cleaning
+
+<a class="anchor release_tag" name="v0_0_0_dev37"></a>
+<h2><a href="#v0_0_0_dev37">Tag: v0.0.0.dev37</a></h2>
+
+##### Branch: 'Trunk'
+
+##### by Brian Caquelin on 05-Aug-2014 16:08PM
+
+
+Added Common Register Repository (CRR) XML importer.  Does not yet support to\_crr XML
+write.  Works with CRR schema v1.3.
+
+<a class="anchor release_tag" name="v0_0_0_dev36"></a>
+<h2><a href="#v0_0_0_dev36">Tag: v0.0.0.dev36</a></h2>
+
+##### Branch: 'Trunk'
+
+##### by Christopher Hume on 05-Aug-2014 14:09PM
+
+
+Minor SIDSC update to prevent duplication of reserved bits
+
+<a class="anchor release_tag" name="v0_0_0_dev35"></a>
+<h2><a href="#v0_0_0_dev35">Tag: v0.0.0.dev35</a></h2>
+
+##### Branch: 'Trunk'
+
+##### by Christopher Hume on 05-Aug-2014 11:36AM
+
+
+Fixed a bug in SIDSC conversion that would miss inserting a "reserved" bit if only a
+single bit was empty in a register.
+
+Added bitNumbers and bitFieldRadix back into SIDSC format.
+
+<a class="anchor release_tag" name="v0_0_0_dev34"></a>
+<h2><a href="#v0_0_0_dev34">Tag: v0.0.0.dev34</a></h2>
+
+##### Branch: 'Trunk'
+
+##### by Stephen McGinty on 24-Jul-2014 03:39AM
+
+
+Changed domain / sub-block delimiter in the IP-XACT AddressBlock name from a '.' to '\_'
+
+<a class="anchor release_tag" name="v0_0_0_dev33"></a>
+<h2><a href="#v0_0_0_dev33">Tag: v0.0.0.dev33</a></h2>
+
+##### Branch: 'Trunk'
+
+##### by Stephen Traynor on 23-Jul-2014 14:00PM
+
+
+Corrected reset of @mask variable every time a new excel spreadsheet is consumed from the
+TCU registers excel file.
+
+<a class="anchor release_tag" name="v0_0_0_dev32"></a>
+<h2><a href="#v0_0_0_dev32">Tag: v0.0.0.dev32</a></h2>
+
+##### Branch: 'Trunk'
+
+##### by Stephen McGinty on 23-Jul-2014 03:00AM
+
+
+IP\_XACT export updates:
+
+* An AddressBlock now represents a sub-block within a specific domain. For example if a model
+  had a sub-block containing registers named 'core0' and this was available on the 'ips' and
+  'ahb' domains, then this would generated two AddressBlocks called 'ips.core0' and 'ahb.core0'
+* Reinstated the HDL path attribute from AddressBlocks
+
+<a class="anchor release_tag" name="v0_0_0_dev31"></a>
+<h2><a href="#v0_0_0_dev31">Tag: v0.0.0.dev31</a></h2>
+
+##### Branch: 'Trunk'
+
+##### by Melody Caron on 22-Jul-2014 09:46AM
+
+
+Fixed xml tag issue where arguments were passed as Symbols, not Strings. This messed up
+the xml tag format.
+
+Bad syntax:
+~~~ruby
+xml.tag!('ip-name', try(:ip\_name, :pdm\_part\_name) || owner.class.to\_s.split('::').last)
+# Shows up in xml as
+# <ip-name:cisocregs/>
+~~~
+Good syntax:
+~~~ruby
+xml.tag!('ip-name', "#{try(:ip\_name, :pdm\_part\_name) ||
+owner.class.to\_s.split('::').last}")
+# Shows up in xml as
+# <ip-name>cisocregs</ip-name>
+~~~
+
+Changes made to sidsc.rb only.
+
+<a class="anchor release_tag" name="v0_0_0_dev30"></a>
+<h2><a href="#v0_0_0_dev30">Tag: v0.0.0.dev30</a></h2>
+
+##### Branch: 'Trunk'
+
+##### by Stephen McGinty on 17-Jul-2014 05:47AM
+
+
+SIDSC export updates:
+
+* Single and double quotes in bits and register descriptions are now automatically escaped
+  and therefore preserved correctly in the XML output
+* < and > will now render verbatim and will not be converted to an escaped version
+
+IP\_XACT export updates:
+
+* Changed the overall structure from MemoryMaps = Domains and AddressBlocks = Sub Blocks to
+  MemoryMaps = The Owner and AddressBlocks = Domains. The net effect of this is that sub-blocks
+  are flattened out with the address blocks, need to pilot further with verification to see
+  if there are any problems from register naming contention from that.
+* Simplified how bit paths are generated by leveraging the latest RGen path API
+* Removed the HDL path attribute from AddressBlocks, doesn't make sense now that they represent
+  domains rather than an RTL hierarchy
+
+<a class="anchor release_tag" name="v0_0_0_dev29"></a>
+<h2><a href="#v0_0_0_dev29">Tag: v0.0.0.dev29</a></h2>
+
+##### Branch: 'Trunk'
+
+##### by Melody Caron on 10-Jul-2014 15:04PM
+
+
+Updated SIDSC register documentation to comprehend italics in register description.
+
+~~~text
+Syntax: *blah blah blah*
+Translates to: <i>blah blah blah</i>
+~~~
+
+<a class="anchor release_tag" name="v0_0_0_dev28"></a>
+<h2><a href="#v0_0_0_dev28">Tag: v0.0.0.dev28</a></h2>
+
+##### Branch: 'Trunk'
+
+##### by Christopher Hume on 10-Jul-2014 09:37AM
+
+
+Updated SIDSC register documentation format to allow for unique register and bitField IDs.
+
+This allows the same register and bit names to occur in different register sub-blocks. 
+For example, if a module has multiple instances of a single register block, the ID names
+will be unique when pulled into SSDS (a requirement for successful documentation
+assembly).
+
+Example:
+
+A model instantiates multiple instances of "CoreRegs":
+
+~~~ruby
+
+  options[:num\_blks].times do |i|
+    sub\_block "core#{i}",   :class\_name => 'CoreRegs',    :base => 0x1500 + (i * 0x100)
+  end
+
+~~~
+
+Where a register "core\_cfg0" is declared within CoreRegs:
+
+~~~ruby
+
+  reg :core\_cfg0, 0x0000, :size => 8 do
+    bits 7..4, :satime
+    bits 3..0, :readt
+  end
+
+~~~
+
+SIDSC conversion now attaches the component name (:component\_name, :name, or
+:pdm\_part\_name) to the register and bitField ID attributes.
+
+For core0:
+
+~~~xml
+
+      <register id="sidsc\_core0\_CORE\_CFG0">
+        <bitField id="core0\_SATIME">
+        <bitField id="core0\_READT">
+
+~~~
+
+And core1:
+
+~~~xml
+
+      <register id="sidsc\_core1\_CORE\_CFG0">
+        <bitField id="core1\_SATIME">
+        <bitField id="core1\_READT">
+
+~~~
+
+<a class="anchor release_tag" name="v0_0_0_dev27"></a>
+<h2><a href="#v0_0_0_dev27">Tag: v0.0.0.dev27</a></h2>
+
+##### Branch: 'Trunk'
+
+##### by Stephen Traynor on 10-Jul-2014 09:02AM
+
+
+Expanded capability to consume register data written in Automotive TCU Excel format, that
+is
+insensitive to the ordering of the bits/bitgroups.
+
+<a class="anchor release_tag" name="v0_0_0_dev26"></a>
+<h2><a href="#v0_0_0_dev26">Tag: v0.0.0.dev26</a></h2>
+
+##### Branch: 'Trunk'
+
+##### by Stephen McGinty on 03-Jul-2014 03:17AM
+
+
+IP\_XACT export updates:
+
+* Filled in the name field in the bit field attributes, this will just generate a name based on the
+  value like: 'val\_0x0', 'val\_0x5'
+* Fixed some vendor extensions that were permanently enabled, now they will only be output when
+  :format => :uvm is passed to the to\_ip\_xact method
+* Made the bit field values conditional but enabled by default, they can be disabled by passing
+  :include\_bit\_field\_values => false to the to\_ip\_xact method
+
+<a class="anchor release_tag" name="v0_0_0_dev25"></a>
+<h2><a href="#v0_0_0_dev25">Tag: v0.0.0.dev25</a></h2>
+
+##### Branch: 'Trunk'
+
+##### by Stephen McGinty on 02-Jul-2014 07:51AM
+
+
+THe IP-XACT exporter will now use the bit.access attribute to fill in the corresponding
+field.
+
+<a class="anchor release_tag" name="v0_0_0_dev24"></a>
+<h2><a href="#v0_0_0_dev24">Tag: v0.0.0.dev24</a></h2>
+
+##### Branch: 'Trunk'
+
+##### by Stephen McGinty on 01-Jul-2014 05:30AM
+
+
+Updates to the IP XACT exporter which now understands the RGen sub-block model and
+conventions.
+
+Also added initial vendor extensions to support UVM - currently working with NVM
+verification to further develop this exporter and enable the RGen -> UVM flow.
+
+<a class="anchor release_tag" name="v0_0_0_dev23"></a>
+<h2><a href="#v0_0_0_dev23">Tag: v0.0.0.dev23</a></h2>
+
+##### Branch: 'Trunk'
+
+##### by William Forfang on 12-Jun-2014 09:14AM
+
+
+Fixed the 'types' attribute extractor in pin\_tool.rb. This allows the in-console BGA
+plotting widget to distinguish between package types. The SOC package type is located at
+the following XML path:
+
+/packages-supported/package/packageInformation/packageType/packageAcronym
+
+If no packageAcronym exists in the XML, the default value of the .types attribute is set
+to 'BGA\_default'.
+
+~~~ruby
+> $dut.package = :t4240
+=> :t4240
+> $dut.package.types
+=> ["BGA\_default"]
+> $dut.package.plot\_help
+~~~
+
+
+<a class="anchor release_tag" name="v0_0_0_dev22"></a>
+<h2><a href="#v0_0_0_dev22">Tag: v0.0.0.dev22</a></h2>
+
+##### Branch: 'Trunk'
+
+##### by William Forfang on 12-Jun-2014 08:40AM
+
+
+Added 'types' attribute to package extracted by pin\_tool.rb. Defaults to 'BGA\_default' if
+no type is listed in the XML.
+
+<a class="anchor release_tag" name="v0_0_0_dev21"></a>
+<h2><a href="#v0_0_0_dev21">Tag: v0.0.0.dev21</a></h2>
+
+##### Branch: 'Trunk'
+
+##### by Stephen Traynor on 28-May-2014 14:37PM
+
+
+Removed unnecssary line displaying :path symbol to the log in the rs\_file method in
+lib/rosetta\_stone.rb
+
+<a class="anchor release_tag" name="v0_0_0_dev20"></a>
+<h2><a href="#v0_0_0_dev20">Tag: v0.0.0.dev20</a></h2>
+
+##### Branch: 'Trunk'
+
+##### by Stephen Traynor on 28-May-2014 11:20AM
+
+
+Corrected method to import the ruby gems spreadsheet module
+
+<a class="anchor release_tag" name="v0_0_0_dev19"></a>
+<h2><a href="#v0_0_0_dev19">Tag: v0.0.0.dev19</a></h2>
+
+##### Branch: 'Trunk'
+
+##### by Stephen Traynor on 28-May-2014 10:05AM
+
+
+adding missing files from initial release
+
+<a class="anchor release_tag" name="v0_0_0_dev18"></a>
+<h2><a href="#v0_0_0_dev18">Tag: v0.0.0.dev18</a></h2>
+
+##### Branch: 'Trunk'
+
+##### by Stephen Traynor on 28-May-2014 09:47AM
+
+
+Included method to read TCU registers defined in excel
+
+<a class="anchor release_tag" name="v0_0_0_dev17"></a>
+<h2><a href="#v0_0_0_dev17">Tag: v0.0.0.dev17</a></h2>
+
+##### Branch: 'Trunk'
+
+##### by Stephen McGinty on 28-May-2014 03:40AM
+
+
+Minor update to make SIDSC export work when the component name is a symbol
+
+<a class="anchor release_tag" name="v0_0_0_dev16"></a>
+<h2><a href="#v0_0_0_dev16">Tag: v0.0.0.dev16</a></h2>
+
+##### Branch: 'Trunk'
+
+##### by Stephen McGinty on 27-May-2014 08:58AM
+
+
+Fix encoding issue when importing from docato on windows
+
+<a class="anchor release_tag" name="v0_0_0_dev15"></a>
+<h2><a href="#v0_0_0_dev15">Tag: v0.0.0.dev15</a></h2>
+
+##### Branch: 'Trunk'
+
+##### by Stephen McGinty on 23-May-2014 05:45AM
+
+
+Some debug of the RALF export format.
+
+Added ability to import from Design Sync - now support local path, Docato or Design Sync.
+See plugin homepage for an example of how to use it.
+
+<a class="anchor release_tag" name="v0_0_0_dev14"></a>
+<h2><a href="#v0_0_0_dev14">Tag: v0.0.0.dev14</a></h2>
+
+##### Branch: 'Trunk'
+
+##### by Stephen McGinty on 01-May-2014 13:06PM
+
+
+Added support for register export to IP-XACT and RALF (Synopsis) formats
+
+<a class="anchor release_tag" name="v0_0_0_dev13"></a>
+<h2><a href="#v0_0_0_dev13">Tag: v0.0.0.dev13</a></h2>
+
+##### Branch: 'Trunk'
+
+##### by Stephen McGinty on 16-Apr-2014 08:22AM
+
+
+Enabled enforced lint/style checking and fixed existing offenses.
+
+Some tweaks to the generated SIDSC output.
+
+<a class="anchor release_tag" name="v0_0_0_dev12"></a>
+<h2><a href="#v0_0_0_dev12">Tag: v0.0.0.dev12</a></h2>
+
+##### Branch: 'Trunk'
+
+##### by Chris Hume on 25-Mar-2014 22:48PM
+
+
+Updated to support new Register API features and format/syntax updates:
+
+Added support for "write-one-to-clear" access (bitFieldAccess).
+
+Implemented automated documentation of unused/empty bit positions via empty\_bits (new
+Register API function).  Any unused/empty bits in a register definition will be
+auto-filled with reserved bits.  Adjacent unused/empty bits are compressed into a single
+bit field.  Multiple sequences of unused bits within a register will yield uniquely named
+reserved locations.  Empty bit fields currently default to Read-Only Zero access. A future
+update may add support for Read-Only One access to be defined on a per-register basis.
+
+Syntax changes of note:
+  * registerNameFull has been changed from all caps to simple capitilization
+  * addressBlock id has been changed from using :ip\_name or :pdm\_part\_name to
+:component\_name, :name, or :pdm\_part\_name.  Use of the same id name for memoryMap and
+addressBlock resulted in a naming collision error in oXygen.
+
+Note that some unused fields have been removed: bitNumbers, bitFieldRadix
+
+If you are using the to\_sidsc method and encounter any syntax or nomenclature issues,
+please contact Chris Hume at r20984@freescale.com/chris.hume@freescale.com.  To the best
+of my knowledge, the TFS FMU design team is the only team leveraging SIDSC formatted XML
+for documentation generation.  I only have access to our register maps and .ditamaps for
+validation cases.  Examples from other teams would be welcome.
+
+<a class="anchor release_tag" name="v0_0_0_dev11"></a>
+<h2><a href="#v0_0_0_dev11">Tag: v0.0.0.dev11</a></h2>
+
+##### Branch: 'Trunk'
+
+##### by Stephen McGinty on 21-Mar-2014 07:51AM
+
+
+Updated the Pin Tool importer to include the busref attribute for the various
+configurations
+of a given pin. This is available via the pin.group method.
+
+<a class="anchor release_tag" name="v0_0_0_dev10"></a>
+<h2><a href="#v0_0_0_dev10">Tag: v0.0.0.dev10</a></h2>
+
+##### Branch: 'Trunk'
+
+##### by Stephen McGinty on 13-Mar-2014 12:31PM
+
+
+Added Docato workspace synchronizer. This is a wrapping of a 3rd party tool
+to upload local documentation to docato.
+
+Will fully document in due course, but basically:
+
+~~~ruby
+include RosettaStone
+
+def generate\_block\_guide
+  my\_method\_to\_generate\_xml
+  rs\_docato.sync(:local\_dir => "#{RGen.root}/output/block\_guide", :docato\_dir => "/my/docato/path")
+end
+~~~
+
+A method is also provided to automatically return a path to the current user's
+sandbox on docato:
+
+~~~ruby
+include RosettaStone
+
+def generate\_block\_guide
+  my\_method\_to\_generate\_xml
+  rs\_docato.sync(:local\_dir => "#{RGen.root}/output/block\_guide", :docato\_dir => rs\_docato.sandbox)
+end
+~~~
+
+<a class="anchor release_tag" name="v0_0_0_dev9"></a>
+<h2><a href="#v0_0_0_dev9">Tag: v0.0.0.dev9</a></h2>
+
+##### Branch: 'Trunk'
+
+##### by Stephen McGinty on 07-Mar-2014 11:21AM
+
+
+Removed all references to RGen pin\_api v3, and set min RGen version to the latest where
+that is now the default.
+
+Removed http Linux hacks in docato.rb, that is now fixed in latest RGen.
+
+<a class="anchor release_tag" name="v0_0_0_dev8"></a>
+<h2><a href="#v0_0_0_dev8">Tag: v0.0.0.dev8</a></h2>
+
+##### Branch: 'Trunk'
+
+##### by Stephen McGinty on 20-Feb-2014 11:41AM
+
+
+Initial release of Pin Tool import.
+
+Docato import now works on both Windows and Linux and can be used in production.
+
+<a class="anchor release_tag" name="v0_0_0_dev7"></a>
+<h2><a href="#v0_0_0_dev7">Tag: v0.0.0.dev7</a></h2>
+
+##### Branch: 'Trunk'
+
+##### by Melody Caron on 19-Feb-2014 09:37AM
+
+
+Added TPC VER2PAT file -> RGen pin definition importer.
+
+<a class="anchor release_tag" name="v0_0_0_dev6"></a>
+<h2><a href="#v0_0_0_dev6">Tag: v0.0.0.dev6</a></h2>
+
+##### Branch: 'Trunk'
+
+##### by Stephen McGinty on 10-Feb-2014 03:36AM
+
+
+Replaced all occurrences of <strong> with <b> in SIDSC content generated from markdown.
+
+Removed the base\_address attribute handling in SIDCS import/export since it clashes with
+RGen's existing handling of it - need a real life use case based on SIDCS to work out how
+to handle this.
+
+Internally renamed the SSDS class as Docato, since it is really concerned with talking to
+the Docato revision control system rather than the more general SSDS.
+
+<a class="anchor release_tag" name="v0_0_0_dev5"></a>
+<h2><a href="#v0_0_0_dev5">Tag: v0.0.0.dev5</a></h2>
+
+##### Branch: 'Trunk'
+
+##### by Chris Hume on 07-Feb-2014 14:56PM
+
+
+Fixed several minor formatting issues with to\_sidsc method.  Barring one exception, (noted
+below), RGen register content is converted to SIDSC-compliant XML documentation via the
+to\_sidsc method.
+
+Exception: markdown-style bolded text, ex: **this is to be bold**, is incorrectly
+bookended with <strong><strong/>.  This will be corrected to <b><b/> in the next release.
+
+<a class="anchor release_tag" name="v0_0_0_dev4"></a>
+<h2><a href="#v0_0_0_dev4">Tag: v0.0.0.dev4</a></h2>
+
+##### Branch: 'Trunk'
+
+##### by Stephen McGinty on 27-Jan-2014 07:25AM
+
+
+Some initial work on a pin tool and datasheet importer.
+
+<a class="anchor release_tag" name="v0_0_0_dev3"></a>
+<h2><a href="#v0_0_0_dev3">Tag: v0.0.0.dev3</a></h2>
+
+##### Branch: 'Trunk'
+
+##### by Stephen McGinty on 13-Jan-2014 16:54PM
+
+
+Added direct import from SSDS. This currently only works on Windows until the Linux Ruby
+installation is updated and will not be documented on the main page until then, but here
+is an example:
+
+~~~ruby
+# Instead of supplying a path to a local file an SSDS ID and version can be supplied instead
+rs\_import(:ssds\_id => , :version => 60)
+~~~
+
+RGen will fetch and cache the corresponding XML file in a similar way to how imports are handled.
+
+Also added an initial module to generate C headers, this adds a to\_header method which will
+currently generate a default header format for the modules registers:
+
+~~~ruby
+$dut.pmc.to\_header
+~~~
+
+<a class="anchor release_tag" name="v0_0_0_dev2"></a>
+<h2><a href="#v0_0_0_dev2">Tag: v0.0.0.dev2</a></h2>
+
+##### Branch: 'Trunk'
+
+##### by Stephen McGinty on 13-Dec-2013 05:21AM
+
+
+Updated to latest doc helpers version in development environment to fix a couple of
+register display bugs.
+
+<a class="anchor release_tag" name="v0_0_0_dev1"></a>
+<h2><a href="#v0_0_0_dev1">Tag: v0.0.0.dev1</a></h2>
+
+##### Branch: 'Trunk'
+
+##### by Stephen McGinty on 12-Dec-2013 11:30AM
+
+
+Added SIDSC (SSDS) export capability.
+
+Initial public API is now defined and described at:
+http://rgen.freescale.net/rosetta\_stone/
+
+## Tag: v0.0.0.dev0
+
+##### Branch: 'Trunk'
+
+##### by Stephen McGinty on 05-Dec-2013 11:15AM
+
+
+This is an initial tag of a new RGen plugin to provide import/export APIs to
+interface with other Freescale tools.
+
+For example the import APIs will allow register, pin and spec data that is
+mastered somewhere else to be automatically imported and instantiated for use
+within an RGen environment.
+
+The export APIs will support the case where RGen is being used to master this
+type of data as is currently being piloted by the NVM design team.
+
+Many formats may ultimately be supported but initially the goal is to support
+SIDSC (SSDS) and API-Factory.
+
+This initial release fully supports importing SIDSC register data and has a
+passing test case which imports registers for the ATX uC module from SSDS.
+
+The public facing API is still in development and will be documented in due
+course.
+
+

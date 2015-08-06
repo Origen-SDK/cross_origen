@@ -1,0 +1,328 @@
+<?xml version="1.0"?>
+<spirit:component xmlns:spirit="http://www.spiritconsortium.org/XMLSchema/SPIRIT/1.4" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="$REGMEM_HOME/builder/ipxact/schema/ipxact
+					$REGMEM_HOME/builder/ipxact/schema/ipxact/index.xsd">
+	<spirit:vendor>cadence</spirit:vendor>
+	<spirit:library>test</spirit:library>
+	<spirit:name>no_ve_golden_model</spirit:name>
+	<spirit:version>1.4</spirit:version>
+	<spirit:memoryMaps>
+		<spirit:memoryMap>
+			<spirit:name>am0</spirit:name>
+			<spirit:addressBlock>
+				<spirit:name>rf1</spirit:name>
+				<spirit:baseAddress>0x1000</spirit:baseAddress>
+				<spirit:range>0x100</spirit:range>
+				<spirit:width>8</spirit:width>
+				<spirit:register>
+					<spirit:name>reg0</spirit:name>
+					<spirit:description>register with no fields. 
+					No access is defined - In logfile the access of the field created 
+					should be write-only (and not the default read-write) because it 
+					inherits access from the parent register.
+					</spirit:description>
+					<spirit:addressOffset>0x0</spirit:addressOffset>
+					<spirit:size>8</spirit:size>
+					<spirit:access>write-only</spirit:access>
+					<spirit:reset>
+						<spirit:value>0x00</spirit:value>
+						<spirit:mask>0xff</spirit:mask>
+					</spirit:reset>
+				</spirit:register>
+				<spirit:register>
+					<spirit:name>reg1</spirit:name>
+					<spirit:description>register with one field. Should look exactly the same
+						 as the previous register (except type specific parameters)</spirit:description>
+					<spirit:addressOffset>0x1</spirit:addressOffset>
+					<spirit:size>8</spirit:size>
+					<spirit:access>write-only</spirit:access>
+					<spirit:reset>
+						<spirit:value>0x00</spirit:value>
+						<spirit:mask>0xff</spirit:mask>
+					</spirit:reset>
+					<spirit:field>
+						<spirit:name>reg1_f</spirit:name>
+						<spirit:bitOffset>0</spirit:bitOffset>
+						<spirit:bitWidth>8</spirit:bitWidth>
+					</spirit:field>
+				</spirit:register>
+				<spirit:register>
+					<spirit:name>reg2</spirit:name>
+					<spirit:description>register with unused offset in the middle. Should create 
+						reserved field in offset 2-5. In logfile register's access_policy should be RW.
+						f0 - access is RW, cov: full, hard_reset: ON/3, soft_reset: OFF/0.   
+						rsv- access is RSVD, cov: none, hard_reset: ON/'hF, soft_reset:  OFF/0.   
+						f2 - access is RW, cov: full, hard_reset: ON/3, soft_reset: OFF/0.    
+						Update mask for the register: 'hc3. 
+	 					Compare mask for the register: 'hff. 
+					
+						one warning: 
+						No field at offset 2 that (auto generated) while a reset mask 
+						for 'Hard Reset' value is specified for it.
+						</spirit:description>
+					<spirit:addressOffset>0x2</spirit:addressOffset>
+					<spirit:size>8</spirit:size>
+					<spirit:reset>
+						<spirit:value>0xff</spirit:value>
+						<spirit:mask>0xff</spirit:mask>
+					</spirit:reset>
+					<spirit:field>
+						<spirit:name>f0</spirit:name>
+						<spirit:bitOffset>0</spirit:bitOffset>
+						<spirit:bitWidth>2</spirit:bitWidth>
+					</spirit:field>
+					<spirit:field>
+						<spirit:name>f2</spirit:name>
+						<spirit:bitOffset>6</spirit:bitOffset>
+						<spirit:bitWidth>2</spirit:bitWidth>
+						<spirit:access>read-write</spirit:access>
+					</spirit:field>
+				</spirit:register>
+				<spirit:register>
+					<spirit:name>reg3</spirit:name>
+					<spirit:description>register with unused offsets at both edges of register. 
+				    Should create reserved fields in offset 0-2 and 6-7.
+					rsv - access is RSVD, cov: none, hard_reset: OFF/0, soft_reset: OFF/0. 
+					f0  - access is RW (default), cov: full, hard_reset: ON/7, soft_reset: OFF/0. 
+					rsv1- access is RSVD, cov: none, hard_reset: OFF/0, soft_reset: OFF/0. 
+					Update mask for the register: 'h38.
+  					Compare mask for the register: 'hff. 
+					</spirit:description>
+					<spirit:addressOffset>0x3</spirit:addressOffset>
+					<spirit:size>8</spirit:size>
+					<spirit:reset>
+						<spirit:value>0x38</spirit:value>
+						<spirit:mask>0x38</spirit:mask>
+					</spirit:reset>
+					<spirit:field>
+						<spirit:name>f0</spirit:name>
+						<spirit:bitOffset>3</spirit:bitOffset>
+						<spirit:bitWidth>3</spirit:bitWidth>
+					</spirit:field>
+				</spirit:register>
+				<spirit:register>
+					<spirit:name>reg4</spirit:name>
+					<spirit:description>register with mixed access policies.
+					f0 - access is RW, cov: full, hard_reset: OFF/1, soft_reset: OFF/0. 
+					f1 - access is RW, cov: full, hard_reset: ON/1, soft_reset: OFF/0. 
+					dirs - access is WO, cov: full, hard_reset: ON/2, soft_reset: OFF/0. 
+					more_dirs - access is RO, cov: full, hard_reset: OFF/1, soft_reset: OFF/0.  
+					rsv - access is RW, cov: all, hard_reset: ON/3, soft_reset: OFF/0.  
+					rsv is not recognized as 'reserved'.
+					Update mask for the register: 'hc.
+  					Compare mask for the register: 'hf0. 
+					</spirit:description>
+					<spirit:addressOffset>0x4</spirit:addressOffset>
+					<spirit:size>8</spirit:size>
+					<spirit:reset>
+						<spirit:value>0xdb</spirit:value>
+						<spirit:mask>0xce</spirit:mask>
+					</spirit:reset>
+					<spirit:field>
+						<spirit:name>f0</spirit:name>
+						<spirit:bitOffset>0</spirit:bitOffset>
+						<spirit:bitWidth>1</spirit:bitWidth>
+					</spirit:field>
+					<spirit:field>
+						<spirit:name>f1</spirit:name>
+						<spirit:bitOffset>1</spirit:bitOffset>
+						<spirit:bitWidth>1</spirit:bitWidth>
+					</spirit:field>
+					<spirit:field>
+						<spirit:name>dirs</spirit:name>
+						<spirit:bitOffset>2</spirit:bitOffset>
+						<spirit:bitWidth>2</spirit:bitWidth>
+						<spirit:access>write-only</spirit:access>
+						<spirit:values>
+							<spirit:value>0</spirit:value>
+							<spirit:name>north</spirit:name>
+						</spirit:values>
+						<spirit:values>
+							<spirit:value>1</spirit:value>
+							<spirit:name>south</spirit:name>
+						</spirit:values>
+						<spirit:values>
+							<spirit:value>2</spirit:value>
+							<spirit:name>east</spirit:name>
+						</spirit:values>
+						<spirit:values>
+							<spirit:value>3</spirit:value>
+							<spirit:name>west</spirit:name>
+						</spirit:values>
+					</spirit:field>
+					<spirit:field>
+						<spirit:name>more_dirs</spirit:name>
+						<spirit:bitOffset>4</spirit:bitOffset>
+						<spirit:bitWidth>2</spirit:bitWidth>
+						<spirit:access>read-only</spirit:access>
+						<spirit:values>
+							<spirit:value>0</spirit:value>
+							<spirit:name>north_east</spirit:name>
+							<spirit:description>0</spirit:description>
+						</spirit:values>
+						<spirit:values>
+							<spirit:value>1</spirit:value>
+							<spirit:name>south_west</spirit:name>
+						</spirit:values>
+						<spirit:values>
+							<spirit:value>2</spirit:value>
+							<spirit:name>south_east</spirit:name>
+						</spirit:values>
+						<spirit:values>
+							<spirit:value>3</spirit:value>
+							<spirit:name>north_west</spirit:name>
+						</spirit:values>
+					</spirit:field>
+					<spirit:field>
+						<spirit:name>rsv</spirit:name>
+						<spirit:bitOffset>6</spirit:bitOffset>
+						<spirit:bitWidth>2</spirit:bitWidth>
+					</spirit:field>
+				</spirit:register>
+				<spirit:register>
+					<spirit:name>reg5</spirit:name>
+					<spirit:description>reuse directions enumeration defined in reg4.
+					This will cause a new instance of a modified enumeration. 
+					rsv1 - access: RSVD, cov: none, hard_reset: ON/3, soft_reset: OFF/0.
+					dirs - access is WO (inherit from reg), cov: full, hard_reset: ON/1, soft_reset: OFF/0.
+					rsv - access is WO (inherit from reg), cov: full, hard_reset: OFF/4, soft_reset: OFF/0.  
+					rsv is not recognized as 'reserved'.
+					
+					Update mask for the register: 'fc.
+  					Compare mask for the register: 'h3. 
+  					
+  					Warning:
+  					x4 Enumeration name/value reusability.
+  					hard reset value exist for unspecified offset
+					</spirit:description>
+					<spirit:addressOffset>0x5</spirit:addressOffset>
+					<spirit:size>8</spirit:size>
+					<spirit:access>write-only</spirit:access>
+					<spirit:reset>
+						<spirit:value>0x47</spirit:value>
+						<spirit:mask>0xf</spirit:mask>
+					</spirit:reset>
+					<spirit:field>
+						<spirit:name>dirs</spirit:name>
+						<spirit:bitOffset>2</spirit:bitOffset>
+						<spirit:bitWidth>2</spirit:bitWidth>
+						<spirit:values>
+							<spirit:value>0</spirit:value>
+							<spirit:name>north</spirit:name>
+						</spirit:values>
+						<spirit:values>
+							<spirit:value>1</spirit:value>
+							<spirit:name>south</spirit:name>
+						</spirit:values>
+						<spirit:values>
+							<spirit:value>2</spirit:value>
+							<spirit:name>east</spirit:name>
+						</spirit:values>
+						<spirit:values>
+							<spirit:value>3</spirit:value>
+							<spirit:name>west</spirit:name>
+						</spirit:values>
+					</spirit:field>
+					<spirit:field>
+						<spirit:name>rsv</spirit:name>
+						<spirit:bitOffset>4</spirit:bitOffset>
+						<spirit:bitWidth>4</spirit:bitWidth>
+					</spirit:field>
+				</spirit:register>
+				<spirit:register>
+					<spirit:name>reg6</spirit:name>
+					<spirit:description>reuse more_directions enumeration defined in reg4 
+					directions - access is RO, cov: full, hard_reset: ON/2, soft_reset: OFF/0.
+					rsv - access is RO, cov: full, hard_reset: OFF/0, soft_reset: OFF/0.  
+					
+					rsv is not identified as 'reserved'.
+					Reg access policy in logfile is RO.
+					
+					Update mask for the register: 'h0.
+  					Compare mask for the register: 'hff. 
+  					
+  					Warning:
+  					x4 Enumeration name/value reusability.
+					</spirit:description>
+					<spirit:addressOffset>0x6</spirit:addressOffset>
+					<spirit:size>8</spirit:size>
+					<spirit:reset>
+						<spirit:value>0x2</spirit:value>
+						<spirit:mask>0x3</spirit:mask>
+					</spirit:reset>
+					<spirit:field>
+						<spirit:name>more_dirs</spirit:name>
+						<spirit:bitOffset>0</spirit:bitOffset>
+						<spirit:bitWidth>2</spirit:bitWidth>
+						<spirit:access>read-only</spirit:access>
+						<spirit:values>
+							<spirit:value>0</spirit:value>
+							<spirit:name>north_east</spirit:name>
+							<spirit:description>0</spirit:description>
+						</spirit:values>
+						<spirit:values>
+							<spirit:value>1</spirit:value>
+							<spirit:name>south_west</spirit:name>
+						</spirit:values>
+						<spirit:values>
+							<spirit:value>2</spirit:value>
+							<spirit:name>south_east</spirit:name>
+						</spirit:values>
+						<spirit:values>
+							<spirit:value>3</spirit:value>
+							<spirit:name>north_west</spirit:name>
+						</spirit:values>
+					</spirit:field>
+					<spirit:field>
+						<spirit:name>rsv</spirit:name>
+						<spirit:bitOffset>2</spirit:bitOffset>
+						<spirit:bitWidth>6</spirit:bitWidth>
+						<spirit:access>read-only</spirit:access>
+					</spirit:field>
+				</spirit:register>
+			</spirit:addressBlock>
+			<spirit:addressBlock>
+				<spirit:name>rf2</spirit:name>
+				<spirit:description>use baseAddress of size greater then 32 bits 
+				and less then 64bits.
+				</spirit:description>
+				<spirit:baseAddress>0x2000</spirit:baseAddress>
+				<spirit:range>0x100</spirit:range>
+				<spirit:width>8</spirit:width>
+				<spirit:register>
+					<spirit:name>reg0</spirit:name>
+					<spirit:description>register with inconsistent hard reset values per
+					field (field's reset masks are composed of ones AND zeroes) should
+					be defaulted to ON. 
+					No soft reset value - should be defaulted to OFF/0.
+					No coverage defined for fields - both default (full coverage).
+					No access is defined for neither fields or register
+					(default to read-write).
+					Hard reset value of both fields is ON/'hf.
+					
+					Warnings:
+					2x Inconsistency of hard reset mask.
+					</spirit:description>
+					<spirit:addressOffset>0x0</spirit:addressOffset>
+					<spirit:size>8</spirit:size>
+					<spirit:reset>
+						<spirit:value>0xff</spirit:value>
+						<spirit:mask>0xcc</spirit:mask>
+					</spirit:reset>
+					<spirit:field>
+						<spirit:name>f0</spirit:name>
+						<spirit:bitOffset>0</spirit:bitOffset>
+						<spirit:bitWidth>4</spirit:bitWidth>
+					</spirit:field>
+					<spirit:field>
+						<spirit:name>f1</spirit:name>
+						<spirit:bitOffset>4</spirit:bitOffset>
+						<spirit:bitWidth>4</spirit:bitWidth>
+					</spirit:field>
+				</spirit:register>
+			</spirit:addressBlock>
+		</spirit:memoryMap>
+	</spirit:memoryMaps>
+	<!-- AddressMap size not Specified -->
+</spirit:component>

@@ -1,0 +1,159 @@
+<p>The DDR SDRAM mode control register allows the user to carry out the following tasks:</p>
+<ul>
+  <li>Issue a mode register set command
+    <ph> to a particular chip select</ph>
+  </li>
+  <li>Issue an immediate refresh
+    <ph> to a particular chip select</ph>
+  </li>
+  <li>Issue an immediate precharge or precharge all command
+    <ph> to a particular chip select</ph>
+  </li>
+  <li>Force the CKE signal
+    <ph>s</ph> to a specific value
+  </li>
+</ul>
+<note>Note that MD_EN, SET_REF, and SET_PRE are mutually exclusive; only one of these fields can be set at a time.</note>
+<p>This table shows how DDR_SDRAM_MD_CNTL fields should be set for each of the tasks described above. </p>
+<table id="aa16442226">
+  <title>Settings of DDR_SDRAM_MD_CNTL Fields</title>
+  <tgroup cols="5">
+    <colspec colname="col1" colnum="1" colwidth="15.16*"></colspec>
+    <colspec colname="col2" colnum="2" colwidth="25.61*"></colspec>
+    <colspec colname="col3" colnum="3" colwidth="8.20*"></colspec>
+    <colspec colname="col4" colnum="4" colwidth="24.18*"></colspec>
+    <colspec colname="col5" colnum="5" colwidth="26.84*"></colspec>
+    <thead>
+      <row>
+        <entry colname="col1">
+          <p>Field</p>
+        </entry>
+        <entry colname="col2">
+          <p>Mode Register Set</p>
+        </entry>
+        <entry colname="col3">
+          <p>Refresh</p>
+        </entry>
+        <entry colname="col4">
+          <p>Precharge</p>
+        </entry>
+        <entry colname="col5">
+          <p>Clock Enable Signals Control</p>
+        </entry>
+      </row>
+    </thead>
+    <tbody>
+      <row>
+        <entry colname="col1">
+          <p>MD_EN</p>
+        </entry>
+        <entry colname="col2">
+          <p>1</p>
+        </entry>
+        <entry colname="col3">
+          <p>0</p>
+        </entry>
+        <entry colname="col4">
+          <p>0</p>
+        </entry>
+        <entry colname="col5">
+          <p>-</p>
+        </entry>
+      </row>
+      <row>
+        <entry colname="col1">
+          <p>SET_REF</p>
+        </entry>
+        <entry colname="col2">
+          <p>0</p>
+        </entry>
+        <entry colname="col3">
+          <p>1</p>
+        </entry>
+        <entry colname="col4">
+          <p>0</p>
+        </entry>
+        <entry colname="col5">
+          <p>-</p>
+        </entry>
+      </row>
+      <row>
+        <entry colname="col1">
+          <p>SET_PRE</p>
+        </entry>
+        <entry colname="col2">
+          <p>0</p>
+        </entry>
+        <entry colname="col3">
+          <p>0</p>
+        </entry>
+        <entry colname="col4">
+          <p>1</p>
+        </entry>
+        <entry colname="col5">
+          <p>-</p>
+        </entry>
+      </row>
+      <row>
+        <entry colname="col1">
+          <p>CS_SEL</p>
+        </entry>
+        <entry nameend="col4" namest="col2">
+          <p>Chooses chip select (CS)</p>
+        </entry>
+        <entry colname="col5">
+          <p>-</p>
+        </entry>
+      </row>
+      <row>
+        <entry colname="col1">
+          <p>MD_SEL</p>
+        </entry>
+        <entry colname="col2">
+          <p>Select mode register.</p>
+        </entry>
+        <entry colname="col3">
+          <p>-</p>
+        </entry>
+        <entry colname="col4">
+          <p>Selects logical bank and bank group</p>
+        </entry>
+        <entry colname="col5">
+          <p>-</p>
+        </entry>
+      </row>
+      <row>
+        <entry colname="col1">
+          <p>MD_VALUE</p>
+        </entry>
+        <entry colname="col2">
+          <p>Value written to mode register</p>
+        </entry>
+        <entry colname="col3">
+          <p>-</p>
+        </entry>
+        <entry colname="col4">
+          <p>Only bit 7 is significant.</p>
+        </entry>
+        <entry colname="col5">
+          <p>-</p>
+        </entry>
+      </row>
+      <row>
+        <entry colname="col1">
+          <p>CKE_CNTL</p>
+        </entry>
+        <entry colname="col2">
+          <p>0</p>
+        </entry>
+        <entry colname="col3">
+          <p>0</p>
+        </entry>
+        <entry colname="col4">
+          <p>0</p>
+        </entry>
+        <entry colname="col5"></entry>
+      </row>
+    </tbody>
+  </tgroup>
+</table>

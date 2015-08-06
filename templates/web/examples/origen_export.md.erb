@@ -1,0 +1,103 @@
+% render "layouts/basic.html", tab: :examples do
+
+## Meta-Model Export
+
+This page shows how to create static read-only ruby files from
+Rosetta Stone created meta-models.
+
+The RGen models are populated by one of the XML register importers 
+(CRR, SIDSC, etc.) but the code does not care how the models came 
+to exist. The method does not make assumptions about the application 
+scope such that it can be composed of N module and M class
+levels of hierarchy.  The static Ruby files will replicate
+the hierarchy seen in the meta-models.
+
+The user only need provide the output path where they want the
+Ruby files to be written. The method assumes there is one 
+unique global called $dut.
+
+### Implementation
+
+Here is an example of how to create the static Ruby files.
+
+~~~ruby
+rs_to_rb("#{RGen.root}/output")   # Run the Rosetta Stone export method
+load "#{RGen.root}/output/bom.rb" # Load the newly created BoM
+$dut.instantiate_bom              # Instantiate the newly created BoM
+~~~
+
+### Output
+
+At the output path the following files are created:
+
+* bom.rb: models the RGen BoM made up of sub_block objects
+
+~~~ruby
+# This file is created by RGen, RosettaStone::RubyFileCreator#meta_to_rb, and is read-only
+require_relative 'sub_blocks'
+module RosettaStone
+  module Test
+    class DUT
+      include RGen::Model
+
+      def instantiate_bom
+        sub_block :atx, base_address: 0xDEADBEEF, class_name: 'ATX'
+        sub_block ...
+      end
+    end
+  end
+end
+~~~
+
+* sub_blocks.rb: include file for the sub_block class files
+
+~~~ruby
+# This file is created by RGen, RosettaStone::RubyFileCreator#meta_to_rb, and is read-only
+require_relative 'import/atx.rb'
+require_relative ...
+~~~
+
+* import/\<sub_block\>.rb: models the individual sub_block object
+
+~~~ruby
+# -*- encoding : utf-8 -*-
+# This file is created by RGen, RosettaStone::RubyFileCreator#meta_to_rb, and is read-only.
+# If you need to make changes, re-open the class
+module RosettaStone
+  module Test
+    class DUT
+      class ATX # rubocop:disable ClassLength
+        include RGen::Model
+
+        def initialize(options = {})
+          instantiate_registers(options)
+        end
+
+        # rubocop:disable LineLength
+        # rubocop:disable StringLiterals
+        def instantiate_registers(options = {}) # rubocop:disable MethodLength
+          # ** Analog Test Annex Control **
+          # The ATX Control register controls connections into and out of the Analog
+          # Test Annex. Note that in general controls for analog muxes to the
+          # force/sense bus should be inside the digital wrapper of the block. Bits
+          # are provided in the Test Annex for analog blocks with no register space.
+          # Note this register is reset only by Chip POR.
+          reg :atx_ctrl, 0x0, 32 do
+            # These bits control SoC-specific control of transmission gates to the force bus for analog modules that do not have a digital wrapper. See chip-specific DFFT guide for mapping 
+            bit 26..31, :force_sel, reset: 0b0, access: 'rw:'
+            # This bit controls the connection of the force bus to an external pin.
+            # 
+            # 0 | Force bus not connected to external pin.
+            # 1 | Force bus connected to external pin.
+            bit 25, :force_pin_en, reset: 0b0, access: :rw
+            ...
+          end
+          ...
+        end
+      end
+    end
+  end
+end
+~~~
+
+% end

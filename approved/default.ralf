@@ -1,0 +1,36 @@
+system  {
+    bytes 8;
+    register dut_top_level_reg (dut_top_level_reg) @'h0 {
+        bytes 4;
+        field pls_work ([15]) {
+            access rw;
+            bits 1;
+            reset 'b1;
+        }
+        field second_bit ([14]) {
+            access rw;
+            bits 1;
+            reset 'b0;
+        }
+    }
+
+    register dut_top_level_reg_number_two (dut_top_level_reg_number_two) @'h10 {
+        bytes 4;
+        field second_bit ([1]) {
+            access rw;
+            bits 1;
+            reset 'b1;
+        }
+        field pls_work ([0]) {
+            access ro;
+            bits 1;
+            reset 'b0;
+        }
+    }
+
+
+    block am0 (am0) @'h0 {
+        bytes 8;
+    }
+
+}

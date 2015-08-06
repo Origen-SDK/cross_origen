@@ -1,0 +1,21 @@
+% reg = options[:reg]
+register <%= options[:name].to_s.downcase %> (<%= reg.path(:relative_to => options[:parent]) + options[:reg_path_postfix] %>) @'h<%= reg.offset.to_s(16).upcase %> {
+    bytes <%= reg.size / 8 %>;
+%   reg.named_bits do |name, bits|
+%   if bits.size == 1
+    field <%= name %> ([<%= bits.position %>]) {
+%   else
+    field <%= name %> ([<%= bits.position + bits.size - 1 %>:<%= bits.position %>]) {
+%   end
+%     if bits.is_readable? && bits.is_writable?                
+        access rw;
+%     elsif bits.is_writable?                
+        access wo;
+%     else bits.is_writable?                
+        access ro;
+%     end
+        bits <%= bits.size %>;
+        reset 'b<%= bits.reset_val.to_s(2) %>;
+    }
+%   end
+}

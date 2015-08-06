@@ -1,0 +1,37 @@
+% # The following options are available:
+% options[:reg_path_postfix] ||= ""
+%
+system <%= (rs_try(:path, :ip_name, :name) || self.class.to_s.split("::").last).downcase %> {
+% unless regs.empty?
+%   # Mapping this to the size of all registers, correct?
+    bytes <%= regs.inject(0){ |sum, reg| sum + reg[1].size } / 8 %>;
+%   regs.each do |reg_name, reg|
+<%= render "register", options.merge(name: reg_name, reg: reg, parent: self, indent: 4) %>
+
+%   end
+% end
+
+% sub_blocks.each do |name, block|
+%   # Should this be the address?    
+    block <%= name %> (<%= block.path(:relative_to => self) %>) @'h<%= block.reg_base_address.to_s(16).upcase %> {
+%       # Mapping this to the size of all registers, correct?
+        bytes <%= regs.inject(0){ |sum, reg| sum + reg[1].size } / 8 %>;
+%       block.regs.each do |reg_name, reg|
+<%= render "register", options.merge(name: reg_name, reg: reg, parent: block, indent: 8) %>
+
+%       end
+%       block.domains.each do |domain_name, domain|
+        domain <%= domain_name %> {
+            bytes 1;
+            endian <%= domain.endian %>;
+%           block.regs.each do |reg_name, reg|
+<%= render "register", options.merge(name: "#{reg_name}_#{domain_name}", reg: reg, parent: block, indent: 12) %>
+
+%       end
+        }
+
+%       end
+    }
+
+% end
+}

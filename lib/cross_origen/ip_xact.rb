@@ -74,17 +74,13 @@ module CrossOrigen
 
     # Returns a string representing the owner object in IP-XACT XML
     def owner_to_xml(options = {})
-      require 'builder'
+      require 'nokogiri'
 
       options = {
         include_bit_field_values: true
       }.merge(options)
 
       @format = options[:format]
-
-      xml = Builder::XmlMarkup.new(indent: 2, margin: 0)
-
-      xml.instruct!
 
       schemas = [
         'http://www.spiritconsortium.org/XMLSchema/SPIRIT/1.4',
@@ -103,69 +99,72 @@ module CrossOrigen
         headers['xmlns:vendorExtensions'] = '$IREG_GEN/XMLSchema/SPIRIT'
       end
 
-      xml.tag!('spirit:component', headers) do
-        xml.spirit :vendor, options[:vendor] || 'Freescale'
-        xml.spirit :library, options[:library] || 'Freescale'
-        # I guess this should really be the register owner's owner's name?
-        xml.spirit :name, try(:ip_name, :pdm_part_name) || owner.class.to_s.split('::').last
-        xml.spirit :version, try(:ip_version, :pdm_version, :pdm_cm_version, :version, :revision)
-        xml.spirit :memoryMaps do
-          memory_maps.each do |map_name, _map|
-            xml.spirit :memoryMap do
-              xml.spirit :name, map_name
-              address_blocks do |domain_name, _domain, sub_block|
-                xml.spirit :addressBlock do
-                  xml.spirit :name, address_block_name(domain_name, sub_block)
-                  xml.spirit :baseAddress, sub_block.base_address.to_hex
-                  xml.spirit :range, range(sub_block)
-                  xml.spirit :width, width(sub_block)
-                  sub_block.regs.each do |name, reg|
-                    # Required for now to ensure that the current value is the reset value
-                    reg.reset
-                    xml.spirit :register do
-                      xml.spirit :name, name
-                      xml.spirit :description, try(reg, :name_full, :full_name)
-                      xml.spirit :addressOffset, reg.offset.to_hex
-                      xml.spirit :size, reg.size
-                      if reg.bits.any?(&:writable?)
-                        xml.spirit :access, 'read-write'
-                      else
-                        xml.spirit :access, 'read-only'
-                      end
-                      xml.spirit :reset do
-                        xml.spirit :value, reg.data.to_hex
-                        xml.spirit :mask, mask(reg).to_hex
-                      end
-                      reg.named_bits do |name, bits|
-                        xml.spirit :field do
-                          xml.spirit :name, name
-                          xml.spirit :description, try(bits, :brief_description, :name_full, :full_name)
-                          xml.spirit :bitOffset, bits.position
-                          xml.spirit :bitWidth, bits.size
-                          xml.spirit :access, bits.access
-                          if options[:include_bit_field_values]
-                            if bits.bit_value_descriptions[0]
-                              bits.bit_value_descriptions.each do |val, desc|
-                                xml.spirit :values do
-                                  xml.spirit :value, val.to_hex
-                                  xml.spirit :name, "val_#{val.to_hex}"
-                                  xml.spirit :description, desc
+      builder = Nokogiri::XML::Builder.new(encoding: 'UTF-8') do |xml|
+        spirit = xml['spirit']
+        spirit.component(headers) do
+          spirit.vendor options[:vendor] || 'Freescale'
+          spirit.library options[:library] || 'Freescale'
+          # I guess this should really be the register owner's owner's name?
+          spirit.name try(:ip_name, :pdm_part_name) || owner.class.to_s.split('::').last
+          spirit.version try(:ip_version, :pdm_version, :pdm_cm_version, :version, :revision)
+          spirit.memoryMaps do
+            memory_maps.each do |map_name, _map|
+              spirit.memoryMap do
+                spirit.name map_name
+                address_blocks do |domain_name, _domain, sub_block|
+                  spirit.addressBlock do
+                    spirit.name address_block_name(domain_name, sub_block)
+                    spirit.baseAddress sub_block.base_address.to_hex
+                    spirit.range range(sub_block)
+                    spirit.width width(sub_block)
+                    sub_block.regs.each do |name, reg|
+                      # Required for now to ensure that the current value is the reset value
+                      reg.reset
+                      spirit.register do
+                        spirit.name name
+                        spirit.description try(reg, :name_full, :full_name)
+                        spirit.addressOffset reg.offset.to_hex
+                        spirit.size reg.size
+                        if reg.bits.any?(&:writable?)
+                          spirit.access 'read-write'
+                        else
+                          spirit.access 'read-only'
+                        end
+                        spirit.reset do
+                          spirit.value reg.data.to_hex
+                          spirit.mask mask(reg).to_hex
+                        end
+                        reg.named_bits do |name, bits|
+                          spirit.field do
+                            spirit.name name
+                            spirit.description try(bits, :brief_description, :name_full, :full_name)
+                            spirit.bitOffset bits.position
+                            spirit.bitWidth bits.size
+                            spirit.access bits.access
+                            if options[:include_bit_field_values]
+                              if bits.bit_value_descriptions[0]
+                                bits.bit_value_descriptions.each do |val, desc|
+                                  spirit.values do
+                                    spirit.value val.to_hex
+                                    spirit.name "val_#{val.to_hex}"
+                                    spirit.description desc
+                                  end
                                 end
                               end
                             end
-                          end
-                          if uvm?
-                            xml.spirit :vendorExtensions do
-                              xml.vendorExtensions :hdl_path, bits.path(relative_to: sub_block)
+                            if uvm?
+                              spirit.vendorExtensions do
+                                xml['vendorExtensions'].hdl_path bits.path(relative_to: sub_block)
+                              end
                             end
                           end
                         end
                       end
                     end
-                  end
-                  if uvm?
-                    xml.spirit :vendorExtensions do
-                      xml.vendorExtensions :hdl_path, sub_block.path(relative_to: owner)
+                    if uvm?
+                      spirit.vendorExtensions do
+                        xml['vendorExtensions'].hdl_path sub_block.path(relative_to: owner)
+                      end
                     end
                   end
                 end
@@ -174,6 +173,7 @@ module CrossOrigen
           end
         end
       end
+      builder.to_xml
     end
 
     private

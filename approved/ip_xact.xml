@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<spirit:component xmlns:spirit="http://www.spiritconsortium.org/XMLSchema/SPIRIT/1.4" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.spiritconsortium.org/XMLSchema/SPIRIT/1.4 http://www.spiritconsortium.org/XMLSchema/SPIRIT/1.4/index.xsd $IREG_GEN/XMLSchema/SPIRIT/VendorExtensions.xsd" xmlns:vendorExtensions="$IREG_GEN/XMLSchema/SPIRIT">
+<spirit:component xmlns:spirit="http://www.spiritconsortium.org/XMLSchema/SPIRIT/1.4" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:vendorExtensions="$IREG_GEN/XMLSchema/SPIRIT" xsi:schemaLocation="http://www.spiritconsortium.org/XMLSchema/SPIRIT/1.4 http://www.spiritconsortium.org/XMLSchema/SPIRIT/1.4/index.xsd $IREG_GEN/XMLSchema/SPIRIT/VendorExtensions.xsd">
   <spirit:vendor>Freescale</spirit:vendor>
   <spirit:library>Freescale</spirit:library>
   <spirit:name>dut</spirit:name>

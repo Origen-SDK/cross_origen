@@ -7,7 +7,7 @@ module CrossOrigen
 
       def initialize
         @path = :hidden
-        sub_block :atx, class_name: "D_IP_ANA_TEST_ANNEX_SYN"
+        sub_block :atx, class_name: 'D_IP_ANA_TEST_ANNEX_SYN'
 
         # Register defined solely to test out the top level register export
         reg :dut_top_level_reg, 0x0, size: 32, bit_order: :msb0, lau: 8 do

@@ -2,11 +2,11 @@
 
 %# HTML tags can be embedded in mark down files if you want to do specific custom
 %# formatting like this, but in most cases that is not required.
-<h1><%= RGen.config.name %> <span style="font-size: 14px">(<%= RGen.app.version %>)</span></h1>
+<h1><%= Origen.config.name %> <span style="font-size: 14px">(<%= Origen.app.version %>)</span></h1>
 
 ### Purpose
 
-In an ideal world everyone would use RGen however in reality there are many different
+In an ideal world everyone would use Origen however in reality there are many different
 'standards' and formats used to represent design data within Freescale. This plugin
 provides APIs and templates to import and export data to formats supported by 3rd
 party tools.
@@ -16,13 +16,13 @@ party tools.
 In your Gemfile add:
 
 ~~~ruby
-gem "<%= RGen.app.name %>", ">= <%= RGen.app.version %>"
+gem "<%= Origen.app.name %>", ">= <%= Origen.app.version %>"
 ~~~
 
 or if your application is a plugin add this to your .gemspec
 
 ~~~ruby
-spec.add_runtime_dependency "<%= RGen.app.name %>", ">= <%= RGen.app.version %>"
+spec.add_runtime_dependency "<%= Origen.app.name %>", ">= <%= Origen.app.version %>"
 ~~~
 
 ### How To Use
@@ -50,7 +50,7 @@ This will automatically detect the type of the given file and select the appropr
 import rules.
 
 The file to be imported must exist locally or it can be pulled automatically from
-a 3rd party respository in which case the file will be fetched the first time RGen
+a 3rd party respository in which case the file will be fetched the first time Origen
 is invoked and then cached locally for future invocations.
 Supported repositories are shown in the example below.
 
@@ -61,7 +61,7 @@ class D_IP_ANA_TEST_ANNEX_SYN
 
   def initialize
     # Import from a local file
-    rs_import(path: "#{RGen.root}/imports/test-annex-Block-registers.xml")
+    rs_import(path: "#{Origen.root}/imports/test-annex-Block-registers.xml")
     # Import from Docato (SSDS)
     rs_import(docato_id: 456300, version: 61)
     # Import from Design Sync
@@ -72,7 +72,7 @@ end
 ~~~
 
 The plugin will add attribute getter and setter methods to the top-level object and to registers and bits
-to contain any metadata information which does not have a direct equivalent within RGen. Generally
+to contain any metadata information which does not have a direct equivalent within Origen. Generally
 the name given to such data will be the lower cased and underscored (following std Ruby
 conventions) version of the attribute name.
 
@@ -83,7 +83,7 @@ as a string in the given format, for example a <code>to_sidsc</code> method is a
 to generate an SIDSC XML representation of an object.
 
 To create an actual XML file a simple template would be setup as shown below
-and then compiled through RGen:
+and then compiled through Origen:
 
 ~~~eruby
 <%= "<" + "%= $dut.to_sidsc %" + ">" %>
@@ -95,22 +95,22 @@ it provides such an API.
 ### How To Setup a Development Environment
 
 ~~~text
-mkdir <%= RGen.app.config.initials.downcase %>
-cd <%= RGen.app.config.initials.downcase %>
-dssc setvault <%= RGen.app.config.vault %> .
+mkdir <%= Origen.app.config.initials.downcase %>
+cd <%= Origen.app.config.initials.downcase %>
+dssc setvault <%= Origen.app.config.vault %> .
 dssc pop -rec -get .
 ~~~
 
 Follow the instructions here if you want to make a 3rd party app
-workspace use your development copy of the <%= RGen.app.config.initials %> plugin:
-[Setting up a Plugin Development Environment](http://rgen.freescale.net/rgen/latest/guides/libraries/environment)
+workspace use your development copy of the <%= Origen.app.config.initials %> plugin:
+[Setting up a Plugin Development Environment](http://origen.freescale.net/origen/latest/guides/libraries/environment)
 
 This plugin also contains a test suite, make sure this passes before committing
 any changes!
 
 ~~~text
-rgen examples
-rgen specs
+origen examples
+origen specs
 ~~~
 
 % end

@@ -1,4 +1,4 @@
-# This file will be required by RGen before your target is loaded, you
+# This file will be required by Origen before your target is loaded, you
 # can use this to require all of your files, which is the easiest way
 # to get started. As your experience grows you may wish to require only the
 # minimum files required to allow the target to be initialized and let
@@ -9,7 +9,7 @@
 # in there can be referenced from here with a relative path.
 #
 # Note that pattern files do not need to be referenced from here and these
-# will be located automatically by rgen.
+# will be located automatically by origen.
 
 # This says load the file "lib/pioneer.rb" the first time anyone makes a
 # reference to the class name 'Pioneer'.
@@ -23,7 +23,7 @@
 #   2. If you want to extend a class defined by an imported application, in
 #      this case your must use required and supply a full path (to distinguish
 #      it from the one in the parent application):
-#require "#{RGen.root}/c90_top_level/p2"
+#require "#{Origen.root}/c90_top_level/p2"
 module RosettaStone
   autoload :XMLDoc,       "rosetta_stone/xml_doc"
   autoload :Headers,      "rosetta_stone/headers"

@@ -2,7 +2,7 @@ module RosettaStone
   module Test
     # Simple DUT class used for testing
     class DUT
-      include RGen::TopLevel
+      include Origen::TopLevel
       include RosettaStone
 
       def initialize
@@ -18,16 +18,16 @@ module RosettaStone
           bit 1, :second_bit, reset: 1, access: :rw
         end
         # Import some data from IP-XACT
-        rs_import(path: "#{RGen.root}/imports/ipxact.xml")
+        rs_import(path: "#{Origen.root}/imports/ipxact.xml")
       end
 
       class D_IP_ANA_TEST_ANNEX_SYN # rubocop:disable ClassAndModuleCamelCase
-        include RGen::Model
+        include Origen::Model
         include RosettaStone
 
         def initialize
           # http://ssds.freescale.net:8080/docato-composer/getXMLResourceView.do?id=336182&xml=true&versionId=37
-          rs_import(path: "#{RGen.root}/imports/test-annex-Block-registers.xml")
+          rs_import(path: "#{Origen.root}/imports/test-annex-Block-registers.xml")
           # A manually defined register for testing the conversion of any specific attributes
 
           # ** MGATE Clock Divider Register **

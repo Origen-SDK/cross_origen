@@ -9,7 +9,7 @@ module RosettaStone
 
     # Returns a string representing the owner object in RALF format
     def owner_to_ralf(options = {})
-      RGen.compile("#{RGen.root!}/templates/ralf/default.ralf.erb", options.merge(scope: owner))
+      Origen.compile("#{Origen.root!}/templates/ralf/default.ralf.erb", options.merge(scope: owner))
     end
   end
 end

@@ -3,7 +3,7 @@ require 'spec_helper'
 describe 'IP-XACT' do
 
   before :all do
-    RGen.load_target('debug')
+    Origen.load_target('debug')
   end
 
   describe 'Import from XML' do

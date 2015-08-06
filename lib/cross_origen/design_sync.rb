@@ -11,13 +11,13 @@ module RosettaStone
     end
 
     def driver
-      @driver ||= RGen::Utility::DesignSync.new
+      @driver ||= Origen::Utility::DesignSync.new
     end
 
     # Returns a full path to the Design Sync import (cache) directory
     def import_dir
       return @import_dir if @import_dir
-      @import_dir = "#{RGen.app.workspace_manager.imports_directory}/design_sync"
+      @import_dir = "#{Origen.app.workspace_manager.imports_directory}/design_sync"
       FileUtils.mkdir_p(@import_dir) unless File.exist?(@import_dir)
       @import_dir
     end

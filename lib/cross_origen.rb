@@ -1,4 +1,4 @@
-require 'rgen'
+require 'origen'
 require_relative '../config/application.rb'
 require_relative '../config/environment.rb'
 
@@ -9,7 +9,7 @@ module RosettaStone
   extend ActiveSupport::Concern
 
   included do
-    include RGen::Model
+    include Origen::Model
   end
 
   def instance_respond_to?(method_name)
@@ -30,9 +30,9 @@ module RosettaStone
   end
   alias_method :to_ipxact, :to_ip_xact
 
-  def to_rgen(options = {})
+  def to_origen(options = {})
     options[:obj] = self
-    rs_to_rgen(options)
+    rs_to_origen(options)
   end
 
   def to_header(options = {})
@@ -62,13 +62,13 @@ module RosettaStone
 
   # Creates Ruby files necessary to model all sub_blocks and registers found (recursively) owned by options[:obj]
   # The Ruby files are created at options[:path] (app output directory by default)
-  def rs_to_rgen(options = {})
+  def rs_to_origen(options = {})
     options = {
       obj:  $dut,
-      path: RGen.app.config.output_directory
+      path: Origen.app.config.output_directory
     }.update(options)
-    # This method assumes and checks for $self to contain RGen::Model
-    error "ERROR: #{options[:obj].class} does not contain RGen::Model as required" unless options[:obj].class < RGen::Model
+    # This method assumes and checks for $self to contain Origen::Model
+    error "ERROR: #{options[:obj].class} does not contain Origen::Model as required" unless options[:obj].class < Origen::Model
     # Check to make sure there are sub_blocks or regs directly under $dut
     error "ERROR: options[:obj]ect #{options[:obj].object_id} of class #{options[:obj].class} does not contain registers or sub_blocks" unless options[:obj].owns_registers? || options[:obj].instance_respond_to?(:sub_blocks)
     OrigenFormat.new(options).export

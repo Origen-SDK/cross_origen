@@ -37,7 +37,7 @@ module RosettaStone
     end
 
     # Defines the rules for sanitization of any HTML strings that will be converted
-    # to markdown for representation within RGen
+    # to markdown for representation within Origen
     HTML_SANITIZATION_CONFIG = {
       # Only these tags will be allowed through, everything else will be stripped
       # Note that this is applied after the transforms listed above
@@ -194,7 +194,7 @@ module RosettaStone
       end
       fail 'Cannot select multiple numeric conversion args at the same time' if numeric_methods.reject { |arg| options[arg] == true }.size < 2
       if xml.nil?
-        RGen.log.debug 'XML data is nil!'
+        Origen.log.debug 'XML data is nil!'
         return nil
       end
       xml = xml.text if options[:get_text] == true
@@ -214,13 +214,13 @@ module RosettaStone
         end
       end
       unless xml.is_a? options[:type]
-        RGen.log.debug "XML data is not of correct type '#{options[:type]}'"
-        RGen.log.debug "xml is \n#{xml}"
+        Origen.log.debug "XML data is not of correct type '#{options[:type]}'"
+        Origen.log.debug "xml is \n#{xml}"
         return nil
       end
       if options[:type] == String
         if xml.match(/\s+/) && options[:whitespace] == false
-          RGen.log.debug "XML data '#{xml}' cannot have white space"
+          Origen.log.debug "XML data '#{xml}' cannot have white space"
           return nil
         end
         xml.downcase! if options[:downcase] == true

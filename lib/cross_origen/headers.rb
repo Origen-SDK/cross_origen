@@ -9,7 +9,7 @@ module RosettaStone
 
     # Returns a string representing the owner as a C header
     def owner_to_header(_options = {})
-      RGen.compile("#{path_to_templates}/headers/default.h.erb", scope: owner)
+      Origen.compile("#{path_to_templates}/headers/default.h.erb", scope: owner)
     end
 
     private

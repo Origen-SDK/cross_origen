@@ -17,8 +17,8 @@ module RosettaStone
     }
 
     FILE_COMMENTS = {
-      class: "\# This file is created by RGen via RosettaStone::OrigenFormat#models_to_rb, and is read-only.\n\# If you need to make changes, re-open the class\n",
-      incl:  "\# This file is created by RGen via RosettaStone::OrigenFormat#models_to_rb, and is read-only"
+      class: "\# This file is created by Origen via RosettaStone::OrigenFormat#models_to_rb, and is read-only.\n\# If you need to make changes, re-open the class\n",
+      incl:  "\# This file is created by Origen via RosettaStone::OrigenFormat#models_to_rb, and is read-only"
     }
 
     attr_reader :obj, :top_level_class, :top_level_hierarchy, :output_dir, :top_level_path, :incl_path, :incl_dir, :file_content
@@ -26,7 +26,7 @@ module RosettaStone
     def initialize(options = {})
       options = {
         obj:  $dut,
-        path: "#{RGen.root!}/output"
+        path: "#{Origen.root!}/output"
       }.update(options)
       @obj = options[:obj]
       @output_dir = options[:path]
@@ -66,7 +66,7 @@ module RosettaStone
       file_content = {}
       full_class = @top_level_hierarchy.keys.last
       klass = @top_level_class.demodulize
-      RGen.log.info 'Exporting to Origen format...'
+      Origen.log.info 'Exporting to Origen format...'
       File.open(@top_level_path, 'w') do |bom_file|
         # bom_file.chmod(0555)
         bom_file.puts(FILE_COMMENTS[:incl])
@@ -75,7 +75,7 @@ module RosettaStone
           bom_file.puts("#{indent}#{obj} #{name.split('::').last}")
           indent += '  '
         end
-        bom_file.puts("#{indent}include RGen::Model")
+        bom_file.puts("#{indent}include Origen::Model")
         bom_file.puts('')
         bom_file.puts("#{indent}def initialize")
         indent += '  '
@@ -94,7 +94,7 @@ module RosettaStone
               end
             end
           else
-            RGen.log.error 'Incorrect key for @file_content instance variable Hash, must be :incl or :bom'
+            Origen.log.error 'Incorrect key for @file_content instance variable Hash, must be :incl or :bom'
           end
         end
         if @obj.owns_registers?
@@ -156,7 +156,7 @@ module RosettaStone
     # Create the bom string for the current object.  Recursive method until no more sub_blocks are found for the current object
     def create_file_content(obj, indent)
       unless obj.respond_to?(:sub_blocks) && obj.send(:sub_blocks)
-        RGen.log.warn 'Object argument does not have sub_blocks, ignoring it...'
+        Origen.log.warn 'Object argument does not have sub_blocks, ignoring it...'
         return
       end
       obj.sub_blocks.each do |name, sb|
@@ -197,7 +197,7 @@ module RosettaStone
       class_file_name = Pathname.new("#{@incl_dir}/#{class_path_addition}.rb")
       class_file_dir = class_file_name.dirname
       unless class_file_dir.exist?
-        RGen.log.debug "app: Directory #{class_file_dir} does not exist, creating it..."
+        Origen.log.debug "app: Directory #{class_file_dir} does not exist, creating it..."
         FileUtils.mkdir_p(class_file_dir)
       end
       File.open(class_file_name, 'w') do |file|
@@ -221,7 +221,7 @@ module RosettaStone
           end
           indent += '  '
         end
-        file.puts("#{indent}include RGen::Model")
+        file.puts("#{indent}include Origen::Model")
         file.puts('')
         instance_vars_with_content(obj).each do |attr, _value|
           file.puts("#{indent}# #{SUB_BLOCK_ATTRS[attr]}")
@@ -371,7 +371,7 @@ module RosettaStone
             end
             file.puts("#{indent}class #{sb.name.upcase} # rubocop:disable ClassLength")
             indent += '  '
-            file.puts("#{indent}include RGen::Model")
+            file.puts("#{indent}include Origen::Model")
             file.puts('')
             SUB_BLOCK_ATTRS.each do |attr, comment|
               attr_sym = ":#{attr}"
@@ -523,7 +523,7 @@ module RosettaStone
     def get_full_class(obj)
       class_str = ''
       until obj.nil?
-        if obj == RGen.top_level
+        if obj == Origen.top_level
           class_str.prepend @top_level_hierarchy.keys.last
         else
           # If the class method produces "SubBlock" then use the object name instead

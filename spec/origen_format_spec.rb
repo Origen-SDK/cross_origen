@@ -3,9 +3,9 @@ require 'spec_helper'
 describe "Export to Ruby .rb files" do
 
   before :all do
-    RGen.load_target('debug')
-    $dut.to_rgen(path: "#{RGen.root}/output/exported", class_name: "ExportedDUT")
-    load "#{RGen.root}/output/exported/top_level.rb"
+    Origen.load_target('debug')
+    $dut.to_origen(path: "#{Origen.root}/output/exported", class_name: "ExportedDUT")
+    load "#{Origen.root}/output/exported/top_level.rb"
     $dut = RosettaStone::Test::ExportedDUT.new
   end
 

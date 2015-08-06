@@ -5,7 +5,7 @@
 This page shows how to create static read-only ruby files from
 Rosetta Stone created meta-models.
 
-The RGen models are populated by one of the XML register importers 
+The Origen models are populated by one of the XML register importers 
 (CRR, SIDSC, etc.) but the code does not care how the models came 
 to exist. The method does not make assumptions about the application 
 scope such that it can be composed of N module and M class
@@ -21,8 +21,8 @@ unique global called $dut.
 Here is an example of how to create the static Ruby files.
 
 ~~~ruby
-rs_to_rb("#{RGen.root}/output")   # Run the Rosetta Stone export method
-load "#{RGen.root}/output/bom.rb" # Load the newly created BoM
+rs_to_rb("#{Origen.root}/output")   # Run the Rosetta Stone export method
+load "#{Origen.root}/output/bom.rb" # Load the newly created BoM
 $dut.instantiate_bom              # Instantiate the newly created BoM
 ~~~
 
@@ -30,15 +30,15 @@ $dut.instantiate_bom              # Instantiate the newly created BoM
 
 At the output path the following files are created:
 
-* bom.rb: models the RGen BoM made up of sub_block objects
+* bom.rb: models the Origen BoM made up of sub_block objects
 
 ~~~ruby
-# This file is created by RGen, RosettaStone::RubyFileCreator#meta_to_rb, and is read-only
+# This file is created by Origen, RosettaStone::RubyFileCreator#meta_to_rb, and is read-only
 require_relative 'sub_blocks'
 module RosettaStone
   module Test
     class DUT
-      include RGen::Model
+      include Origen::Model
 
       def instantiate_bom
         sub_block :atx, base_address: 0xDEADBEEF, class_name: 'ATX'
@@ -52,7 +52,7 @@ end
 * sub_blocks.rb: include file for the sub_block class files
 
 ~~~ruby
-# This file is created by RGen, RosettaStone::RubyFileCreator#meta_to_rb, and is read-only
+# This file is created by Origen, RosettaStone::RubyFileCreator#meta_to_rb, and is read-only
 require_relative 'import/atx.rb'
 require_relative ...
 ~~~
@@ -61,13 +61,13 @@ require_relative ...
 
 ~~~ruby
 # -*- encoding : utf-8 -*-
-# This file is created by RGen, RosettaStone::RubyFileCreator#meta_to_rb, and is read-only.
+# This file is created by Origen, RosettaStone::RubyFileCreator#meta_to_rb, and is read-only.
 # If you need to make changes, re-open the class
 module RosettaStone
   module Test
     class DUT
       class ATX # rubocop:disable ClassLength
-        include RGen::Model
+        include Origen::Model
 
         def initialize(options = {})
           instantiate_registers(options)

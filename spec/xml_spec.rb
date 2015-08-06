@@ -3,7 +3,7 @@ require 'spec_helper'
 describe "XML Import/Export" do
 
   before :all do
-    RGen.load_target("debug")
+    Origen.load_target("debug")
     $xml = $dut.rs_ip_xact
   end
 
@@ -95,7 +95,7 @@ END
   end
 
   it "works with (really) weird description markup" do
-    html = File.read("#{RGen.root}/imports/bad_description_1.xml")
+    html = File.read("#{Origen.root}/imports/bad_description_1.xml")
     md = $xml.to_markdown(html)
     md.should_not include("could not be imported")
     md.should include('colspan="3"')

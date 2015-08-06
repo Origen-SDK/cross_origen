@@ -7,6 +7,8 @@ module CrossOrigen
 
       def initialize
         @path = :hidden
+        sub_block :atx, class_name: "D_IP_ANA_TEST_ANNEX_SYN"
+
         # Register defined solely to test out the top level register export
         reg :dut_top_level_reg, 0x0, size: 32, bit_order: :msb0, lau: 8 do
           bit 15, :pls_work, reset: 1, access: :rw
@@ -18,7 +20,7 @@ module CrossOrigen
           bit 1, :second_bit, reset: 1, access: :rw
         end
         # Import some data from IP-XACT
-        rs_import(path: "#{Origen.root}/imports/ipxact.xml")
+        cr_import(path: "#{Origen.root}/imports/ipxact.xml")
       end
 
       class D_IP_ANA_TEST_ANNEX_SYN # rubocop:disable ClassAndModuleCamelCase
@@ -26,8 +28,6 @@ module CrossOrigen
         include CrossOrigen
 
         def initialize
-          # http://ssds.freescale.net:8080/docato-composer/getXMLResourceView.do?id=336182&xml=true&versionId=37
-          rs_import(path: "#{Origen.root}/imports/test-annex-Block-registers.xml")
           # A manually defined register for testing the conversion of any specific attributes
 
           # ** MGATE Clock Divider Register **

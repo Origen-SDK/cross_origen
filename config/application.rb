@@ -20,8 +20,8 @@ class CrossOrigenApplication < Origen::Application
 
   # This information is used in headers and email templates, set it specific
   # to your application
-  config.name     = "Rosetta Stone"
-  config.initials = "Rosetta_Stone"
+  config.name     = "Cross Origen"
+  config.initials = "CrossOrigen"
   config.rc_url   = "git@github.com:Origen-SDK/cross_origen.git"
   config.release_externally = true
 
@@ -50,7 +50,7 @@ class CrossOrigenApplication < Origen::Application
 
   # Ensure that all tests pass before allowing a release to continue
   def validate_release
-    if !system("origen specs") || !system("origen examples")
+    if !system("origen test")
       puts "Sorry but you can't release with failing tests, please fix them and try again."
       exit 1
     else
@@ -61,8 +61,7 @@ class CrossOrigenApplication < Origen::Application
   # Run the tests before deploying to generate test coverage numbers
   def before_deploy_site
     Dir.chdir Origen.root do
-      system "origen examples -c"
-      system "origen specs -c"
+      system "origen test -c"
       dir = "#{Origen.root}/web/output/coverage"       
       FileUtils.remove_dir(dir, true) if File.exists?(dir) 
       system "mv #{Origen.root}/coverage #{dir}"

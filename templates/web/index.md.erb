@@ -6,8 +6,8 @@
 
 ### Purpose
 
-In an ideal world everyone would use Origen however in reality there are many different
-'standards' and formats used to represent design data within Freescale. This plugin
+In an ideal world everyone would use Origen, but in reality there are many different
+'standards' used to represent design data. This plugin
 provides APIs and templates to import and export data to formats supported by 3rd
 party tools.
 
@@ -31,13 +31,9 @@ spec.add_runtime_dependency "<%= Origen.app.name %>", ">= <%= Origen.app.version
 
 Currently the following formats are supported:
 
-* SIDSC (SSDS) - Import and Export Register Definitions and Top-level Metadata
-* IP-XACT - Export register Definitions
-* VER2PAT - Import pin defintions
-* Pin Tool - Import pin defintions
-* RALF (Synopsys format) - Export register defintions
-* TCU Registers in Excel - TCU Register and bit descriptions specific to the style IDC use 
-* CRR - Common Register Repository
+* IP-XACT - Import and Export registers and hierarchy
+* RALF (Synopsys format) - Export registers
+* Origen - Export registers and hierarchy
 
 See the [examples](<%= path "examples" %>) for format specific documentation, but
 most formats should follow this basic structure...
@@ -45,7 +41,7 @@ most formats should follow this basic structure...
 #### Data Import  
 
 When the <code>CrossOrigen</code> module is included in a class it gets access
-to an <code>rs_import</code> method.
+to an <code>cr_import</code> method.
 This will automatically detect the type of the given file and select the appropriate
 import rules.
 
@@ -61,11 +57,9 @@ class D_IP_ANA_TEST_ANNEX_SYN
 
   def initialize
     # Import from a local file
-    rs_import(path: "#{Origen.root}/imports/test-annex-Block-registers.xml")
-    # Import from Docato (SSDS)
-    rs_import(docato_id: 456300, version: 61)
+    cr_import(path: "#{Origen.root}/imports/test-annex-Block-registers.xml")
     # Import from Design Sync
-    rs_import(vault: "sync://sync-15040:15040/Projects/nvm_c90tfsn2w/ftf2/rtl_v/kx2_4m/.regs", version: "ftf2_kx2_4096k2_256_128k_64_4k.00.00.01.00") 
+    cr_import(vault: "sync://sync-15040:15040/Projects/nvm_c90tfsn2w/ftf2/rtl_v/kx2_4m/.regs", version: "ftf2_kx2_4096k2_256_128k_64_4k.00.00.01.00") 
   end
 
 end
@@ -79,14 +73,14 @@ conventions) version of the attribute name.
 #### Data Export
 
 The <code>CrossOrigen</code> module adds some methods to export the given object
-as a string in the given format, for example a <code>to_sidsc</code> method is available
-to generate an SIDSC XML representation of an object.
+as a string in the given format, for example a <code>to_ip_xact</code> method is available
+to generate an IP-XACT XML representation of an object.
 
 To create an actual XML file a simple template would be setup as shown below
 and then compiled through Origen:
 
 ~~~eruby
-<%= "<" + "%= $dut.to_sidsc %" + ">" %>
+<%= "<" + "%= $dut.to_ip_xact %" + ">" %>
 ~~~
 
 In future support may be added to export directly to a 3rd party tool if
@@ -94,23 +88,17 @@ it provides such an API.
 
 ### How To Setup a Development Environment
 
-~~~text
-mkdir <%= Origen.app.config.initials.downcase %>
-cd <%= Origen.app.config.initials.downcase %>
-dssc setvault <%= Origen.app.config.vault %> .
-dssc pop -rec -get .
-~~~
+[Clone the repository from Github](https://github.com/Origen-SDK/cross_origen).
 
 Follow the instructions here if you want to make a 3rd party app
 workspace use your development copy of the <%= Origen.app.config.initials %> plugin:
-[Setting up a Plugin Development Environment](http://origen.freescale.net/origen/latest/guides/libraries/environment)
+[Setting up a Plugin Development Environment](http://origen-sdk.org/origen/latest/guides/plugins)
 
 This plugin also contains a test suite, make sure this passes before committing
 any changes!
 
 ~~~text
-origen examples
-origen specs
+origen test
 ~~~
 
 % end

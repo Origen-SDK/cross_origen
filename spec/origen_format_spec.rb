@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "Export to Ruby .rb files" do
+describe "Export to Origen .rb files" do
 
   before :all do
     Origen.load_target('debug')
@@ -20,7 +20,7 @@ describe "Export to Ruby .rb files" do
 
     it "Queries the AM0 sub_block based on the loaded Ruby files" do
       $dut.class.should == CrossOrigen::Test::ExportedDUT
-      $dut.sub_blocks.size.should == 1
+      $dut.sub_blocks.size.should == 2
       $dut.am0.regs.empty?.should == true
       $dut.am0.sub_blocks.size.should == 2
     end

@@ -8,6 +8,46 @@
     <spirit:memoryMap>
       <spirit:name/>
       <spirit:addressBlock>
+        <spirit:name>atx</spirit:name>
+        <spirit:baseAddress>0x0</spirit:baseAddress>
+        <spirit:range>4</spirit:range>
+        <spirit:width>32</spirit:width>
+        <spirit:register>
+          <spirit:name>mclkdiv</spirit:name>
+          <spirit:description>MGATE Clock Divider Register</spirit:description>
+          <spirit:addressOffset>0x0</spirit:addressOffset>
+          <spirit:size>16</spirit:size>
+          <spirit:access>read-write</spirit:access>
+          <spirit:reset>
+            <spirit:value>0x8000</spirit:value>
+            <spirit:mask>0xFFFF</spirit:mask>
+          </spirit:reset>
+          <spirit:field>
+            <spirit:name>osch</spirit:name>
+            <spirit:description>Oscillator (Hi)</spirit:description>
+            <spirit:bitOffset>15</spirit:bitOffset>
+            <spirit:bitWidth>1</spirit:bitWidth>
+            <spirit:access>rw</spirit:access>
+            <spirit:values>
+              <spirit:value>0x0</spirit:value>
+              <spirit:name>val_0x0</spirit:name>
+              <spirit:description>FMU clock is the externally supplied bus clock ipg_clk</spirit:description>
+            </spirit:values>
+            <spirit:values>
+              <spirit:value>0x1</spirit:value>
+              <spirit:name>val_0x1</spirit:name>
+              <spirit:description>FMU clock is the internal oscillator from the TFS hardblock</spirit:description>
+            </spirit:values>
+            <spirit:vendorExtensions>
+              <vendorExtensions:hdl_path>mclkdiv[15]</vendorExtensions:hdl_path>
+            </spirit:vendorExtensions>
+          </spirit:field>
+        </spirit:register>
+        <spirit:vendorExtensions>
+          <vendorExtensions:hdl_path>atx</vendorExtensions:hdl_path>
+        </spirit:vendorExtensions>
+      </spirit:addressBlock>
+      <spirit:addressBlock>
         <spirit:name>rf1</spirit:name>
         <spirit:baseAddress>0x1000</spirit:baseAddress>
         <spirit:range>8</spirit:range>

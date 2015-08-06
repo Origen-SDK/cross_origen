@@ -1,48 +1,43 @@
 % render "layouts/basic.html", tab: :examples do
 
-## Meta-Model Export
+## Origen Export
 
-This page shows how to create static read-only ruby files from
-Rosetta Stone created meta-models.
+This page shows how to create static read-only Ruby files from
+models created by importing 3rd party data (e.g. IP-XACT). The Ruby files can then be
+used for day-day running of your application and this will significantly improve
+the boot up speed vs. re-importing the data every time.
 
-The Origen models are populated by one of the XML register importers 
-(CRR, SIDSC, etc.) but the code does not care how the models came 
-to exist. The method does not make assumptions about the application 
-scope such that it can be composed of N module and M class
-levels of hierarchy.  The static Ruby files will replicate
-the hierarchy seen in the meta-models.
+The Ruby files can be periodically refreshed as new versions of the master
+data are released.
 
 The user only need provide the output path where they want the
-Ruby files to be written. The method assumes there is one 
-unique global called $dut.
+Ruby files to be written.
 
 ### Implementation
 
 Here is an example of how to create the static Ruby files.
 
 ~~~ruby
-rs_to_rb("#{Origen.root}/output")   # Run the Rosetta Stone export method
-load "#{Origen.root}/output/bom.rb" # Load the newly created BoM
-$dut.instantiate_bom              # Instantiate the newly created BoM
+$dut.to_origen(path: "#{Origen.root}/output/exported")
 ~~~
 
 ### Output
 
 At the output path the following files are created:
 
-* bom.rb: models the Origen BoM made up of sub_block objects
+* top_level.rb: The top-level object, this is the one that should be instantiated
 
 ~~~ruby
-# This file is created by Origen, CrossOrigen::RubyFileCreator#meta_to_rb, and is read-only
+# This file is created by Origen, CrossOrigen::OrigenFormat#export, and is read-only
 require_relative 'sub_blocks'
 module CrossOrigen
   module Test
     class DUT
       include Origen::Model
 
-      def instantiate_bom
+      def initialize(options = {})
         sub_block :atx, base_address: 0xDEADBEEF, class_name: 'ATX'
-        sub_block ...
+        sub_block # ...
       end
     end
   end
@@ -52,16 +47,16 @@ end
 * sub_blocks.rb: include file for the sub_block class files
 
 ~~~ruby
-# This file is created by Origen, CrossOrigen::RubyFileCreator#meta_to_rb, and is read-only
+# This file is created by Origen, CrossOrigen::OrigenFormat#export, and is read-only
 require_relative 'import/atx.rb'
-require_relative ...
+require_relative # ...
 ~~~
 
 * import/\<sub_block\>.rb: models the individual sub_block object
 
 ~~~ruby
 # -*- encoding : utf-8 -*-
-# This file is created by Origen, CrossOrigen::RubyFileCreator#meta_to_rb, and is read-only.
+# This file is created by Origen, CrossOrigen::OrigenFormat#export, and is read-only.
 # If you need to make changes, re-open the class
 module CrossOrigen
   module Test
@@ -76,23 +71,21 @@ module CrossOrigen
         # rubocop:disable LineLength
         # rubocop:disable StringLiterals
         def instantiate_registers(options = {}) # rubocop:disable MethodLength
-          # ** Analog Test Annex Control **
-          # The ATX Control register controls connections into and out of the Analog
-          # Test Annex. Note that in general controls for analog muxes to the
-          # force/sense bus should be inside the digital wrapper of the block. Bits
-          # are provided in the Test Annex for analog blocks with no register space.
-          # Note this register is reset only by Chip POR.
-          reg :atx_ctrl, 0x0, 32 do
-            # These bits control SoC-specific control of transmission gates to the force bus for analog modules that do not have a digital wrapper. See chip-specific DFFT guide for mapping 
-            bit 26..31, :force_sel, reset: 0b0, access: 'rw:'
-            # This bit controls the connection of the force bus to an external pin.
+          # ** MGATE Clock Divider Register **
+          # The MCLKDIV register is used to divide down the frequency of the HBOSCCLK input. If the MCLKDIV
+          # register is set to value "N", then the output (beat) frequency of the clock divider is OSCCLK / (N+1). The
+          # resulting beats are, in turn, counted by the PTIMER module to control the duration of Flash high-voltage
+          # operations.
+          reg :mclkdiv, 0x0, size: 16 do |reg|
+            # **Oscillator (Hi)** - Firmware FMU clk source selection. (Note that in addition to this firmware-controlled bit, the
+            # FMU clock source is also dependent on test and power control discretes).
             # 
-            # 0 | Force bus not connected to external pin.
-            # 1 | Force bus connected to external pin.
-            bit 25, :force_pin_en, reset: 0b0, access: :rw
-            ...
+            # 0 | FMU clock is the externally supplied bus clock ipg_clk
+            # 1 | FMU clock is the internal oscillator from the TFS hardblock
+            reg.bit 15, :osch, reset: 0b1, access: :rw
+            # ...
           end
-          ...
+          # ...
         end
       end
     end

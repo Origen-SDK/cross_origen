@@ -17,8 +17,8 @@ module CrossOrigen
     }
 
     FILE_COMMENTS = {
-      class: "\# This file is created by Origen via CrossOrigen::OrigenFormat#models_to_rb, and is read-only.\n\# If you need to make changes, re-open the class\n",
-      incl:  "\# This file is created by Origen via CrossOrigen::OrigenFormat#models_to_rb, and is read-only"
+      class: "\# This file is created by Origen via CrossOrigen::OrigenFormat#export, and is read-only.\n\# If you need to make changes, re-open the class\n",
+      incl:  "\# This file is created by Origen via CrossOrigen::OrigenFormat#export, and is read-only"
     }
 
     attr_reader :obj, :top_level_class, :top_level_hierarchy, :output_dir, :top_level_path, :incl_path, :incl_dir, :file_content
@@ -77,7 +77,7 @@ module CrossOrigen
         end
         bom_file.puts("#{indent}include Origen::Model")
         bom_file.puts('')
-        bom_file.puts("#{indent}def initialize")
+        bom_file.puts("#{indent}def initialize(options = {})")
         indent += '  '
         # This method is recursive (indirectly) so file_content should find all BoM and include file strings
         create_file_content(@obj, indent)

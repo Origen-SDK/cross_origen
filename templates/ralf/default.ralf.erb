@@ -1,7 +1,7 @@
 % # The following options are available:
 % options[:reg_path_postfix] ||= ""
 %
-system <%= (rs_try(:path, :ip_name, :name) || self.class.to_s.split("::").last).downcase %> {
+system <%= (cr_try(:path, :ip_name, :name) || self.class.to_s.split("::").last).downcase %> {
 % unless regs.empty?
 %   # Mapping this to the size of all registers, correct?
     bytes <%= regs.inject(0){ |sum, reg| sum + reg[1].size } / 8 %>;

@@ -4,7 +4,7 @@ describe "XML Import/Export" do
 
   before :all do
     Origen.load_target("debug")
-    $xml = $dut.rs_ip_xact
+    $xml = $dut.cr_ip_xact
   end
 
   CLEAN_HTML =<<END

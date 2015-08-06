@@ -5,10 +5,6 @@
 This page shows RALF (Synopsys) formatted output that has been generated from an Origen
 representation of a module.
 
-The Origen model itself was populated by the SIDSC import
-code shown in the 
-[SIDSC Import](<%= path "examples/sidsc_import" %>) example.
-
 The code to generate this page was simply:
 
 ~~~eruby
@@ -16,7 +12,7 @@ The code to generate this page was simply:
 ~~~
 
 ~~~text
-<%= $dut.sidsc_module.to_ralf %>
+<%= $dut.to_ralf %>
 ~~~
 
 % end

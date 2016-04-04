@@ -62,6 +62,10 @@ describe 'IP-XACT' do
       $dut.atx2.regs.size.should == 1
       $dut.atx2.mclkdiv.address.should == 0x6000_0000
       $dut.atx2.mclkdiv.osch.data.should == 1
+      $dut.atx2.mclkdiv.description.should == ["MGATE Clock Divider Register"]
+      $dut.atx2.mclkdiv.osch.description.first.should == "Oscillator (Hi)"
+      $dut.atx2.mclkdiv.osch.bit_value_descriptions[0].should == "FMU clock is the externally supplied bus clock ipg_clk"
+      $dut.atx2.mclkdiv.osch.bit_value_descriptions[1].should == "FMU clock is the internal oscillator from the TFS hardblock"
     end
   end
 end

@@ -52,7 +52,7 @@ module CrossOrigen
                 # Do a logical bitwise AND with the reset value and mask
                 reset_value = reset_value & reset_mask
               end
-              addr_block_obj.reg name, addr_offset, size: size, access: access do |reg|
+              addr_block_obj.reg name, addr_offset, size: size, access: access, description: reg_description(register) do |reg|
                 register.xpath('spirit:field').each do |field|
                   name = fetch field.at_xpath('spirit:name'), downcase: true, to_sym: true, get_text: true
                   bit_offset = fetch field.at_xpath('spirit:bitOffset'), get_text: true, to_i: true
@@ -71,7 +71,7 @@ module CrossOrigen
                   else
                     range = (bit_offset + bit_width - 1)..bit_offset
                   end
-                  reg.bit range, name, reset: reset_value[range], access: access
+                  reg.bit range, name, reset: reset_value[range], access: access, description: bit_description(field)
                 end
               end
             end
@@ -190,6 +190,27 @@ module CrossOrigen
     end
 
     private
+
+    def reg_description(register)
+      fetch register.at_xpath('spirit:description'), get_text: true, whitespace: true
+    end
+
+    def bit_description(bit)
+      desc = fetch(bit.at_xpath('spirit:description'), get_text: true, whitespace: true) || ''
+      bit_val_present = false
+      bit.xpath('spirit:values').each do |val|
+        unless bit_val_present
+          desc += "\n"
+          bit_val_present = true
+        end
+        value = extract(val, 'spirit:value', format: :integer, hex: true)
+        value_desc = extract val, 'spirit:description'
+        if value && value_desc
+          desc += "\n#{value.to_s(2)} | #{value_desc}"
+        end
+      end
+      desc
+    end
 
     def mask(reg)
       m = 0

@@ -159,7 +159,6 @@ xsi:schemaLocation="$REGMEM_HOME/builder/ipxact/schema/ipxact
 						<spirit:values>
 							<spirit:value>0</spirit:value>
 							<spirit:name>north_east</spirit:name>
-							<spirit:description>0</spirit:description>
 						</spirit:values>
 						<spirit:values>
 							<spirit:value>1</spirit:value>
@@ -259,7 +258,6 @@ xsi:schemaLocation="$REGMEM_HOME/builder/ipxact/schema/ipxact
 						<spirit:values>
 							<spirit:value>0</spirit:value>
 							<spirit:name>north_east</spirit:name>
-							<spirit:description>0</spirit:description>
 						</spirit:values>
 						<spirit:values>
 							<spirit:value>1</spirit:value>

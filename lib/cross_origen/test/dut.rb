@@ -7,7 +7,7 @@ module CrossOrigen
 
       def initialize
         @path = :hidden
-        sub_block :atx, class_name: 'D_IP_ANA_TEST_ANNEX_SYN'
+        sub_block :atx, class_name: 'D_IP_ANA_TEST_ANNEX_SYN', base_address: 0x4000_0000
 
         # Register defined solely to test out the top level register export
         reg :dut_top_level_reg, 0x0, size: 32, bit_order: :msb0, lau: 8 do
@@ -21,6 +21,19 @@ module CrossOrigen
         end
         # Import some data from IP-XACT
         cr_import(path: "#{Origen.root}/imports/ipxact.xml")
+      end
+
+      def add_atx2
+        sub_block :atx2, class_name: 'ATX2', base_address: 0x6000_0000
+      end
+
+      class ATX2
+        include Origen::Model
+        include CrossOrigen
+
+        def initialize
+          cr_import(path: "#{Origen.root}/approved/ip_xact_sub_block.xml")
+        end
       end
 
       class D_IP_ANA_TEST_ANNEX_SYN # rubocop:disable ClassAndModuleCamelCase

@@ -56,5 +56,12 @@ describe 'IP-XACT' do
     it 'extracts register path correctly' do
       $dut.am0.rf1.reg4.dirs.path.should == 'am0.rf1.reg4[3:2]'
     end
+
+    it 'extracts an IP-level file correctly' do
+      $dut.add_atx2
+      $dut.atx2.regs.size.should == 1
+      $dut.atx2.mclkdiv.address.should == 0x6000_0000
+      $dut.atx2.mclkdiv.osch.data.should == 1
+    end
   end
 end

@@ -29,7 +29,7 @@ system  {
     }
 
 
-    block atx (atx) @'h0 {
+    block atx (atx) @'h40000000 {
         bytes 8;
         register mclkdiv (mclkdiv) @'h0 {
             bytes 2;

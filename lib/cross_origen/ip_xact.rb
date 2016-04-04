@@ -21,15 +21,23 @@ module CrossOrigen
         end
         doc.xpath('//spirit:memoryMaps/spirit:memoryMap').each do |mem_map|
           mem_map_name = fetch mem_map.at_xpath('spirit:name'), downcase: true, to_sym: true, get_text: true
-          owner.sub_block mem_map_name
-          mem_map_obj = owner.send(mem_map_name)
+          if mem_map_name.to_s.empty?
+            mem_map_obj = owner
+          else
+            owner.sub_block mem_map_name
+            mem_map_obj = owner.send(mem_map_name)
+          end
           mem_map.xpath('spirit:addressBlock').each do |addr_block|
             name = fetch addr_block.at_xpath('spirit:name'), downcase: true, to_sym: true, get_text: true
             base_address = fetch addr_block.at_xpath('spirit:baseAddress'), get_text: true, to_dec: true
             range = fetch addr_block.at_xpath('spirit:range'), get_text: true, to_dec: true
             width = fetch addr_block.at_xpath('spirit:width'), get_text: true, to_i: true
-            mem_map_obj.sub_block name, base_address: base_address, range: range, lau: width
-            addr_block_obj = mem_map_obj.send(name)
+            if name.to_s.empty?
+              addr_block_obj = mem_map_obj
+            else
+              mem_map_obj.sub_block name, base_address: base_address, range: range, lau: width
+              addr_block_obj = mem_map_obj.send(name)
+            end
             addr_block.xpath('spirit:register').each do |register|
               name = fetch register.at_xpath('spirit:name'), downcase: true, to_sym: true, get_text: true
               size = fetch register.at_xpath('spirit:size'), get_text: true, to_i: true
@@ -102,19 +110,24 @@ module CrossOrigen
       builder = Nokogiri::XML::Builder.new(encoding: 'UTF-8') do |xml|
         spirit = xml['spirit']
         spirit.component(headers) do
-          spirit.vendor options[:vendor] || 'Freescale'
-          spirit.library options[:library] || 'Freescale'
+          spirit.vendor options[:vendor] || 'Origen'
+          spirit.library options[:library] || 'Origen'
           # I guess this should really be the register owner's owner's name?
-          spirit.name try(:ip_name, :pdm_part_name) || owner.class.to_s.split('::').last
-          spirit.version try(:ip_version, :pdm_version, :pdm_cm_version, :version, :revision)
+          spirit.name try(:ip_name) || owner.class.to_s.split('::').last
+          spirit.version try(:ip_version, :version, :revision)
           spirit.memoryMaps do
             memory_maps.each do |map_name, _map|
               spirit.memoryMap do
                 spirit.name map_name
                 address_blocks do |domain_name, _domain, sub_block|
                   spirit.addressBlock do
-                    spirit.name address_block_name(domain_name, sub_block)
-                    spirit.baseAddress sub_block.base_address.to_hex
+                    if sub_block == owner
+                      spirit.name nil
+                      spirit.baseAddress 0.to_hex
+                    else
+                      spirit.name address_block_name(domain_name, sub_block)
+                      spirit.baseAddress sub_block.base_address.to_hex
+                    end
                     spirit.range range(sub_block)
                     spirit.width width(sub_block)
                     sub_block.regs.each do |name, reg|
@@ -193,7 +206,7 @@ module CrossOrigen
     end
 
     def memory_maps
-      { owner.name => {} }
+      { nil => {} }
     end
 
     def sub_blocks(domain_name)
@@ -207,6 +220,9 @@ module CrossOrigen
       domains = owner.register_domains
       domains = { default: {} } if domains.empty?
       domains.each do |domain_name, domain|
+        if owner.owns_registers?
+          yield domain_name, domain, owner
+        end
         sub_blocks(domain_name).each do |sub_block|
           yield domain_name, domain, sub_block
         end

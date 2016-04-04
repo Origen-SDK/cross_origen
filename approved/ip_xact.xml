@@ -1,15 +1,86 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spirit:component xmlns:spirit="http://www.spiritconsortium.org/XMLSchema/SPIRIT/1.4" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:vendorExtensions="$IREG_GEN/XMLSchema/SPIRIT" xsi:schemaLocation="http://www.spiritconsortium.org/XMLSchema/SPIRIT/1.4 http://www.spiritconsortium.org/XMLSchema/SPIRIT/1.4/index.xsd $IREG_GEN/XMLSchema/SPIRIT/VendorExtensions.xsd">
-  <spirit:vendor>Freescale</spirit:vendor>
-  <spirit:library>Freescale</spirit:library>
+  <spirit:vendor>Origen</spirit:vendor>
+  <spirit:library>Origen</spirit:library>
   <spirit:name>dut</spirit:name>
   <spirit:version/>
   <spirit:memoryMaps>
     <spirit:memoryMap>
       <spirit:name/>
       <spirit:addressBlock>
-        <spirit:name>atx</spirit:name>
+        <spirit:name/>
         <spirit:baseAddress>0x0</spirit:baseAddress>
+        <spirit:range>20</spirit:range>
+        <spirit:width>32</spirit:width>
+        <spirit:register>
+          <spirit:name>dut_top_level_reg</spirit:name>
+          <spirit:description/>
+          <spirit:addressOffset>0x0</spirit:addressOffset>
+          <spirit:size>32</spirit:size>
+          <spirit:access>read-write</spirit:access>
+          <spirit:reset>
+            <spirit:value>0x8000</spirit:value>
+            <spirit:mask>0xFFFFFFFF</spirit:mask>
+          </spirit:reset>
+          <spirit:field>
+            <spirit:name>pls_work</spirit:name>
+            <spirit:description/>
+            <spirit:bitOffset>15</spirit:bitOffset>
+            <spirit:bitWidth>1</spirit:bitWidth>
+            <spirit:access>rw</spirit:access>
+            <spirit:vendorExtensions>
+              <vendorExtensions:hdl_path>dut_top_level_reg[15]</vendorExtensions:hdl_path>
+            </spirit:vendorExtensions>
+          </spirit:field>
+          <spirit:field>
+            <spirit:name>second_bit</spirit:name>
+            <spirit:description/>
+            <spirit:bitOffset>14</spirit:bitOffset>
+            <spirit:bitWidth>1</spirit:bitWidth>
+            <spirit:access>rw</spirit:access>
+            <spirit:vendorExtensions>
+              <vendorExtensions:hdl_path>dut_top_level_reg[14]</vendorExtensions:hdl_path>
+            </spirit:vendorExtensions>
+          </spirit:field>
+        </spirit:register>
+        <spirit:register>
+          <spirit:name>dut_top_level_reg_number_two</spirit:name>
+          <spirit:description/>
+          <spirit:addressOffset>0x10</spirit:addressOffset>
+          <spirit:size>32</spirit:size>
+          <spirit:access>read-write</spirit:access>
+          <spirit:reset>
+            <spirit:value>0x2</spirit:value>
+            <spirit:mask>0xFFFFFFFF</spirit:mask>
+          </spirit:reset>
+          <spirit:field>
+            <spirit:name>second_bit</spirit:name>
+            <spirit:description/>
+            <spirit:bitOffset>1</spirit:bitOffset>
+            <spirit:bitWidth>1</spirit:bitWidth>
+            <spirit:access>rw</spirit:access>
+            <spirit:vendorExtensions>
+              <vendorExtensions:hdl_path>dut_top_level_reg_number_two[1]</vendorExtensions:hdl_path>
+            </spirit:vendorExtensions>
+          </spirit:field>
+          <spirit:field>
+            <spirit:name>pls_work</spirit:name>
+            <spirit:description/>
+            <spirit:bitOffset>0</spirit:bitOffset>
+            <spirit:bitWidth>1</spirit:bitWidth>
+            <spirit:access>ro</spirit:access>
+            <spirit:vendorExtensions>
+              <vendorExtensions:hdl_path>dut_top_level_reg_number_two[0]</vendorExtensions:hdl_path>
+            </spirit:vendorExtensions>
+          </spirit:field>
+        </spirit:register>
+        <spirit:vendorExtensions>
+          <vendorExtensions:hdl_path/>
+        </spirit:vendorExtensions>
+      </spirit:addressBlock>
+      <spirit:addressBlock>
+        <spirit:name>atx</spirit:name>
+        <spirit:baseAddress>0x40000000</spirit:baseAddress>
         <spirit:range>4</spirit:range>
         <spirit:width>32</spirit:width>
         <spirit:register>

@@ -173,6 +173,3 @@ DEPENDENCIES
   coveralls
   cross_origen!
   origen_doc_helpers (>= 0.2.0)
-
-BUNDLED WITH
-   1.11.2

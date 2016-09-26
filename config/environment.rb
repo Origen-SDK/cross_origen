@@ -31,5 +31,6 @@ module CrossOrigen
   autoload :IpXact,       "cross_origen/ip_xact"
   autoload :DesignSync,   "cross_origen/design_sync"
   autoload :OrigenFormat, "cross_origen/origen_format"
+  autoload :CMSISSVD,     "cross_origen/cmsis_svd"
 end
 require "cross_origen"

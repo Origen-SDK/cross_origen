@@ -14,6 +14,13 @@ class CrossOrigenApplication < Origen::Application
     #:files => ["lib", "config/application.rb"],
   }
 
+  config.shared = {
+  #  :patterns => "pattern/shared",
+  #  :templates => "templates",
+  #  :programs => "program",
+    :command_launcher => "config/shared_commands.rb"
+  }
+
   # Prevent these from showing up in 'origen rc unman'
   config.unmanaged_dirs = %w()
   config.unmanaged_files = %w()

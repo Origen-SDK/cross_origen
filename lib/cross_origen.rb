@@ -65,7 +65,8 @@ module CrossOrigen
   def cr_to_origen(options = {})
     options = {
       obj:  $dut,
-      path: Origen.app.config.output_directory
+      path: nil,
+			instantiate_level: :top
     }.update(options)
     # This method assumes and checks for $self to contain Origen::Model
     error "ERROR: #{options[:obj].class} does not contain Origen::Model as required" unless options[:obj].class < Origen::Model
@@ -81,6 +82,10 @@ module CrossOrigen
   def cr_ip_xact
     @cr_ip_xact ||= IpXact.new(self)
   end
+  
+  def cr_sgxml
+		@cr_sgxml ||= SgXML.new(self)
+  end
 
   private
 
@@ -90,6 +95,8 @@ module CrossOrigen
     case snippet
     when /spiritconsortium/
       cr_ip_xact
+		when /SGXML/
+			cr_sgxml
     else
       fail "Unknown file format for file: #{file}"
     end

@@ -25,14 +25,14 @@ module CrossOrigen
 
     def initialize(options = {})
       options = {
-        obj:  $dut,
-        path: "#{Origen.root!}/output",
-				instantiate_level: :top
+        obj:               $dut,
+        path:              "#{Origen.root!}/output",
+        instantiate_level: :top
       }.update(options)
       @obj = options[:obj]
       @output_dir = options[:path]
-			@inst_level = options[:instantiate_level]
-			fail "@instantiate_level must be either set to ':top' or ':sub_block'" unless [:top, :sub_block].include?(@inst_level)
+      @inst_level = options[:instantiate_level]
+      fail "@instantiate_level must be either set to ':top' or ':sub_block'" unless [:top, :sub_block].include?(@inst_level)
       @top_level_path = "#{output_dir}/top_level.rb"
       @incl_path = "#{output_dir}/sub_blocks.rb"
       @incl_dir = "#{output_dir}/import"
@@ -75,22 +75,22 @@ module CrossOrigen
         bom_file.puts(FILE_COMMENTS[:incl])
         bom_file.puts("require_relative 'sub_blocks'")
         @top_level_hierarchy.each do |name, obj|
-					if(@inst_level == :sub_block && @top_level_hierarchy.keys.last == name)
-						obj = "module"
-						name = "SubBlocks"
-				  end
-					bom_file.puts("#{indent}#{obj} #{name.split('::').last}")
-					indent += '  '
+          if @inst_level == :sub_block && @top_level_hierarchy.keys.last == name
+            obj = 'module'
+            name = 'SubBlocks'
+          end
+          bom_file.puts("#{indent}#{obj} #{name.split('::').last}")
+          indent += '  '
         end
         bom_file.puts("#{indent}include Origen::Model")
         bom_file.puts('')
-				if @inst_level == :sub_block
-					bom_file.puts("#{indent}def instantiate_sub_blocks(options = {})")
-				elsif @inst_level == :top
-					bom_file.puts("#{indent}def initialize(options = {})")
-				else
-					fail "@instantiate_level not set to an acceptable value [:top, :sub_block]"
-				end
+        if @inst_level == :sub_block
+          bom_file.puts("#{indent}def instantiate_sub_blocks(options = {})")
+        elsif @inst_level == :top
+          bom_file.puts("#{indent}def initialize(options = {})")
+        else
+          fail '@instantiate_level not set to an acceptable value [:top, :sub_block]'
+        end
         indent += '  '
         # This method is recursive (indirectly) so file_content should find all BoM and include file strings
         create_file_content(@obj, indent)

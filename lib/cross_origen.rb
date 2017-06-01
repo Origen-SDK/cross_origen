@@ -82,10 +82,6 @@ module CrossOrigen
   def cr_ip_xact
     @cr_ip_xact ||= IpXact.new(self)
   end
-  
-  def cr_sgxml
-		@cr_sgxml ||= SgXML.new(self)
-  end
 
   private
 
@@ -95,8 +91,6 @@ module CrossOrigen
     case snippet
     when /spiritconsortium/
       cr_ip_xact
-		when /SGXML/
-			cr_sgxml
     else
       fail "Unknown file format for file: #{file}"
     end

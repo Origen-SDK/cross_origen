@@ -15,7 +15,12 @@ Ruby files to be written.
 
 ### Implementation
 
-Here is an example of how to create the static Ruby files.
+There are two methods for instantiating device models:
+
+1. As a named Origen TopLevel class with a method #instantiate_sub_blocks to model the device
+2. As a generic SubBlocks module to model the device
+
+Option #1 is the default behavior and is handled in this manner:
 
 ~~~ruby
 $dut.to_origen(path: "#{Origen.root}/output/exported")
@@ -91,6 +96,56 @@ module CrossOrigen
     end
   end
 end
+~~~
+
+Why option #2?  Some Origen applications may serve multiple products and want the ability to swap the current
+TopLevel model using target instantitation.  
+
+~~~ruby
+origen i -t my_product
+~~~
+
+Here is a generic example of how an application may use option #2 in
+combination with the CrossOrigen import feature.  By passing the 'instantiate_level: :sub_block' to the #to_origen
+method, the device model is changed to a SubBlocks module implementation.  Notice that the #to_origen method is called
+inside the #on_load_target callback.  This is necessary as the #to_origen method accesses Origen.app.output_directory,
+which is not available until the target is instantiated.
+
+~~~ruby
+
+module MyOrigenApp
+  class Product
+    include Origen::TopLevel
+    include CrossOrigen
+    
+    attr_accessor :curr_prod, :curr_prod_xml, :top_origen_path
+	
+    def initialize(options = {})
+      options = {
+        curr_product: nil
+      }.update(options)
+      @curr_prod = options [:curr_product]
+      @curr_prod_xml = Pathname.new("#{Origen.root}/vendor/mycompany/products/#{curr_prod}/product_ipxact.xml")
+      @top_origen_path = Pathname.new("#{Origen.root}/vendor/mycompany/products/#{curr_prod}/top_level.rb")
+      # Import or instantiate registers
+      if @top_origen_path.exist?
+        Origen.log.info("Instantiating registers from Origen source for product #{curr_prod}...")
+        require @top_origen_path.to_s.chomp(".rb")
+        extend SubBlocks
+        instantiate_sub_blocks()
+      else
+        Origen.log.info("Importing IP-XACT registers for #{curr_prod}...")
+        cr_import(path: @curr_prod_xml)
+      end
+    end
+    
+    def on_load_target
+      to_origen(path: @top_origen_path, instantiate_level: :sub_block)
+    end
+    
+  end
+end  
+
 ~~~
 
 % end

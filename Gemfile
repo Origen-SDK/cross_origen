@@ -1,12 +1,10 @@
 source 'https://rubygems.org'
 
-# Specify your gem's dependencies in cross_origen.gemspec
-gemspec
-
+# Development dependencies
+gem "byebug"
+gem "origen_doc_helpers"
+gem "origen_updater"
 gem 'coveralls', require: false
 
-if RUBY_VERSION >= '2.0.0'
-  gem 'byebug', '~>3.5'
-else
-  gem 'debugger', '~>1.6'
-end
+# Specify your gem's runtime dependencies in cross_origen.gemspec
+gemspec

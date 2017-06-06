@@ -24,12 +24,9 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   # Add any gems that your plugin needs to run within a host application
-  spec.add_runtime_dependency "origen", "~> 0.2"
+  spec.add_runtime_dependency "origen", ">= 0.2"
   spec.add_runtime_dependency "sanitize", "~>3.0"
   if RUBY_VERSION < "2.0.0"
     spec.add_runtime_dependency "scrub_rb", "~>1.0"
   end
-
-  # Add any gems that your plugin needs for its development environment only
-  spec.add_development_dependency "origen_doc_helpers", ">= 0.2.0"
 end

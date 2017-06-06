@@ -64,8 +64,9 @@ module CrossOrigen
   # The Ruby files are created at options[:path] (app output directory by default)
   def cr_to_origen(options = {})
     options = {
-      obj:  $dut,
-      path: Origen.app.config.output_directory
+      obj:               $dut,
+      path:              Origen.app.config.output_directory,
+      instantiate_level: :top
     }.update(options)
     # This method assumes and checks for $self to contain Origen::Model
     error "ERROR: #{options[:obj].class} does not contain Origen::Model as required" unless options[:obj].class < Origen::Model

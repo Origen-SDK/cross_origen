@@ -5,7 +5,7 @@ describe "Export to Origen .rb files" do
   before :all do
     Origen.load_target('debug')
     $dut.to_origen(path: "#{Origen.root}/output/exported", class_name: "ExportedDUT")
-    load "#{Origen.root}/output/exported/top_level.rb"
+    load "#{Origen.root}/output/exported/origen_src/top_level.rb"
     $dut = CrossOrigen::Test::ExportedDUT.new
   end
 

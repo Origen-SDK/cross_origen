@@ -3,12 +3,12 @@
   <spirit:vendor>Origen</spirit:vendor>
   <spirit:library>Origen</spirit:library>
   <spirit:name>d_ip_ana_test_annex_syn</spirit:name>
-  <spirit:version></spirit:version>
+  <spirit:version/>
   <spirit:memoryMaps>
     <spirit:memoryMap>
-      <spirit:name></spirit:name>
+      <spirit:name/>
       <spirit:addressBlock>
-        <spirit:name></spirit:name>
+        <spirit:name/>
         <spirit:baseAddress>0x0</spirit:baseAddress>
         <spirit:range>4</spirit:range>
         <spirit:width>32</spirit:width>

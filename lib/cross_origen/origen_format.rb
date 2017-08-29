@@ -33,9 +33,9 @@ module CrossOrigen
       @output_dir = options[:path]
       @inst_level = options[:instantiate_level]
       fail "@instantiate_level must be either set to ':top' or ':sub_block'" unless [:top, :sub_block].include?(@inst_level)
-      @top_level_path = "#{output_dir}/top_level.rb"
-      @incl_path = "#{output_dir}/sub_blocks.rb"
-      @incl_dir = "#{output_dir}/import"
+      @top_level_path = "#{output_dir}/origen_src/top_level.rb"
+      @incl_path = "#{output_dir}/origen_src/sub_blocks.rb"
+      @incl_dir = "#{output_dir}/origen_src/from_import"
       @top_level_hierarchy = get_namespace(options)
       @top_level_class = @top_level_hierarchy.keys.last
 
@@ -206,7 +206,7 @@ module CrossOrigen
       indent = ''
       klass = get_full_class(obj)
       class_path_addition = (klass.split('::') - @top_level_class.split('::')).join('/').downcase
-      @file_content[:incl][klass] = "require_relative 'import/#{class_path_addition}'"
+      @file_content[:incl][klass] = "require_relative 'from_import/#{class_path_addition}'"
       class_file_name = Pathname.new("#{@incl_dir}/#{class_path_addition}.rb")
       class_file_dir = class_file_name.dirname
       unless class_file_dir.exist?
@@ -373,7 +373,7 @@ module CrossOrigen
         @obj.sub_blocks.each do |_name, sb|
           current_bist = nil
           bypass_addr = 0
-          incl_file.puts("require_relative 'import/#{sb.name}.rb'")
+          incl_file.puts("require_relative 'from_import/#{sb.name}.rb'")
           File.open("#{@incl_dir}/#{sb.name}.rb", 'w') do |file|
             file.chmod(0555)
             file.puts('# -*- encoding : utf-8 -*-') if RUBY_VERSION < '2.0.0'

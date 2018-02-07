@@ -3,9 +3,6 @@ require_relative '../config/application.rb'
 require_relative '../config/environment.rb'
 
 module CrossOrigen
-  if RUBY_VERSION < '2.0.0'
-    require 'scrub_rb'
-  end
   extend ActiveSupport::Concern
 
   included do

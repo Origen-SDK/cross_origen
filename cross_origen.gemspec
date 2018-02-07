@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.summary       = "Translators for importing and exporting Origen data to/from 3rd party formats"
   spec.homepage      = "http://origen-sdk.org/cross_origen"
 
-  spec.required_ruby_version     = '>= 1.9.3'
+  spec.required_ruby_version     = '>= 2'
   spec.required_rubygems_version = '>= 1.8.11'
 
   # Only the files that are hit by these wildcards will be included in the
@@ -26,7 +26,4 @@ Gem::Specification.new do |spec|
   # Add any gems that your plugin needs to run within a host application
   spec.add_runtime_dependency "origen", ">= 0.2"
   spec.add_runtime_dependency "sanitize", "~>3.0"
-  if RUBY_VERSION < "2.0.0"
-    spec.add_runtime_dependency "scrub_rb", "~>1.0"
-  end
 end

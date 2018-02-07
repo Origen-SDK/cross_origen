@@ -1,13 +1,14 @@
 require 'origen'
 require_relative '../config/application.rb'
-require_relative '../config/environment.rb'
 
 module CrossOrigen
-  extend ActiveSupport::Concern
-
-  included do
-    include Origen::Model
-  end
+  autoload :XMLDoc,       'cross_origen/xml_doc'
+  autoload :Headers,      'cross_origen/headers'
+  autoload :Ralf,         'cross_origen/ralf'
+  autoload :IpXact,       'cross_origen/ip_xact'
+  autoload :DesignSync,   'cross_origen/design_sync'
+  autoload :OrigenFormat, 'cross_origen/origen_format'
+  autoload :CMSISSVD,     'cross_origen/cmsis_svd'
 
   def instance_respond_to?(method_name)
     public_methods.include?(method_name)
@@ -83,13 +84,19 @@ module CrossOrigen
   private
 
   # Returns an instance of the translator for the format of the given file
-  def cr_translator(file, _options = {})
+  def cr_translator(file, options = {})
     snippet = IO.read(file, 2000)  # Read first 2000 characters
     case snippet
     when /spiritconsortium/
       cr_ip_xact
     else
-      fail "Unknown file format for file: #{file}"
+      # Give IP-XACT another opportunity if it looks like partial IP-XACT doc
+      if snippet =~ /<spirit:register>/
+        options[:fragment] = true
+        cr_ip_xact
+      else
+        fail "Unknown file format for file: #{file}"
+      end
     end
   end
 

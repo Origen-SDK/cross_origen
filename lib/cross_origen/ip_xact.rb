@@ -22,7 +22,6 @@ module CrossOrigen
         open_memory_map(doc) do |mem_map|
           if mem_map
             mem_map_name = fetch mem_map.at_xpath('spirit:name'), downcase: true, to_sym: true, get_text: true
-            mem_map_name = ''
             if mem_map_name.to_s.empty?
               mem_map_obj = owner
             else

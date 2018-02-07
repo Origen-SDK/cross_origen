@@ -10,6 +10,4 @@
 # this would be used to load some dummy classes to instantiate
 # your objects so that they can be tested and/or interacted with
 # in the console.
-module CrossOrigenDev
-  autoload :DUT, "cross_origen/test/dut"
-end
+require "cross_origen_dev/dut"

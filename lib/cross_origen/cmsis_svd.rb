@@ -1,6 +1,16 @@
 module CrossOrigen
   class CMSISSVD < XMLDoc
     def import(file, options = {}) # rubocop:disable CyclomaticComplexity
+      filename = Pathname.new(file).basename('.*').to_s
+
+      unless options[:refresh] || CrossOrigen.refresh?
+        if owner.import(filename, allow_missing: true)
+          return
+        end
+      end
+
+      model = CrossOrigen::Model.new
+
       with_output_file(options) do |f|
         doc(file, options) do |doc|
           f.puts '# This file was automatically generated from a CMSIS-SVD input file'

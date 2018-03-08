@@ -1,3 +1,35 @@
+GIT
+  remote: git@github.com:Origen-SDK/origen.git
+  revision: 3c61b034d5e51227855908bd6ffe1b19013eaf53
+  branch: misc_updates
+  specs:
+    origen (0.31.0)
+      activesupport (~> 4.1)
+      bundler (~> 1.7)
+      coderay (~> 1.1)
+      colored (~> 1.2)
+      colorize (~> 0.8.1)
+      dentaku (~> 2)
+      geminabox (= 0.12.4)
+      gems (~> 0.8)
+      highline (~> 1.7)
+      httparty (~> 0.13)
+      kramdown (~> 1.5)
+      log4r (~> 1.1.10, ~> 1.1)
+      nanoc (~> 3.7)
+      net-ldap (~> 0.13)
+      nokogiri (= 1.7.2)
+      pry (~> 0.10)
+      rake (~> 10)
+      rspec (~> 3)
+      rspec-legacy_formatters (~> 1)
+      rubocop (= 0.30)
+      scrub_rb (~> 1.0)
+      simplecov (~> 0.9)
+      sinatra (~> 1)
+      thor (~> 0.19)
+      yard (~> 0.8)
+
 PATH
   remote: .
   specs:
@@ -44,10 +76,10 @@ GEM
       sinatra (>= 1.2.7)
     gems (0.8.3)
     highline (1.7.10)
-    httparty (0.15.6)
+    httparty (0.16.0)
       multi_xml (>= 0.5.2)
     httpclient (2.8.3)
-    i18n (0.9.3)
+    i18n (0.9.5)
       concurrent-ruby (~> 1.0)
     json (2.1.0)
     kramdown (1.16.2)
@@ -65,44 +97,18 @@ GEM
       mini_portile2 (~> 2.1.0)
     nokogumbo (1.2.0)
       nokogiri
-    origen (0.30.0)
-      activesupport (~> 4.1)
-      bundler (~> 1.7)
-      coderay (~> 1.1)
-      colored (~> 1.2)
-      colorize (~> 0.8.1)
-      dentaku (~> 2)
-      geminabox (= 0.12.4)
-      gems (~> 0.8)
-      highline (~> 1.7)
-      httparty (~> 0.13)
-      kramdown (~> 1.5)
-      log4r (~> 1.1.10, ~> 1.1)
-      nanoc (~> 3.7)
-      net-ldap (~> 0.13)
-      nokogiri (= 1.7.2)
-      pry (~> 0.10)
-      rake (~> 10)
-      rspec (~> 3)
-      rspec-legacy_formatters (~> 1)
-      rubocop (= 0.30)
-      scrub_rb (~> 1.0)
-      simplecov (~> 0.9)
-      sinatra (~> 1)
-      thor (~> 0.19)
-      yard (~> 0.8)
     origen_doc_helpers (0.5.2)
       origen (>= 0.7.15)
     origen_updater (0.7.0)
       origen
-    parser (2.4.0.2)
-      ast (~> 2.3)
+    parser (2.5.0.3)
+      ast (~> 2.4.0)
     powerpack (0.1.1)
     pry (0.11.3)
       coderay (~> 1.1.0)
       method_source (~> 0.9.0)
-    rack (1.6.8)
-    rack-protection (1.5.3)
+    rack (1.6.9)
+    rack-protection (1.5.5)
       rack
     rainbow (2.2.2)
       rake
@@ -160,6 +166,7 @@ DEPENDENCIES
   byebug
   coveralls
   cross_origen!
+  origen!
   origen_doc_helpers
   origen_updater
 

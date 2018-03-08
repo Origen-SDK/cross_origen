@@ -9,6 +9,17 @@ module CrossOrigen
   autoload :DesignSync,   'cross_origen/design_sync'
   autoload :CMSISSVD,     'cross_origen/cmsis_svd'
 
+  # Basic object that is used to capture imported data and then export/save
+  # it to Origen format
+  class Model
+    include Origen::Model
+  end
+
+  # Returns true if the --refresh switch was passed to the current Origen command
+  def self.refresh?
+    @refresh || false
+  end
+
   def instance_respond_to?(method_name)
     public_methods.include?(method_name)
   end
@@ -80,6 +91,10 @@ module CrossOrigen
     @cr_ip_xact ||= IpXact.new(self)
   end
 
+  def cr_cmsis_svd
+    @cr_cmsis_svd ||= CMSISSVD.new(self)
+  end
+
   private
 
   # Returns an instance of the translator for the format of the given file
@@ -88,6 +103,8 @@ module CrossOrigen
     case snippet
     when /spiritconsortium/
       cr_ip_xact
+    when /CMSIS-SVD.xsd/
+      cr_cmsis_svd
     else
       # Give IP-XACT another opportunity if it looks like partial IP-XACT doc
       if snippet =~ /<spirit:register>/

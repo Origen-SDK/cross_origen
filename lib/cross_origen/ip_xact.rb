@@ -10,6 +10,16 @@ module CrossOrigen
     def import(file, options = {}) # rubocop:disable CyclomaticComplexity
       require 'kramdown'
 
+      filename = Pathname.new(file).basename('.*').to_s
+
+      unless options[:refresh] || CrossOrigen.refresh?
+        if owner.import(filename, allow_missing: true)
+          return
+        end
+      end
+
+      model = CrossOrigen::Model.new
+
       address_spaces = {}
 
       doc(file, options) do |doc|
@@ -23,14 +33,14 @@ module CrossOrigen
           if mem_map
             mem_map_name = fetch mem_map.at_xpath('spirit:name'), downcase: true, to_sym: true, get_text: true
             if mem_map_name.to_s.empty?
-              mem_map_obj = owner
+              mem_map_obj = model
             else
-              owner.sub_block mem_map_name
-              mem_map_obj = owner.send(mem_map_name)
+              model.sub_block mem_map_name
+              mem_map_obj = model.send(mem_map_name)
             end
             addr_blocks = mem_map.xpath('spirit:addressBlock')
           else
-            mem_map_obj = owner
+            mem_map_obj = model
             addr_blocks = doc.xpath('//spirit:addressBlock')
           end
           addr_blocks.each do |addr_block|
@@ -84,9 +94,12 @@ module CrossOrigen
           end
         end
       end
+      model.export(filename)
+      owner.import(filename)
     end
 
     def doc(path, options = {})
+      # If a fragment of IP-XACT is given, then wrap it with a valid header and we will try our best
       if options[:fragment]
         require 'nokogiri'
 

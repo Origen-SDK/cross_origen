@@ -13,9 +13,7 @@ module CrossOrigen
       filename = Pathname.new(file).basename('.*').to_s
 
       unless options[:refresh] || CrossOrigen.refresh?
-        if owner.import(filename, allow_missing: true)
-          return
-        end
+        return if owner.import(filename, allow_missing: true)
       end
 
       model = CrossOrigen::Model.new

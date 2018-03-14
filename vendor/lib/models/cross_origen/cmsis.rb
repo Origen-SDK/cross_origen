@@ -3,7 +3,7 @@
 module CrossOrigen
   module Cmsis
     def self.extended(model)
-      model.sub_block :timer, file: 'cross_origen/cmsis/timer.rb', lazy: true
+      model.sub_block :timer, file: 'cross_origen/cmsis/timer.rb', dir: '/home/stephen/Code/github/cross_origen/vendor/lib/models', lazy: true
 
     end
   end

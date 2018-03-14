@@ -25,7 +25,7 @@ module CrossOrigen
           add_registers(block, find_peripheral_by_name(doc, name))
         end
       end
-      model.export(filename)
+      model.export(filename, include_timestamp: CrossOrigen.include_timestamp?)
       owner.import(filename)
     end
 

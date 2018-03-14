@@ -20,11 +20,23 @@ module CrossOrigen
     @refresh || false
   end
 
+  def self.include_timestamp?
+    instance_variable_defined?(:@include_timestamp) ? @include_timestamp : true
+  end
+
+  def self.include_timestamp=(val)
+    @include_timestamp = val
+  end
+
   def instance_respond_to?(method_name)
     public_methods.include?(method_name)
   end
 
   def cr_import(options = {})
+    options = {
+      include_timestamp: true
+    }.merge(options)
+    CrossOrigen.include_timestamp = options[:include_timestamp]
     file = cr_file(options)
     cr_translator(file, options).import(file, options)
   end
@@ -37,11 +49,6 @@ module CrossOrigen
     cr_ip_xact.owner_to_xml(options)
   end
   alias_method :to_ipxact, :to_ip_xact
-
-  def to_origen(options = {})
-    options[:obj] = self
-    cr_to_origen(options)
-  end
 
   def to_header(options = {})
     cr_headers.owner_to_header(options)
@@ -66,21 +73,6 @@ module CrossOrigen
 
   def cr_headers
     @cr_headers ||= Headers.new(self)
-  end
-
-  # Creates Ruby files necessary to model all sub_blocks and registers found (recursively) owned by options[:obj]
-  # The Ruby files are created at options[:path] (app output directory by default)
-  def cr_to_origen(options = {})
-    options = {
-      obj:               $dut,
-      path:              Origen.app.config.output_directory,
-      instantiate_level: :top
-    }.update(options)
-    # This method assumes and checks for $self to contain Origen::Model
-    error "ERROR: #{options[:obj].class} does not contain Origen::Model as required" unless options[:obj].class < Origen::Model
-    # Check to make sure there are sub_blocks or regs directly under $dut
-    error "ERROR: options[:obj]ect #{options[:obj].object_id} of class #{options[:obj].class} does not contain registers or sub_blocks" unless options[:obj].owns_registers? || options[:obj].instance_respond_to?(:sub_blocks)
-    OrigenFormat.new(options).export
   end
 
   def cr_ralf

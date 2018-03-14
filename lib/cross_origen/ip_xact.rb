@@ -92,7 +92,7 @@ module CrossOrigen
           end
         end
       end
-      model.export(filename)
+      model.export(filename, include_timestamp: CrossOrigen.include_timestamp?)
       owner.import(filename)
     end
 

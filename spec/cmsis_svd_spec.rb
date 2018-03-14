@@ -8,7 +8,7 @@ describe 'CMSIS-SVD' do
       include CrossOrigen
 
       def initialize(options = {})
-        cr_import(path: "#{Origen.root}/imports/cmsis.svd", refresh: true)
+        cr_import(path: "#{Origen.root}/imports/cmsis.svd", refresh: true, include_timestamp: false)
       end
     end
 

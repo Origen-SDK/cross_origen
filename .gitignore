@@ -1,5 +1,6 @@
 # App specific
 /spec/patterns/bin
+/vendor/lib/models/cross_origen
 
 # Editor cruft
 *.swp

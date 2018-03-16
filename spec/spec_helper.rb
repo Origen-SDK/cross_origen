@@ -22,13 +22,9 @@ require "origen"
 
 require "rspec/legacy_formatters"
 require "#{Origen.top}/spec/format/origen_formatter"
-
-if RUBY_VERSION >= '2.0.0'
-  require "byebug"
-  require 'pry'
-else
- # require 'debugger'
-end
+require "byebug"
+require 'pry'
+require 'cross_origen'
 
 def load_target(target="default")
   Origen.target.switch_to target

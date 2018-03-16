@@ -32,8 +32,8 @@ spec.add_runtime_dependency "<%= Origen.app.name %>", ">= <%= Origen.app.version
 Currently the following formats are supported:
 
 * IP-XACT - Import and Export registers and hierarchy
+* CMSIS-SVD - Import registers and hierarchy
 * RALF (Synopsys format) - Export registers
-* Origen - Export registers and hierarchy
 
 See the [examples](<%= path "examples" %>) for format specific documentation, but
 most formats should follow this basic structure...
@@ -41,17 +41,17 @@ most formats should follow this basic structure...
 #### Data Import  
 
 When the <code>CrossOrigen</code> module is included in a class it gets access
-to an <code>cr_import</code> method.
+to a <code>cr_import</code> method.
 This will automatically detect the type of the given file and select the appropriate
 import rules.
 
 The file to be imported must exist locally or it can be pulled automatically from
-a 3rd party respository in which case the file will be fetched the first time Origen
+a 3rd party repository in which case the file will be fetched the first time Origen
 is invoked and then cached locally for future invocations.
 Supported repositories are shown in the example below.
 
 ~~~ruby
-class D_IP_ANA_TEST_ANNEX_SYN
+class MyDevice
 
   include CrossOrigen
 
@@ -61,14 +61,31 @@ class D_IP_ANA_TEST_ANNEX_SYN
     # Import from Design Sync
     cr_import(vault: "sync://sync-15040:15040/Projects/nvm_c90tfsn2w/ftf2/rtl_v/kx2_4m/.regs", version: "ftf2_kx2_4096k2_256_128k_64_4k.00.00.01.00") 
   end
-
 end
 ~~~
 
-The plugin will add attribute getter and setter methods to the top-level object and to registers and bits
-to contain any metadata information which does not have a direct equivalent within Origen. Generally
-the name given to such data will be the lower cased and underscored (following std Ruby
-conventions) version of the attribute name.
+The given file(s) will be parsed the first time the model is instantiated, which could take some time
+depending on the amount of data being imported.
+
+During the import process, the data from the files will be converted to Origen native format and stored
+to the application's `vendor` directory. You should check these generated files into your revision control
+system, although you should refrain from modifying them by hand since edits will be lost if the import
+process is repeated in future.
+
+On subsequent model instantiations, the `cr_import` method will recognize that the data has already been
+imported and it will load directly from the `vendor` dir. Generally speaking, this will make the model
+instantiation time instant, regardless of how much data was originally imported.
+
+If you obtain a new version of the 3rd party source file, it can be re-imported by passing a
+`refresh` option to `cr_import`:
+
+~~~ruby
+cr_import(path: "#{Origen.root}/imports/test-annex-Block-registers.xml", refresh: true)
+~~~
+
+Or, a global refresh (meaning every `cr_import` that is encountered with a given Origen command) can be
+invoked by passing the `--refresh` option to any Origen command which will instantiate the model you
+wish to refresh.
 
 #### Data Export
 

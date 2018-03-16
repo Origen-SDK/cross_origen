@@ -1,5 +1,6 @@
 # App specific
 /spec/patterns/bin
+/vendor/lib/models/cross_origen
 
 # Editor cruft
 *.swp
@@ -31,6 +32,7 @@
 /.session
 /.pdm/pi_attributes.txt
 /.irb_history
+/.byebug_history
 
 # Cruft from other revision control systems
 .SYNC

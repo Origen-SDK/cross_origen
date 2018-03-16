@@ -10,6 +10,14 @@ module CrossOrigen
     def import(file, options = {}) # rubocop:disable CyclomaticComplexity
       require 'kramdown'
 
+      filename = Pathname.new(file).basename('.*').to_s
+
+      unless options[:refresh] || CrossOrigen.refresh?
+        return if owner.import(filename, allow_missing: true)
+      end
+
+      model = CrossOrigen::Model.new
+
       address_spaces = {}
 
       doc(file, options) do |doc|
@@ -19,15 +27,21 @@ module CrossOrigen
           width = fetch addr_space.at_xpath('spirit:width'), get_text: true, to_i: true
           address_spaces[name] = AddressSpace.new(name, range, width)
         end
-        doc.xpath('//spirit:memoryMaps/spirit:memoryMap').each do |mem_map|
-          mem_map_name = fetch mem_map.at_xpath('spirit:name'), downcase: true, to_sym: true, get_text: true
-          if mem_map_name.to_s.empty?
-            mem_map_obj = owner
+        open_memory_map(doc) do |mem_map|
+          if mem_map
+            mem_map_name = fetch mem_map.at_xpath('spirit:name'), downcase: true, to_sym: true, get_text: true
+            if mem_map_name.to_s.empty?
+              mem_map_obj = model
+            else
+              model.sub_block mem_map_name
+              mem_map_obj = model.send(mem_map_name)
+            end
+            addr_blocks = mem_map.xpath('spirit:addressBlock')
           else
-            owner.sub_block mem_map_name
-            mem_map_obj = owner.send(mem_map_name)
+            mem_map_obj = model
+            addr_blocks = doc.xpath('//spirit:addressBlock')
           end
-          mem_map.xpath('spirit:addressBlock').each do |addr_block|
+          addr_blocks.each do |addr_block|
             name = fetch addr_block.at_xpath('spirit:name'), downcase: true, to_sym: true, get_text: true
             base_address = fetch addr_block.at_xpath('spirit:baseAddress'), get_text: true, to_dec: true
             range = fetch addr_block.at_xpath('spirit:range'), get_text: true, to_dec: true
@@ -77,6 +91,28 @@ module CrossOrigen
             end
           end
         end
+      end
+      model.export(filename, include_timestamp: CrossOrigen.include_timestamp?)
+      owner.import(filename)
+    end
+
+    def doc(path, options = {})
+      # If a fragment of IP-XACT is given, then wrap it with a valid header and we will try our best
+      if options[:fragment]
+        require 'nokogiri'
+
+        content = %(
+<?xml version="1.0"?>
+<spirit:component xmlns:spirit="http://www.spiritconsortium.org/XMLSchema/SPIRIT/1.4"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="$REGMEM_HOME/builder/ipxact/schema/ipxact
+          $REGMEM_HOME/builder/ipxact/schema/ipxact/index.xsd">
+        #{File.read(path)}
+</spirit:component>
+        )
+        yield Nokogiri::XML(content)
+      else
+        super
       end
     end
 
@@ -190,6 +226,14 @@ module CrossOrigen
     end
 
     private
+
+    def open_memory_map(doc)
+      maps = doc.xpath('//spirit:memoryMaps/spirit:memoryMap')
+      maps = [nil] if maps.empty?
+      maps.each do |mem_map|
+        yield mem_map
+      end
+    end
 
     def reg_description(register)
       fetch register.at_xpath('spirit:description'), get_text: true, whitespace: true

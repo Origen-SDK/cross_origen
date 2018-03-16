@@ -83,7 +83,7 @@ module CrossOrigen
     end
 
     # This returns the doc wrapped by a Nokogiri doc
-    def doc(path, _options = {})
+    def doc(path, options = {})
       require 'nokogiri'
 
       File.open(path) do |f|

@@ -1,3 +1,20 @@
+<a class="anchor release_tag" name="v1_0_0"></a>
+<h1><a href="#v1_0_0">Tag: v1.0.0</a></h1>
+
+##### Branch: 'master'
+
+##### by Stephen McGinty on 16-Mar-2018 11:55AM
+
+
+* Removed the Origen format export option since Origen core now provides native import/export
+
+* All current importers (IP-XACT and CMSIS-SVD) have been updated to leverage the Origen import/export
+  APIs to automatically store the imported data locally in Origen format, giving very fast application
+  boot times after the initial import is done. See here for more: 
+  http://origen-sdk.org/cross\_origen/#Data\_Import
+
+* Various improvements to the IP-XACT and CMSIS-SVD importers
+
 <a class="anchor release_tag" name="v0_7_0"></a>
 <h1><a href="#v0_7_0">Tag: v0.7.0</a></h1>
 

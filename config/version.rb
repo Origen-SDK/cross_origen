@@ -1,6 +1,6 @@
 module CrossOrigen
-  MAJOR = 0
-  MINOR = 7
+  MAJOR = 1
+  MINOR = 0
   BUGFIX = 0
   DEV = nil
 

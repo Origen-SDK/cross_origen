@@ -3,18 +3,18 @@
   <spirit:vendor>Origen</spirit:vendor>
   <spirit:library>Origen</spirit:library>
   <spirit:name>dut</spirit:name>
-  <spirit:version/>
+  <spirit:version></spirit:version>
   <spirit:memoryMaps>
     <spirit:memoryMap>
-      <spirit:name/>
+      <spirit:name></spirit:name>
       <spirit:addressBlock>
-        <spirit:name/>
+        <spirit:name></spirit:name>
         <spirit:baseAddress>0x0</spirit:baseAddress>
         <spirit:range>20</spirit:range>
         <spirit:width>32</spirit:width>
         <spirit:register>
           <spirit:name>dut_top_level_reg</spirit:name>
-          <spirit:description/>
+          <spirit:description></spirit:description>
           <spirit:addressOffset>0x0</spirit:addressOffset>
           <spirit:size>32</spirit:size>
           <spirit:access>read-write</spirit:access>
@@ -24,7 +24,7 @@
           </spirit:reset>
           <spirit:field>
             <spirit:name>second_bit</spirit:name>
-            <spirit:description/>
+            <spirit:description></spirit:description>
             <spirit:bitOffset>14</spirit:bitOffset>
             <spirit:bitWidth>1</spirit:bitWidth>
             <spirit:access>rw</spirit:access>
@@ -34,7 +34,7 @@
           </spirit:field>
           <spirit:field>
             <spirit:name>pls_work</spirit:name>
-            <spirit:description/>
+            <spirit:description></spirit:description>
             <spirit:bitOffset>15</spirit:bitOffset>
             <spirit:bitWidth>1</spirit:bitWidth>
             <spirit:access>rw</spirit:access>
@@ -45,7 +45,7 @@
         </spirit:register>
         <spirit:register>
           <spirit:name>dut_top_level_reg_number_two</spirit:name>
-          <spirit:description/>
+          <spirit:description></spirit:description>
           <spirit:addressOffset>0x10</spirit:addressOffset>
           <spirit:size>32</spirit:size>
           <spirit:access>read-write</spirit:access>
@@ -55,7 +55,7 @@
           </spirit:reset>
           <spirit:field>
             <spirit:name>second_bit</spirit:name>
-            <spirit:description/>
+            <spirit:description></spirit:description>
             <spirit:bitOffset>1</spirit:bitOffset>
             <spirit:bitWidth>1</spirit:bitWidth>
             <spirit:access>rw</spirit:access>
@@ -65,7 +65,7 @@
           </spirit:field>
           <spirit:field>
             <spirit:name>pls_work</spirit:name>
-            <spirit:description/>
+            <spirit:description></spirit:description>
             <spirit:bitOffset>0</spirit:bitOffset>
             <spirit:bitWidth>1</spirit:bitWidth>
             <spirit:access>ro</spirit:access>
@@ -75,7 +75,7 @@
           </spirit:field>
         </spirit:register>
         <spirit:vendorExtensions>
-          <vendorExtensions:hdl_path/>
+          <vendorExtensions:hdl_path></vendorExtensions:hdl_path>
         </spirit:vendorExtensions>
       </spirit:addressBlock>
       <spirit:addressBlock>
@@ -125,7 +125,7 @@
         <spirit:width>32</spirit:width>
         <spirit:register>
           <spirit:name>reg0</spirit:name>
-          <spirit:description/>
+          <spirit:description></spirit:description>
           <spirit:addressOffset>0x0</spirit:addressOffset>
           <spirit:size>8</spirit:size>
           <spirit:access>read-only</spirit:access>
@@ -136,7 +136,7 @@
         </spirit:register>
         <spirit:register>
           <spirit:name>reg1</spirit:name>
-          <spirit:description/>
+          <spirit:description></spirit:description>
           <spirit:addressOffset>0x1</spirit:addressOffset>
           <spirit:size>8</spirit:size>
           <spirit:access>read-write</spirit:access>
@@ -146,7 +146,7 @@
           </spirit:reset>
           <spirit:field>
             <spirit:name>reg1_f</spirit:name>
-            <spirit:description/>
+            <spirit:description></spirit:description>
             <spirit:bitOffset>0</spirit:bitOffset>
             <spirit:bitWidth>8</spirit:bitWidth>
             <spirit:access>rw</spirit:access>
@@ -157,7 +157,7 @@
         </spirit:register>
         <spirit:register>
           <spirit:name>reg2</spirit:name>
-          <spirit:description/>
+          <spirit:description></spirit:description>
           <spirit:addressOffset>0x2</spirit:addressOffset>
           <spirit:size>8</spirit:size>
           <spirit:access>read-write</spirit:access>
@@ -167,7 +167,7 @@
           </spirit:reset>
           <spirit:field>
             <spirit:name>f2</spirit:name>
-            <spirit:description/>
+            <spirit:description></spirit:description>
             <spirit:bitOffset>6</spirit:bitOffset>
             <spirit:bitWidth>2</spirit:bitWidth>
             <spirit:access>rw</spirit:access>
@@ -177,7 +177,7 @@
           </spirit:field>
           <spirit:field>
             <spirit:name>f0</spirit:name>
-            <spirit:description/>
+            <spirit:description></spirit:description>
             <spirit:bitOffset>0</spirit:bitOffset>
             <spirit:bitWidth>2</spirit:bitWidth>
             <spirit:access>rw</spirit:access>
@@ -188,7 +188,7 @@
         </spirit:register>
         <spirit:register>
           <spirit:name>reg3</spirit:name>
-          <spirit:description/>
+          <spirit:description></spirit:description>
           <spirit:addressOffset>0x3</spirit:addressOffset>
           <spirit:size>8</spirit:size>
           <spirit:access>read-write</spirit:access>
@@ -198,7 +198,7 @@
           </spirit:reset>
           <spirit:field>
             <spirit:name>f0</spirit:name>
-            <spirit:description/>
+            <spirit:description></spirit:description>
             <spirit:bitOffset>3</spirit:bitOffset>
             <spirit:bitWidth>3</spirit:bitWidth>
             <spirit:access>rw</spirit:access>
@@ -209,7 +209,7 @@
         </spirit:register>
         <spirit:register>
           <spirit:name>reg4</spirit:name>
-          <spirit:description/>
+          <spirit:description></spirit:description>
           <spirit:addressOffset>0x4</spirit:addressOffset>
           <spirit:size>8</spirit:size>
           <spirit:access>read-write</spirit:access>
@@ -219,7 +219,7 @@
           </spirit:reset>
           <spirit:field>
             <spirit:name>rsv</spirit:name>
-            <spirit:description/>
+            <spirit:description></spirit:description>
             <spirit:bitOffset>6</spirit:bitOffset>
             <spirit:bitWidth>2</spirit:bitWidth>
             <spirit:access>rw</spirit:access>
@@ -229,7 +229,7 @@
           </spirit:field>
           <spirit:field>
             <spirit:name>more_dirs</spirit:name>
-            <spirit:description/>
+            <spirit:description></spirit:description>
             <spirit:bitOffset>4</spirit:bitOffset>
             <spirit:bitWidth>2</spirit:bitWidth>
             <spirit:access>ro</spirit:access>
@@ -239,7 +239,7 @@
           </spirit:field>
           <spirit:field>
             <spirit:name>dirs</spirit:name>
-            <spirit:description/>
+            <spirit:description></spirit:description>
             <spirit:bitOffset>2</spirit:bitOffset>
             <spirit:bitWidth>2</spirit:bitWidth>
             <spirit:access>wo</spirit:access>
@@ -249,7 +249,7 @@
           </spirit:field>
           <spirit:field>
             <spirit:name>f1</spirit:name>
-            <spirit:description/>
+            <spirit:description></spirit:description>
             <spirit:bitOffset>1</spirit:bitOffset>
             <spirit:bitWidth>1</spirit:bitWidth>
             <spirit:access>rw</spirit:access>
@@ -259,7 +259,7 @@
           </spirit:field>
           <spirit:field>
             <spirit:name>f0</spirit:name>
-            <spirit:description/>
+            <spirit:description></spirit:description>
             <spirit:bitOffset>0</spirit:bitOffset>
             <spirit:bitWidth>1</spirit:bitWidth>
             <spirit:access>rw</spirit:access>
@@ -270,7 +270,7 @@
         </spirit:register>
         <spirit:register>
           <spirit:name>reg5</spirit:name>
-          <spirit:description/>
+          <spirit:description></spirit:description>
           <spirit:addressOffset>0x5</spirit:addressOffset>
           <spirit:size>8</spirit:size>
           <spirit:access>read-write</spirit:access>
@@ -280,7 +280,7 @@
           </spirit:reset>
           <spirit:field>
             <spirit:name>rsv</spirit:name>
-            <spirit:description/>
+            <spirit:description></spirit:description>
             <spirit:bitOffset>4</spirit:bitOffset>
             <spirit:bitWidth>4</spirit:bitWidth>
             <spirit:access>rw</spirit:access>
@@ -290,7 +290,7 @@
           </spirit:field>
           <spirit:field>
             <spirit:name>dirs</spirit:name>
-            <spirit:description/>
+            <spirit:description></spirit:description>
             <spirit:bitOffset>2</spirit:bitOffset>
             <spirit:bitWidth>2</spirit:bitWidth>
             <spirit:access>rw</spirit:access>
@@ -301,7 +301,7 @@
         </spirit:register>
         <spirit:register>
           <spirit:name>reg6</spirit:name>
-          <spirit:description/>
+          <spirit:description></spirit:description>
           <spirit:addressOffset>0x6</spirit:addressOffset>
           <spirit:size>8</spirit:size>
           <spirit:access>read-only</spirit:access>
@@ -311,7 +311,7 @@
           </spirit:reset>
           <spirit:field>
             <spirit:name>rsv</spirit:name>
-            <spirit:description/>
+            <spirit:description></spirit:description>
             <spirit:bitOffset>2</spirit:bitOffset>
             <spirit:bitWidth>6</spirit:bitWidth>
             <spirit:access>ro</spirit:access>
@@ -321,7 +321,7 @@
           </spirit:field>
           <spirit:field>
             <spirit:name>more_dirs</spirit:name>
-            <spirit:description/>
+            <spirit:description></spirit:description>
             <spirit:bitOffset>0</spirit:bitOffset>
             <spirit:bitWidth>2</spirit:bitWidth>
             <spirit:access>ro</spirit:access>
@@ -341,7 +341,7 @@
         <spirit:width>32</spirit:width>
         <spirit:register>
           <spirit:name>reg0</spirit:name>
-          <spirit:description/>
+          <spirit:description></spirit:description>
           <spirit:addressOffset>0x0</spirit:addressOffset>
           <spirit:size>8</spirit:size>
           <spirit:access>read-write</spirit:access>
@@ -351,7 +351,7 @@
           </spirit:reset>
           <spirit:field>
             <spirit:name>f1</spirit:name>
-            <spirit:description/>
+            <spirit:description></spirit:description>
             <spirit:bitOffset>4</spirit:bitOffset>
             <spirit:bitWidth>4</spirit:bitWidth>
             <spirit:access>rw</spirit:access>
@@ -361,7 +361,7 @@
           </spirit:field>
           <spirit:field>
             <spirit:name>f0</spirit:name>
-            <spirit:description/>
+            <spirit:description></spirit:description>
             <spirit:bitOffset>0</spirit:bitOffset>
             <spirit:bitWidth>4</spirit:bitWidth>
             <spirit:access>rw</spirit:access>

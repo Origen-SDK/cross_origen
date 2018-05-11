@@ -1,3 +1,14 @@
+<a class="anchor release_tag" name="v1_1_0"></a>
+<h1><a href="#v1_1_0">Tag: v1.1.0</a></h1>
+
+##### Branch: 'master'
+
+##### by Stephen McGinty on 11-May-2018 06:52AM
+
+
+Bumped the version of the sanitize gem dependency, having libxml version issues with the
+old one
+
 <a class="anchor release_tag" name="v1_0_0"></a>
 <h1><a href="#v1_0_0">Tag: v1.0.0</a></h1>
 

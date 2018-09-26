@@ -40,21 +40,61 @@ module CrossOrigenDev
       include CrossOrigen
 
       def initialize
-        # A manually defined register for testing the conversion of any specific attributes
+        # A manually defined set of registers for testing the conversion of any specific attributes
 
-        # ** MGATE Clock Divider Register **
-        # The MCLKDIV register is used to divide down the frequency of the HBOSCCLK input. If the MCLKDIV
+        # ** MPU Clock Divider Register **
+        #
+        # The MCLKDIV register is used to divide down the frequency of the OSCCLK input. If the MCLKDIV
         # register is set to value "N", then the output (beat) frequency of the clock divider is OSCCLK / (N+1). The
-        # resulting beats are, in turn, counted by the PTIMER module to control the duration of Flash high-voltage
-        # operations.
+        # resulting beats are, in turn, counted by the TIMER module to control the duration of operations.
         # This is a test of potentially problematic characters ' " \' \" < >
         reg :mclkdiv, 0x0, size: 16, bit_order: 'decrement' do
-          # **Oscillator (Hi)** - Firmware FMU clk source selection. (Note that in addition to this firmware-controlled bit, the
-          # FMU clock source is also dependent on test and power control discretes).
+          # **Oscillator (Hi)** - Clock source selection. (Note that in addition to this firmware-controlled bit, the
+          # clock source is also dependent on test and power control discretes).
           #
-          # 0 | FMU clock is the externally supplied bus clock ipg_clk
-          # 1 | FMU clock is the internal oscillator from the TFS hardblock
+          # 0 | Clock is the externally supplied bus clock ipg_clk
+          # 1 | Clock is the internal oscillator from the hardblock
           bit 15, :osch, reset: 1, access: :rw
+        end
+
+        # **Access Type Test Register**
+        #
+        # This register tests the IP-XACT export of various bit access types, such as write-one-to-clear,
+        # read-only, etc.
+        reg :access_types, 0x4, size: 32 do
+          # Test read-only access.
+          bit 31, :readonly, access: :ro
+          # Test read-write access.
+          bit 30, :readwrite, access: :rw
+          # Test read-clear access, where a read clears the value afterwards.
+          bit 29, :readclear, access: :rc
+          # Test read-set access, where a read sets the bit afterwards.
+          bit 28, :readset, access: :rs
+          # Test writable, clear-on-read access, etc...
+          bit 27, :writablereadclear, access: :wrc
+          bit 26, :writablereadset, access: :wrs
+          bit 25, :writeclear, access: :wc
+          bit 24, :writeset, access: :ws
+          bit 23, :writesetreadclear, access: :wsrc
+          bit 22, :writeclearreadset, access: :wcrs
+          bit 21, :write1toclear, access: :w1c
+          bit 20, :write1toset, access: :w1s
+          bit 19, :write1totoggle, access: :w1t
+          bit 18, :write0toclear, access: :w0c
+          bit 17, :write0toset, access: :w0s
+          bit 16, :write0totoggle, access: :w0t
+          bit 15, :write1tosetreadclear, access: :w1src
+          bit 14, :write1toclearreadset, access: :w1crs
+          bit 13, :write0tosetreadclear, access: :w0src
+          bit 12, :write0toclearreadset, access: :w0crs
+          bit 11, :writeonly, access: :wo
+          bit 10, :writeonlyclear, access: :woc
+          bit 9, :writeonlyreadzero, access: :worz
+          bit 8, :writeonlyset, access: :wos
+          bit 7, :writeonce, access: :w1
+          bit 6, :writeonlyonce, access: :wo1
+          bit 5, :readwritenocheck, access: :dc
+          bit 4, :readonlyclearafter, access: :rowz
         end
       end
     end

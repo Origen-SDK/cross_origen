@@ -19,7 +19,7 @@ module CrossOrigenDev
         bit 1, :second_bit, reset: 1, access: :rw
       end
       # Import some data from IP-XACT
-      cr_import(path: "#{Origen.root}/imports/ipxact.xml")
+      cr_import(path: "#{Origen.root}/imports/ipxact.xml", refresh: true)
     end
 
     def add_atx2
@@ -31,7 +31,7 @@ module CrossOrigenDev
       include CrossOrigen
 
       def initialize
-        cr_import(path: "#{Origen.root}/approved/ip_xact_sub_block.xml")
+        cr_import(path: "#{Origen.root}/approved/ip_xact_sub_block.xml", refresh: true)
       end
     end
 

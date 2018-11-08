@@ -6,6 +6,39 @@ module CrossOrigen
 
     AddressBlock = Struct.new(:name, :base_address, :range, :width)
 
+    # Modified access type hash used in 1685-2009 (and 2014) schema
+    # NOTE: It is not possible to differentiate :rw from :dc on IP-XACT import.
+    @@access_hash = {
+      ro:    { base: 'read-only',       write: nil,             read: nil },
+      rw:    { base: 'read-write',      write: nil,             read: nil },
+      rc:    { base: 'read-only',       write: nil,             read: 'clear' },
+      rs:    { base: 'read-only',       write: nil,             read: 'set' },
+      wrc:   { base: 'read-write',      write: nil,             read: 'clear' },
+      wrs:   { base: 'read-write',      write: nil,             read: 'set' },
+      wc:    { base: 'read-write',      write: 'clear',         read: nil },
+      ws:    { base: 'read-write',      write: 'set',           read: nil },
+      wsrc:  { base: 'read-write',      write: 'set',           read: 'clear' },
+      wcrs:  { base: 'read-write',      write: 'clear',         read: 'set' },
+      w1c:   { base: 'read-write',      write: 'oneToClear',    read: nil },
+      w1s:   { base: 'read-write',      write: 'oneToSet',      read: nil },
+      w1t:   { base: 'read-write',      write: 'oneToToggle',   read: nil },
+      w0c:   { base: 'read-write',      write: 'zeroToClear',   read: nil },
+      w0s:   { base: 'read-write',      write: 'zeroToSet',     read: nil },
+      w0t:   { base: 'read-write',      write: 'zeroToToggle',  read: nil },
+      w1src: { base: 'read-write',      write: 'oneToSet',      read: 'clear' },
+      w1crs: { base: 'read-write',      write: 'oneToClear',    read: 'set' },
+      w0src: { base: 'read-write',      write: 'zeroToSet',     read: 'clear' },
+      w0crs: { base: 'read-write',      write: 'zeroToClear',   read: 'set' },
+      wo:    { base: 'write-only',      write: nil,             read: nil },
+      woc:   { base: 'write-only',      write: 'clear',         read: nil },
+      worz:  { base: 'write-only',      write: nil,             read: nil },
+      wos:   { base: 'write-only',      write: 'set',           read: nil },
+      w1:    { base: 'read-writeOnce',  write: nil,             read: nil },
+      wo1:   { base: 'writeOnce',       write: nil,             read: nil },
+      dc:    { base: 'read-write',      write: nil,             read: nil },
+      rowz:  { base: 'read-only',       write: nil,             read: 'clear' }
+    }
+
     # Import/reader that currently only supports creating registers and bit fields
     def import(file, options = {}) # rubocop:disable CyclomaticComplexity
       require 'kramdown'
@@ -66,15 +99,42 @@ module CrossOrigen
                 # Do a logical bitwise AND with the reset value and mask
                 reset_value = reset_value & reset_mask
               end
+              # Future expansion: pull in HDL path as abs_path in Origen.
               addr_block_obj.reg name, addr_offset, size: size, access: access, description: reg_description(register) do |reg|
                 register.xpath('spirit:field').each do |field|
                   name = fetch field.at_xpath('spirit:name'), downcase: true, to_sym: true, get_text: true
                   bit_offset = fetch field.at_xpath('spirit:bitOffset'), get_text: true, to_i: true
                   bit_width = fetch field.at_xpath('spirit:bitWidth'), get_text: true, to_i: true
-                  access = fetch field.at_xpath('spirit:access'), get_text: true
-                  if access =~ /\S+\-\S+/
-                    access = access[/^(\S)/, 1] + access[/\-(\S)\S+$/, 1]
-                    access = access.downcase.to_sym
+                  xml_access = fetch field.at_xpath('spirit:access'), get_text: true
+                  # Newer IP-XACT standards list access as < read or write>-< descriptor >, such as
+                  # "read-write", "read-only", or "read-writeOnce"
+                  if xml_access =~ /\S+\-\S+/ || xml_access == 'writeOnce'
+                    # This filter alone is not capable of interpreting the 1685-2009 (and 2014).  Therefore
+                    # must reverse-interpret the content of access_hash (see top of file).
+                    #
+                    # First get the base access type, ie: read-write, read-only, etc.
+                    # base_access = fetch field.at_xpath('spirit:access'), get_text: true
+                    base_access = xml_access
+                    # Next grab any modified write values or read actions
+                    mod_write = fetch field.at_xpath('spirit:modifiedWriteValue'), get_text: true
+                    read_action = fetch field.at_xpath('spirit:readAction'), get_text: true
+                    # Using base_access, mod_write, and read_action, look up the corresponding access
+                    # acronym from access_hash, noting it is not possible to differentiate write-only
+                    # from write-only, read zero and read-write from dc.
+                    #
+                    # Matched needs to be tracked, as there is no way to differentiate :rw and :dc in IP-XACT.
+                    # Everything imported will default to :rw, never :dc.
+                    matched = false
+                    @@access_hash.each_key do |key|
+                      if @@access_hash[key][:base] == base_access && @@access_hash[key][:write] == mod_write && @@access_hash[key][:read] == read_action && !matched
+                        access = key.to_sym
+                        matched = true
+                      end
+                    end
+                  # Older IP-XACT standards appear to also accept short acronyms like "ro", "w1c", "rw",
+                  # etc.
+                  elsif xml_access =~ /\S+/
+                    access = xml_access.downcase.to_sym
                   else
                     # default to read-write if access is not specified
                     access = :rw
@@ -130,38 +190,6 @@ xsi:schemaLocation="$REGMEM_HOME/builder/ipxact/schema/ipxact
       options = {
         include_bit_field_values: true
       }.merge(options)
-
-      # Modified access type hash used in 1685-2009 schema
-      access_hash = {
-        ro:    { write: nil,             read: nil },
-        rw:    { write: nil,             read: nil },
-        rc:    { write: nil,             read: 'clear' },
-        rs:    { write: nil,             read: 'set' },
-        wrc:   { write: nil,             read: 'clear' },
-        wrs:   { write: nil,             read: 'set' },
-        wc:    { write: 'clear',         read: nil },
-        ws:    { write: 'set',           read: nil },
-        wsrc:  { write: 'set',           read: 'clear' },
-        wcrs:  { write: 'clear',         read: 'set' },
-        w1c:   { write: 'oneToClear',    read: nil },
-        w1s:   { write: 'oneToSet',      read: nil },
-        w1t:   { write: 'oneToToggle',   read: nil },
-        w0c:   { write: 'zeroToClear',   read: nil },
-        w0s:   { write: 'zeroToSet',     read: nil },
-        w0t:   { write: 'zeroToToggle',  read: nil },
-        w1src: { write: 'oneToSet',      read: 'clear' },
-        w1crs: { write: 'oneToClear',    read: 'set' },
-        w0src: { write: 'zeroToSet',     read: 'clear' },
-        w0crs: { write: 'zeroToClear',   read: 'set' },
-        wo:    { write: nil,             read: nil },
-        woc:   { write: 'clear',         read: nil },
-        worz:  { write: nil,             read: nil },
-        wos:   { write: 'set',           read: nil },
-        w1:    { write: nil,             read: nil },
-        wo1:   { write: nil,             read: nil },
-        dc:    { write: nil,             read: nil },
-        rowz:  { write: nil,             read: 'clear' }
-      }
 
       @format = options[:format]
 
@@ -238,11 +266,17 @@ xsi:schemaLocation="$REGMEM_HOME/builder/ipxact/schema/ipxact
           spirit.memoryMaps do
             memory_maps.each do |map_name, _map|
               spirit.memoryMap do
-                # Optionally assign memory map name to something other than the module name in Ruby
-                spirit.name options[:mmap_name] || map_name
+                # Optionally assign memory map name to something other than the module name in Ruby,
+                # default to 'RegisterMap'
+                spirit.name options[:mmap_name] || 'RegisterMap'
                 address_blocks do |domain_name, _domain, sub_block|
                   spirit.addressBlock do
-                    spirit.name address_block_name(domain_name, sub_block)
+                    # When registers reside at the top level, do not assign an address block name
+                    if sub_block == owner
+                      spirit.name nil
+                    else
+                      spirit.name address_block_name(domain_name, sub_block)
+                    end
                     spirit.baseAddress sub_block.base_address.to_hex
                     spirit.range range(sub_block)
                     spirit.width width(sub_block)
@@ -269,42 +303,95 @@ xsi:schemaLocation="$REGMEM_HOME/builder/ipxact/schema/ipxact
                             spirit.description try(bits, :brief_description, :name_full, :full_name)
                             spirit.bitOffset bits.position
                             spirit.bitWidth bits.size
-                            if options[:schema] == '1685-2009' # Magillem tool uses alternate schema
+                            # When exporting to 1685-2009 schema, need to handle special cases (writeOnce),
+                            # modifiedWriteValue, and readAction fields.
+                            if options[:schema] == '1685-2009'
                               if bits.writable? && bits.readable?
-                                spirit.access 'read-write'
+                                if bits.access == :w1
+                                  spirit.access 'read-writeOnce'
+                                else
+                                  spirit.access 'read-write'
+                                end
                               elsif bits.writable?
-                                spirit.access 'write-only'
+                                if bits.access == :wo1
+                                  spirit.access 'writeOnce'
+                                else
+                                  spirit.access 'write-only'
+                                end
                               elsif bits.readable?
                                 spirit.access 'read-only'
                               end
                               if bits.readable?
-                                unless access_hash[bits.access][:read].nil?
-                                  spirit.readAction access_hash[bits.access][:read]
+                                unless @@access_hash[bits.access][:read].nil?
+                                  spirit.readAction @@access_hash[bits.access][:read]
                                 end
                               end
                               if bits.writable?
-                                unless access_hash[bits.access][:write].nil?
-                                  spirit.modifiedWriteValue access_hash[bits.access][:write]
+                                unless @@access_hash[bits.access][:write].nil?
+                                  spirit.modifiedWriteValue @@access_hash[bits.access][:write]
                                 end
                               end
                             else # Assume Spirit 1.4 if not
                               spirit.access bits.access
                             end
+                            # HDL paths provide hooks for a testbench to directly manipulate the
+                            # registers without having to go through a bus interface or read/write
+                            # protocol.  Because the hierarchical path to a register block can vary
+                            # greatly between devices, allow the user to provide an abs_path value
+                            # and define "full_reg_path" to assist.
+                            #
+                            # When registers reside at the top level of the memory map, assume "top"
+                            # for the register path name.  (Need to improve this process in the future.)
+                            if reg.owner.top_level? == true
+                              regpath = 'top'
+                            else
+                              regpath = reg.owner.path
+                            end
+                            # If :full_reg_path is defined, the :abs_path metadata for a register will
+                            # be used for regpath.  This can be assigned at an address block (sub-block)
+                            # level.
+                            unless options[:full_reg_path].nil? == true
+                              regpath = reg.path
+                            end
                             if options[:schema] == '1685-2009'
                               spirit.parameters do
                                 spirit.parameter do
                                   spirit.name '_hdlPath_'
-                                  spirit.value "ISYNTH.#{name.downcase}"
+                                  # HDL path needs to be to the declared bit field name, NOT to the bus slice
+                                  # that Origen's "abs_path" will yield.  Ex:
+                                  #
+                                  # ~~~ ruby
+                                  # reg :myreg, 0x0, size: 32 do |reg|
+                                  #   bits 7..4, :bits_high
+                                  #   bits 3..0, :bits_low
+                                  # end
+                                  # ~~~
+                                  #
+                                  # The abs_path to ...regs(:myreg).bits(:bits_low).abs_path will yield
+                                  # "myreg.myreg[3:0]", not "myreg.bits_low".  This is not an understood path
+                                  # in Origen (myreg[3:0] does not exist in either myreg's RegCollection or BitCollection),
+                                  # and does not sync with how RTL would create bits_low[3:0].
+                                  # Therefore, use the path to "myreg"'s owner appended with bits.name (bits_low here).
+                                  #
+                                  # This can be done in a register or sub_blocks definition by defining register
+                                  # metadata for "abs_path".  If the reg owner's path weren't used, but instead the
+                                  # reg's path, that would imply each register was a separate hierarchical path in
+                                  # RTL (ex: "top.myblock.regblock.myreg.myreg_bits"), which is normally not the case.
+                                  # The most likely path would be "top.myblock.regblock.myreg_bits.
+                                  spirit.value "#{regpath}.#{bits.name}"
                                 end
                               end
                             end
-                            if options[:schema] == '1685-2009'
-                              spirit.vendorExtensions do
-                                vendorext = { 'xmlns:vendorExtensions' => '$UVM_RGM_HOME/builder/ipxact/schema' }
-                                xml['vendorExtensions'].hdl_path vendorext, "ISYNTH.#{name}"
-                              end
-                            end
-                            # spirit.access bits.access
+                            # C. Hume - Unclear which vendorExtensions should be included by default, if any.
+                            # Future improvment: Allow passing of vendorExtensions enable & value hash/string
+                            # if options[:schema] == '1685-2009'
+                            #   spirit.vendorExtensions do
+                            #     vendorext = { 'xmlns:vendorExtensions' => '$UVM_RGM_HOME/builder/ipxact/schema' }
+                            #     xml['vendorExtensions'].hdl_path vendorext, "#{reg.path}.#{bits.name}"
+                            #   end
+                            # end
+
+                            # Allow optional inclusion of bit field values and descriptions
                             if options[:include_bit_field_values]
                               if bits.bit_value_descriptions[0]
                                 bits.bit_value_descriptions.each do |val, desc|
@@ -318,7 +405,7 @@ xsi:schemaLocation="$REGMEM_HOME/builder/ipxact/schema/ipxact
                             end
                             if uvm? && !(options[:schema] == '1685-2009')
                               spirit.vendorExtensions do
-                                xml['vendorExtensions'].hdl_path bits.path(relative_to: sub_block)
+                                xml['vendorExtensions'].hdl_path "#{regpath}.#{bits.name}"
                               end
                             end
                           end
@@ -332,6 +419,12 @@ xsi:schemaLocation="$REGMEM_HOME/builder/ipxact/schema/ipxact
                     #  end
                     # end
                   end
+                end
+                # Assume byte addressing if not specified
+                if owner.methods.include?(:lau) == false
+                  spirit.addressUnitBits 8
+                else
+                  spirit.addressUnitBits owner.lau
                 end
               end
             end
@@ -387,10 +480,7 @@ xsi:schemaLocation="$REGMEM_HOME/builder/ipxact/schema/ipxact
     end
 
     def memory_maps
-      # C. Hume - This is non-functional for iregGen when the memory map name is empty -
-      # replacing with owner.name
-      # { nil => {} }
-      { owner.name => {} }
+      { nil => {} }
     end
 
     def sub_blocks(domain_name)

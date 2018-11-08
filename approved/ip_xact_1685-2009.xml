@@ -3,7 +3,7 @@
   <spirit:vendor>origen-sdk.org</spirit:vendor>
   <spirit:library>id</spirit:library>
   <spirit:name>dut</spirit:name>
-  <spirit:version/>
+  <spirit:version></spirit:version>
   <spirit:busInterfaces>
     <spirit:busInterface>
       <spirit:name>Slave</spirit:name>
@@ -17,13 +17,13 @@
     <spirit:memoryMap>
       <spirit:name>RegisterMap</spirit:name>
       <spirit:addressBlock>
-        <spirit:name/>
+        <spirit:name></spirit:name>
         <spirit:baseAddress>0x0</spirit:baseAddress>
         <spirit:range>20</spirit:range>
         <spirit:width>32</spirit:width>
         <spirit:register>
           <spirit:name>dut_top_level_reg</spirit:name>
-          <spirit:description/>
+          <spirit:description></spirit:description>
           <spirit:addressOffset>0x0</spirit:addressOffset>
           <spirit:size>32</spirit:size>
           <spirit:access>read-write</spirit:access>
@@ -33,40 +33,34 @@
           </spirit:reset>
           <spirit:field>
             <spirit:name>second_bit</spirit:name>
-            <spirit:description/>
+            <spirit:description></spirit:description>
             <spirit:bitOffset>14</spirit:bitOffset>
             <spirit:bitWidth>1</spirit:bitWidth>
             <spirit:access>read-write</spirit:access>
             <spirit:parameters>
               <spirit:parameter>
                 <spirit:name>_hdlPath_</spirit:name>
-                <spirit:value>ISYNTH.second_bit</spirit:value>
+                <spirit:value>top.second_bit</spirit:value>
               </spirit:parameter>
             </spirit:parameters>
-            <spirit:vendorExtensions>
-              <vendorExtensions:hdl_path xmlns:vendorExtensions="$UVM_RGM_HOME/builder/ipxact/schema">ISYNTH.second_bit</vendorExtensions:hdl_path>
-            </spirit:vendorExtensions>
           </spirit:field>
           <spirit:field>
             <spirit:name>pls_work</spirit:name>
-            <spirit:description/>
+            <spirit:description></spirit:description>
             <spirit:bitOffset>15</spirit:bitOffset>
             <spirit:bitWidth>1</spirit:bitWidth>
             <spirit:access>read-write</spirit:access>
             <spirit:parameters>
               <spirit:parameter>
                 <spirit:name>_hdlPath_</spirit:name>
-                <spirit:value>ISYNTH.pls_work</spirit:value>
+                <spirit:value>top.pls_work</spirit:value>
               </spirit:parameter>
             </spirit:parameters>
-            <spirit:vendorExtensions>
-              <vendorExtensions:hdl_path xmlns:vendorExtensions="$UVM_RGM_HOME/builder/ipxact/schema">ISYNTH.pls_work</vendorExtensions:hdl_path>
-            </spirit:vendorExtensions>
           </spirit:field>
         </spirit:register>
         <spirit:register>
           <spirit:name>dut_top_level_reg_number_two</spirit:name>
-          <spirit:description/>
+          <spirit:description></spirit:description>
           <spirit:addressOffset>0x10</spirit:addressOffset>
           <spirit:size>32</spirit:size>
           <spirit:access>read-write</spirit:access>
@@ -76,35 +70,29 @@
           </spirit:reset>
           <spirit:field>
             <spirit:name>second_bit</spirit:name>
-            <spirit:description/>
+            <spirit:description></spirit:description>
             <spirit:bitOffset>1</spirit:bitOffset>
             <spirit:bitWidth>1</spirit:bitWidth>
             <spirit:access>read-write</spirit:access>
             <spirit:parameters>
               <spirit:parameter>
                 <spirit:name>_hdlPath_</spirit:name>
-                <spirit:value>ISYNTH.second_bit</spirit:value>
+                <spirit:value>top.second_bit</spirit:value>
               </spirit:parameter>
             </spirit:parameters>
-            <spirit:vendorExtensions>
-              <vendorExtensions:hdl_path xmlns:vendorExtensions="$UVM_RGM_HOME/builder/ipxact/schema">ISYNTH.second_bit</vendorExtensions:hdl_path>
-            </spirit:vendorExtensions>
           </spirit:field>
           <spirit:field>
             <spirit:name>pls_work</spirit:name>
-            <spirit:description/>
+            <spirit:description></spirit:description>
             <spirit:bitOffset>0</spirit:bitOffset>
             <spirit:bitWidth>1</spirit:bitWidth>
             <spirit:access>read-only</spirit:access>
             <spirit:parameters>
               <spirit:parameter>
                 <spirit:name>_hdlPath_</spirit:name>
-                <spirit:value>ISYNTH.pls_work</spirit:value>
+                <spirit:value>top.pls_work</spirit:value>
               </spirit:parameter>
             </spirit:parameters>
-            <spirit:vendorExtensions>
-              <vendorExtensions:hdl_path xmlns:vendorExtensions="$UVM_RGM_HOME/builder/ipxact/schema">ISYNTH.pls_work</vendorExtensions:hdl_path>
-            </spirit:vendorExtensions>
           </spirit:field>
         </spirit:register>
       </spirit:addressBlock>
@@ -132,16 +120,13 @@
             <spirit:parameters>
               <spirit:parameter>
                 <spirit:name>_hdlPath_</spirit:name>
-                <spirit:value>ISYNTH.osch</spirit:value>
+                <spirit:value>atx.osch</spirit:value>
               </spirit:parameter>
             </spirit:parameters>
-            <spirit:vendorExtensions>
-              <vendorExtensions:hdl_path xmlns:vendorExtensions="$UVM_RGM_HOME/builder/ipxact/schema">ISYNTH.osch</vendorExtensions:hdl_path>
-            </spirit:vendorExtensions>
             <spirit:values>
               <spirit:value>0x0</spirit:value>
               <spirit:name>val_0x0</spirit:name>
-              <spirit:description>Clock is the externally supplied bus clock ipg_clk</spirit:description>
+              <spirit:description>Clock is the externally supplied bus clock bus_clk</spirit:description>
             </spirit:values>
             <spirit:values>
               <spirit:value>0x1</spirit:value>
@@ -162,39 +147,33 @@
           </spirit:reset>
           <spirit:field>
             <spirit:name>readonly</spirit:name>
-            <spirit:description/>
+            <spirit:description></spirit:description>
             <spirit:bitOffset>31</spirit:bitOffset>
             <spirit:bitWidth>1</spirit:bitWidth>
             <spirit:access>read-only</spirit:access>
             <spirit:parameters>
               <spirit:parameter>
                 <spirit:name>_hdlPath_</spirit:name>
-                <spirit:value>ISYNTH.readonly</spirit:value>
+                <spirit:value>atx.readonly</spirit:value>
               </spirit:parameter>
             </spirit:parameters>
-            <spirit:vendorExtensions>
-              <vendorExtensions:hdl_path xmlns:vendorExtensions="$UVM_RGM_HOME/builder/ipxact/schema">ISYNTH.readonly</vendorExtensions:hdl_path>
-            </spirit:vendorExtensions>
           </spirit:field>
           <spirit:field>
             <spirit:name>readwrite</spirit:name>
-            <spirit:description/>
+            <spirit:description></spirit:description>
             <spirit:bitOffset>30</spirit:bitOffset>
             <spirit:bitWidth>1</spirit:bitWidth>
             <spirit:access>read-write</spirit:access>
             <spirit:parameters>
               <spirit:parameter>
                 <spirit:name>_hdlPath_</spirit:name>
-                <spirit:value>ISYNTH.readwrite</spirit:value>
+                <spirit:value>atx.readwrite</spirit:value>
               </spirit:parameter>
             </spirit:parameters>
-            <spirit:vendorExtensions>
-              <vendorExtensions:hdl_path xmlns:vendorExtensions="$UVM_RGM_HOME/builder/ipxact/schema">ISYNTH.readwrite</vendorExtensions:hdl_path>
-            </spirit:vendorExtensions>
           </spirit:field>
           <spirit:field>
             <spirit:name>readclear</spirit:name>
-            <spirit:description/>
+            <spirit:description></spirit:description>
             <spirit:bitOffset>29</spirit:bitOffset>
             <spirit:bitWidth>1</spirit:bitWidth>
             <spirit:access>read-write</spirit:access>
@@ -202,16 +181,13 @@
             <spirit:parameters>
               <spirit:parameter>
                 <spirit:name>_hdlPath_</spirit:name>
-                <spirit:value>ISYNTH.readclear</spirit:value>
+                <spirit:value>atx.readclear</spirit:value>
               </spirit:parameter>
             </spirit:parameters>
-            <spirit:vendorExtensions>
-              <vendorExtensions:hdl_path xmlns:vendorExtensions="$UVM_RGM_HOME/builder/ipxact/schema">ISYNTH.readclear</vendorExtensions:hdl_path>
-            </spirit:vendorExtensions>
           </spirit:field>
           <spirit:field>
             <spirit:name>readset</spirit:name>
-            <spirit:description/>
+            <spirit:description></spirit:description>
             <spirit:bitOffset>28</spirit:bitOffset>
             <spirit:bitWidth>1</spirit:bitWidth>
             <spirit:access>read-write</spirit:access>
@@ -219,16 +195,13 @@
             <spirit:parameters>
               <spirit:parameter>
                 <spirit:name>_hdlPath_</spirit:name>
-                <spirit:value>ISYNTH.readset</spirit:value>
+                <spirit:value>atx.readset</spirit:value>
               </spirit:parameter>
             </spirit:parameters>
-            <spirit:vendorExtensions>
-              <vendorExtensions:hdl_path xmlns:vendorExtensions="$UVM_RGM_HOME/builder/ipxact/schema">ISYNTH.readset</vendorExtensions:hdl_path>
-            </spirit:vendorExtensions>
           </spirit:field>
           <spirit:field>
             <spirit:name>writablereadclear</spirit:name>
-            <spirit:description/>
+            <spirit:description></spirit:description>
             <spirit:bitOffset>27</spirit:bitOffset>
             <spirit:bitWidth>1</spirit:bitWidth>
             <spirit:access>read-write</spirit:access>
@@ -236,16 +209,13 @@
             <spirit:parameters>
               <spirit:parameter>
                 <spirit:name>_hdlPath_</spirit:name>
-                <spirit:value>ISYNTH.writablereadclear</spirit:value>
+                <spirit:value>atx.writablereadclear</spirit:value>
               </spirit:parameter>
             </spirit:parameters>
-            <spirit:vendorExtensions>
-              <vendorExtensions:hdl_path xmlns:vendorExtensions="$UVM_RGM_HOME/builder/ipxact/schema">ISYNTH.writablereadclear</vendorExtensions:hdl_path>
-            </spirit:vendorExtensions>
           </spirit:field>
           <spirit:field>
             <spirit:name>writablereadset</spirit:name>
-            <spirit:description/>
+            <spirit:description></spirit:description>
             <spirit:bitOffset>26</spirit:bitOffset>
             <spirit:bitWidth>1</spirit:bitWidth>
             <spirit:access>read-write</spirit:access>
@@ -253,16 +223,13 @@
             <spirit:parameters>
               <spirit:parameter>
                 <spirit:name>_hdlPath_</spirit:name>
-                <spirit:value>ISYNTH.writablereadset</spirit:value>
+                <spirit:value>atx.writablereadset</spirit:value>
               </spirit:parameter>
             </spirit:parameters>
-            <spirit:vendorExtensions>
-              <vendorExtensions:hdl_path xmlns:vendorExtensions="$UVM_RGM_HOME/builder/ipxact/schema">ISYNTH.writablereadset</vendorExtensions:hdl_path>
-            </spirit:vendorExtensions>
           </spirit:field>
           <spirit:field>
             <spirit:name>writeclear</spirit:name>
-            <spirit:description/>
+            <spirit:description></spirit:description>
             <spirit:bitOffset>25</spirit:bitOffset>
             <spirit:bitWidth>1</spirit:bitWidth>
             <spirit:access>read-write</spirit:access>
@@ -270,16 +237,13 @@
             <spirit:parameters>
               <spirit:parameter>
                 <spirit:name>_hdlPath_</spirit:name>
-                <spirit:value>ISYNTH.writeclear</spirit:value>
+                <spirit:value>atx.writeclear</spirit:value>
               </spirit:parameter>
             </spirit:parameters>
-            <spirit:vendorExtensions>
-              <vendorExtensions:hdl_path xmlns:vendorExtensions="$UVM_RGM_HOME/builder/ipxact/schema">ISYNTH.writeclear</vendorExtensions:hdl_path>
-            </spirit:vendorExtensions>
           </spirit:field>
           <spirit:field>
             <spirit:name>writeset</spirit:name>
-            <spirit:description/>
+            <spirit:description></spirit:description>
             <spirit:bitOffset>24</spirit:bitOffset>
             <spirit:bitWidth>1</spirit:bitWidth>
             <spirit:access>read-write</spirit:access>
@@ -287,16 +251,13 @@
             <spirit:parameters>
               <spirit:parameter>
                 <spirit:name>_hdlPath_</spirit:name>
-                <spirit:value>ISYNTH.writeset</spirit:value>
+                <spirit:value>atx.writeset</spirit:value>
               </spirit:parameter>
             </spirit:parameters>
-            <spirit:vendorExtensions>
-              <vendorExtensions:hdl_path xmlns:vendorExtensions="$UVM_RGM_HOME/builder/ipxact/schema">ISYNTH.writeset</vendorExtensions:hdl_path>
-            </spirit:vendorExtensions>
           </spirit:field>
           <spirit:field>
             <spirit:name>writesetreadclear</spirit:name>
-            <spirit:description/>
+            <spirit:description></spirit:description>
             <spirit:bitOffset>23</spirit:bitOffset>
             <spirit:bitWidth>1</spirit:bitWidth>
             <spirit:access>read-write</spirit:access>
@@ -305,16 +266,13 @@
             <spirit:parameters>
               <spirit:parameter>
                 <spirit:name>_hdlPath_</spirit:name>
-                <spirit:value>ISYNTH.writesetreadclear</spirit:value>
+                <spirit:value>atx.writesetreadclear</spirit:value>
               </spirit:parameter>
             </spirit:parameters>
-            <spirit:vendorExtensions>
-              <vendorExtensions:hdl_path xmlns:vendorExtensions="$UVM_RGM_HOME/builder/ipxact/schema">ISYNTH.writesetreadclear</vendorExtensions:hdl_path>
-            </spirit:vendorExtensions>
           </spirit:field>
           <spirit:field>
             <spirit:name>writeclearreadset</spirit:name>
-            <spirit:description/>
+            <spirit:description></spirit:description>
             <spirit:bitOffset>22</spirit:bitOffset>
             <spirit:bitWidth>1</spirit:bitWidth>
             <spirit:access>read-write</spirit:access>
@@ -323,16 +281,13 @@
             <spirit:parameters>
               <spirit:parameter>
                 <spirit:name>_hdlPath_</spirit:name>
-                <spirit:value>ISYNTH.writeclearreadset</spirit:value>
+                <spirit:value>atx.writeclearreadset</spirit:value>
               </spirit:parameter>
             </spirit:parameters>
-            <spirit:vendorExtensions>
-              <vendorExtensions:hdl_path xmlns:vendorExtensions="$UVM_RGM_HOME/builder/ipxact/schema">ISYNTH.writeclearreadset</vendorExtensions:hdl_path>
-            </spirit:vendorExtensions>
           </spirit:field>
           <spirit:field>
             <spirit:name>write1toclear</spirit:name>
-            <spirit:description/>
+            <spirit:description></spirit:description>
             <spirit:bitOffset>21</spirit:bitOffset>
             <spirit:bitWidth>1</spirit:bitWidth>
             <spirit:access>read-write</spirit:access>
@@ -340,16 +295,13 @@
             <spirit:parameters>
               <spirit:parameter>
                 <spirit:name>_hdlPath_</spirit:name>
-                <spirit:value>ISYNTH.write1toclear</spirit:value>
+                <spirit:value>atx.write1toclear</spirit:value>
               </spirit:parameter>
             </spirit:parameters>
-            <spirit:vendorExtensions>
-              <vendorExtensions:hdl_path xmlns:vendorExtensions="$UVM_RGM_HOME/builder/ipxact/schema">ISYNTH.write1toclear</vendorExtensions:hdl_path>
-            </spirit:vendorExtensions>
           </spirit:field>
           <spirit:field>
             <spirit:name>write1toset</spirit:name>
-            <spirit:description/>
+            <spirit:description></spirit:description>
             <spirit:bitOffset>20</spirit:bitOffset>
             <spirit:bitWidth>1</spirit:bitWidth>
             <spirit:access>read-write</spirit:access>
@@ -357,16 +309,13 @@
             <spirit:parameters>
               <spirit:parameter>
                 <spirit:name>_hdlPath_</spirit:name>
-                <spirit:value>ISYNTH.write1toset</spirit:value>
+                <spirit:value>atx.write1toset</spirit:value>
               </spirit:parameter>
             </spirit:parameters>
-            <spirit:vendorExtensions>
-              <vendorExtensions:hdl_path xmlns:vendorExtensions="$UVM_RGM_HOME/builder/ipxact/schema">ISYNTH.write1toset</vendorExtensions:hdl_path>
-            </spirit:vendorExtensions>
           </spirit:field>
           <spirit:field>
             <spirit:name>write1totoggle</spirit:name>
-            <spirit:description/>
+            <spirit:description></spirit:description>
             <spirit:bitOffset>19</spirit:bitOffset>
             <spirit:bitWidth>1</spirit:bitWidth>
             <spirit:access>read-write</spirit:access>
@@ -374,16 +323,13 @@
             <spirit:parameters>
               <spirit:parameter>
                 <spirit:name>_hdlPath_</spirit:name>
-                <spirit:value>ISYNTH.write1totoggle</spirit:value>
+                <spirit:value>atx.write1totoggle</spirit:value>
               </spirit:parameter>
             </spirit:parameters>
-            <spirit:vendorExtensions>
-              <vendorExtensions:hdl_path xmlns:vendorExtensions="$UVM_RGM_HOME/builder/ipxact/schema">ISYNTH.write1totoggle</vendorExtensions:hdl_path>
-            </spirit:vendorExtensions>
           </spirit:field>
           <spirit:field>
             <spirit:name>write0toclear</spirit:name>
-            <spirit:description/>
+            <spirit:description></spirit:description>
             <spirit:bitOffset>18</spirit:bitOffset>
             <spirit:bitWidth>1</spirit:bitWidth>
             <spirit:access>read-write</spirit:access>
@@ -391,16 +337,13 @@
             <spirit:parameters>
               <spirit:parameter>
                 <spirit:name>_hdlPath_</spirit:name>
-                <spirit:value>ISYNTH.write0toclear</spirit:value>
+                <spirit:value>atx.write0toclear</spirit:value>
               </spirit:parameter>
             </spirit:parameters>
-            <spirit:vendorExtensions>
-              <vendorExtensions:hdl_path xmlns:vendorExtensions="$UVM_RGM_HOME/builder/ipxact/schema">ISYNTH.write0toclear</vendorExtensions:hdl_path>
-            </spirit:vendorExtensions>
           </spirit:field>
           <spirit:field>
             <spirit:name>write0toset</spirit:name>
-            <spirit:description/>
+            <spirit:description></spirit:description>
             <spirit:bitOffset>17</spirit:bitOffset>
             <spirit:bitWidth>1</spirit:bitWidth>
             <spirit:access>read-write</spirit:access>
@@ -408,16 +351,13 @@
             <spirit:parameters>
               <spirit:parameter>
                 <spirit:name>_hdlPath_</spirit:name>
-                <spirit:value>ISYNTH.write0toset</spirit:value>
+                <spirit:value>atx.write0toset</spirit:value>
               </spirit:parameter>
             </spirit:parameters>
-            <spirit:vendorExtensions>
-              <vendorExtensions:hdl_path xmlns:vendorExtensions="$UVM_RGM_HOME/builder/ipxact/schema">ISYNTH.write0toset</vendorExtensions:hdl_path>
-            </spirit:vendorExtensions>
           </spirit:field>
           <spirit:field>
             <spirit:name>write0totoggle</spirit:name>
-            <spirit:description/>
+            <spirit:description></spirit:description>
             <spirit:bitOffset>16</spirit:bitOffset>
             <spirit:bitWidth>1</spirit:bitWidth>
             <spirit:access>read-write</spirit:access>
@@ -425,16 +365,13 @@
             <spirit:parameters>
               <spirit:parameter>
                 <spirit:name>_hdlPath_</spirit:name>
-                <spirit:value>ISYNTH.write0totoggle</spirit:value>
+                <spirit:value>atx.write0totoggle</spirit:value>
               </spirit:parameter>
             </spirit:parameters>
-            <spirit:vendorExtensions>
-              <vendorExtensions:hdl_path xmlns:vendorExtensions="$UVM_RGM_HOME/builder/ipxact/schema">ISYNTH.write0totoggle</vendorExtensions:hdl_path>
-            </spirit:vendorExtensions>
           </spirit:field>
           <spirit:field>
             <spirit:name>write1tosetreadclear</spirit:name>
-            <spirit:description/>
+            <spirit:description></spirit:description>
             <spirit:bitOffset>15</spirit:bitOffset>
             <spirit:bitWidth>1</spirit:bitWidth>
             <spirit:access>read-write</spirit:access>
@@ -443,16 +380,13 @@
             <spirit:parameters>
               <spirit:parameter>
                 <spirit:name>_hdlPath_</spirit:name>
-                <spirit:value>ISYNTH.write1tosetreadclear</spirit:value>
+                <spirit:value>atx.write1tosetreadclear</spirit:value>
               </spirit:parameter>
             </spirit:parameters>
-            <spirit:vendorExtensions>
-              <vendorExtensions:hdl_path xmlns:vendorExtensions="$UVM_RGM_HOME/builder/ipxact/schema">ISYNTH.write1tosetreadclear</vendorExtensions:hdl_path>
-            </spirit:vendorExtensions>
           </spirit:field>
           <spirit:field>
             <spirit:name>write1toclearreadset</spirit:name>
-            <spirit:description/>
+            <spirit:description></spirit:description>
             <spirit:bitOffset>14</spirit:bitOffset>
             <spirit:bitWidth>1</spirit:bitWidth>
             <spirit:access>read-write</spirit:access>
@@ -461,16 +395,13 @@
             <spirit:parameters>
               <spirit:parameter>
                 <spirit:name>_hdlPath_</spirit:name>
-                <spirit:value>ISYNTH.write1toclearreadset</spirit:value>
+                <spirit:value>atx.write1toclearreadset</spirit:value>
               </spirit:parameter>
             </spirit:parameters>
-            <spirit:vendorExtensions>
-              <vendorExtensions:hdl_path xmlns:vendorExtensions="$UVM_RGM_HOME/builder/ipxact/schema">ISYNTH.write1toclearreadset</vendorExtensions:hdl_path>
-            </spirit:vendorExtensions>
           </spirit:field>
           <spirit:field>
             <spirit:name>write0tosetreadclear</spirit:name>
-            <spirit:description/>
+            <spirit:description></spirit:description>
             <spirit:bitOffset>13</spirit:bitOffset>
             <spirit:bitWidth>1</spirit:bitWidth>
             <spirit:access>read-write</spirit:access>
@@ -479,16 +410,13 @@
             <spirit:parameters>
               <spirit:parameter>
                 <spirit:name>_hdlPath_</spirit:name>
-                <spirit:value>ISYNTH.write0tosetreadclear</spirit:value>
+                <spirit:value>atx.write0tosetreadclear</spirit:value>
               </spirit:parameter>
             </spirit:parameters>
-            <spirit:vendorExtensions>
-              <vendorExtensions:hdl_path xmlns:vendorExtensions="$UVM_RGM_HOME/builder/ipxact/schema">ISYNTH.write0tosetreadclear</vendorExtensions:hdl_path>
-            </spirit:vendorExtensions>
           </spirit:field>
           <spirit:field>
             <spirit:name>write0toclearreadset</spirit:name>
-            <spirit:description/>
+            <spirit:description></spirit:description>
             <spirit:bitOffset>12</spirit:bitOffset>
             <spirit:bitWidth>1</spirit:bitWidth>
             <spirit:access>read-write</spirit:access>
@@ -497,32 +425,26 @@
             <spirit:parameters>
               <spirit:parameter>
                 <spirit:name>_hdlPath_</spirit:name>
-                <spirit:value>ISYNTH.write0toclearreadset</spirit:value>
+                <spirit:value>atx.write0toclearreadset</spirit:value>
               </spirit:parameter>
             </spirit:parameters>
-            <spirit:vendorExtensions>
-              <vendorExtensions:hdl_path xmlns:vendorExtensions="$UVM_RGM_HOME/builder/ipxact/schema">ISYNTH.write0toclearreadset</vendorExtensions:hdl_path>
-            </spirit:vendorExtensions>
           </spirit:field>
           <spirit:field>
             <spirit:name>writeonly</spirit:name>
-            <spirit:description/>
+            <spirit:description></spirit:description>
             <spirit:bitOffset>11</spirit:bitOffset>
             <spirit:bitWidth>1</spirit:bitWidth>
             <spirit:access>write-only</spirit:access>
             <spirit:parameters>
               <spirit:parameter>
                 <spirit:name>_hdlPath_</spirit:name>
-                <spirit:value>ISYNTH.writeonly</spirit:value>
+                <spirit:value>atx.writeonly</spirit:value>
               </spirit:parameter>
             </spirit:parameters>
-            <spirit:vendorExtensions>
-              <vendorExtensions:hdl_path xmlns:vendorExtensions="$UVM_RGM_HOME/builder/ipxact/schema">ISYNTH.writeonly</vendorExtensions:hdl_path>
-            </spirit:vendorExtensions>
           </spirit:field>
           <spirit:field>
             <spirit:name>writeonlyclear</spirit:name>
-            <spirit:description/>
+            <spirit:description></spirit:description>
             <spirit:bitOffset>10</spirit:bitOffset>
             <spirit:bitWidth>1</spirit:bitWidth>
             <spirit:access>read-write</spirit:access>
@@ -530,32 +452,26 @@
             <spirit:parameters>
               <spirit:parameter>
                 <spirit:name>_hdlPath_</spirit:name>
-                <spirit:value>ISYNTH.writeonlyclear</spirit:value>
+                <spirit:value>atx.writeonlyclear</spirit:value>
               </spirit:parameter>
             </spirit:parameters>
-            <spirit:vendorExtensions>
-              <vendorExtensions:hdl_path xmlns:vendorExtensions="$UVM_RGM_HOME/builder/ipxact/schema">ISYNTH.writeonlyclear</vendorExtensions:hdl_path>
-            </spirit:vendorExtensions>
           </spirit:field>
           <spirit:field>
             <spirit:name>writeonlyreadzero</spirit:name>
-            <spirit:description/>
+            <spirit:description></spirit:description>
             <spirit:bitOffset>9</spirit:bitOffset>
             <spirit:bitWidth>1</spirit:bitWidth>
             <spirit:access>write-only</spirit:access>
             <spirit:parameters>
               <spirit:parameter>
                 <spirit:name>_hdlPath_</spirit:name>
-                <spirit:value>ISYNTH.writeonlyreadzero</spirit:value>
+                <spirit:value>atx.writeonlyreadzero</spirit:value>
               </spirit:parameter>
             </spirit:parameters>
-            <spirit:vendorExtensions>
-              <vendorExtensions:hdl_path xmlns:vendorExtensions="$UVM_RGM_HOME/builder/ipxact/schema">ISYNTH.writeonlyreadzero</vendorExtensions:hdl_path>
-            </spirit:vendorExtensions>
           </spirit:field>
           <spirit:field>
             <spirit:name>writeonlyset</spirit:name>
-            <spirit:description/>
+            <spirit:description></spirit:description>
             <spirit:bitOffset>8</spirit:bitOffset>
             <spirit:bitWidth>1</spirit:bitWidth>
             <spirit:access>read-write</spirit:access>
@@ -563,64 +479,52 @@
             <spirit:parameters>
               <spirit:parameter>
                 <spirit:name>_hdlPath_</spirit:name>
-                <spirit:value>ISYNTH.writeonlyset</spirit:value>
+                <spirit:value>atx.writeonlyset</spirit:value>
               </spirit:parameter>
             </spirit:parameters>
-            <spirit:vendorExtensions>
-              <vendorExtensions:hdl_path xmlns:vendorExtensions="$UVM_RGM_HOME/builder/ipxact/schema">ISYNTH.writeonlyset</vendorExtensions:hdl_path>
-            </spirit:vendorExtensions>
           </spirit:field>
           <spirit:field>
             <spirit:name>writeonce</spirit:name>
-            <spirit:description/>
+            <spirit:description></spirit:description>
             <spirit:bitOffset>7</spirit:bitOffset>
             <spirit:bitWidth>1</spirit:bitWidth>
-            <spirit:access>read-write</spirit:access>
+            <spirit:access>read-writeOnce</spirit:access>
             <spirit:parameters>
               <spirit:parameter>
                 <spirit:name>_hdlPath_</spirit:name>
-                <spirit:value>ISYNTH.writeonce</spirit:value>
+                <spirit:value>atx.writeonce</spirit:value>
               </spirit:parameter>
             </spirit:parameters>
-            <spirit:vendorExtensions>
-              <vendorExtensions:hdl_path xmlns:vendorExtensions="$UVM_RGM_HOME/builder/ipxact/schema">ISYNTH.writeonce</vendorExtensions:hdl_path>
-            </spirit:vendorExtensions>
           </spirit:field>
           <spirit:field>
             <spirit:name>writeonlyonce</spirit:name>
-            <spirit:description/>
+            <spirit:description></spirit:description>
             <spirit:bitOffset>6</spirit:bitOffset>
             <spirit:bitWidth>1</spirit:bitWidth>
             <spirit:access>read-write</spirit:access>
             <spirit:parameters>
               <spirit:parameter>
                 <spirit:name>_hdlPath_</spirit:name>
-                <spirit:value>ISYNTH.writeonlyonce</spirit:value>
+                <spirit:value>atx.writeonlyonce</spirit:value>
               </spirit:parameter>
             </spirit:parameters>
-            <spirit:vendorExtensions>
-              <vendorExtensions:hdl_path xmlns:vendorExtensions="$UVM_RGM_HOME/builder/ipxact/schema">ISYNTH.writeonlyonce</vendorExtensions:hdl_path>
-            </spirit:vendorExtensions>
           </spirit:field>
           <spirit:field>
             <spirit:name>readwritenocheck</spirit:name>
-            <spirit:description/>
+            <spirit:description></spirit:description>
             <spirit:bitOffset>5</spirit:bitOffset>
             <spirit:bitWidth>1</spirit:bitWidth>
             <spirit:access>read-write</spirit:access>
             <spirit:parameters>
               <spirit:parameter>
                 <spirit:name>_hdlPath_</spirit:name>
-                <spirit:value>ISYNTH.readwritenocheck</spirit:value>
+                <spirit:value>atx.readwritenocheck</spirit:value>
               </spirit:parameter>
             </spirit:parameters>
-            <spirit:vendorExtensions>
-              <vendorExtensions:hdl_path xmlns:vendorExtensions="$UVM_RGM_HOME/builder/ipxact/schema">ISYNTH.readwritenocheck</vendorExtensions:hdl_path>
-            </spirit:vendorExtensions>
           </spirit:field>
           <spirit:field>
             <spirit:name>readonlyclearafter</spirit:name>
-            <spirit:description/>
+            <spirit:description></spirit:description>
             <spirit:bitOffset>4</spirit:bitOffset>
             <spirit:bitWidth>1</spirit:bitWidth>
             <spirit:access>read-write</spirit:access>
@@ -628,12 +532,9 @@
             <spirit:parameters>
               <spirit:parameter>
                 <spirit:name>_hdlPath_</spirit:name>
-                <spirit:value>ISYNTH.readonlyclearafter</spirit:value>
+                <spirit:value>atx.readonlyclearafter</spirit:value>
               </spirit:parameter>
             </spirit:parameters>
-            <spirit:vendorExtensions>
-              <vendorExtensions:hdl_path xmlns:vendorExtensions="$UVM_RGM_HOME/builder/ipxact/schema">ISYNTH.readonlyclearafter</vendorExtensions:hdl_path>
-            </spirit:vendorExtensions>
           </spirit:field>
         </spirit:register>
       </spirit:addressBlock>
@@ -644,7 +545,7 @@
         <spirit:width>32</spirit:width>
         <spirit:register>
           <spirit:name>reg0</spirit:name>
-          <spirit:description/>
+          <spirit:description></spirit:description>
           <spirit:addressOffset>0x0</spirit:addressOffset>
           <spirit:size>8</spirit:size>
           <spirit:access>read-only</spirit:access>
@@ -655,7 +556,7 @@
         </spirit:register>
         <spirit:register>
           <spirit:name>reg1</spirit:name>
-          <spirit:description/>
+          <spirit:description></spirit:description>
           <spirit:addressOffset>0x1</spirit:addressOffset>
           <spirit:size>8</spirit:size>
           <spirit:access>read-write</spirit:access>
@@ -665,24 +566,21 @@
           </spirit:reset>
           <spirit:field>
             <spirit:name>reg1_f</spirit:name>
-            <spirit:description/>
+            <spirit:description></spirit:description>
             <spirit:bitOffset>0</spirit:bitOffset>
             <spirit:bitWidth>8</spirit:bitWidth>
             <spirit:access>read-write</spirit:access>
             <spirit:parameters>
               <spirit:parameter>
                 <spirit:name>_hdlPath_</spirit:name>
-                <spirit:value>ISYNTH.reg1_f</spirit:value>
+                <spirit:value>am0.rf1.reg1_f</spirit:value>
               </spirit:parameter>
             </spirit:parameters>
-            <spirit:vendorExtensions>
-              <vendorExtensions:hdl_path xmlns:vendorExtensions="$UVM_RGM_HOME/builder/ipxact/schema">ISYNTH.reg1_f</vendorExtensions:hdl_path>
-            </spirit:vendorExtensions>
           </spirit:field>
         </spirit:register>
         <spirit:register>
           <spirit:name>reg2</spirit:name>
-          <spirit:description/>
+          <spirit:description></spirit:description>
           <spirit:addressOffset>0x2</spirit:addressOffset>
           <spirit:size>8</spirit:size>
           <spirit:access>read-write</spirit:access>
@@ -692,40 +590,34 @@
           </spirit:reset>
           <spirit:field>
             <spirit:name>f2</spirit:name>
-            <spirit:description/>
+            <spirit:description></spirit:description>
             <spirit:bitOffset>6</spirit:bitOffset>
             <spirit:bitWidth>2</spirit:bitWidth>
             <spirit:access>read-write</spirit:access>
             <spirit:parameters>
               <spirit:parameter>
                 <spirit:name>_hdlPath_</spirit:name>
-                <spirit:value>ISYNTH.f2</spirit:value>
+                <spirit:value>am0.rf1.f2</spirit:value>
               </spirit:parameter>
             </spirit:parameters>
-            <spirit:vendorExtensions>
-              <vendorExtensions:hdl_path xmlns:vendorExtensions="$UVM_RGM_HOME/builder/ipxact/schema">ISYNTH.f2</vendorExtensions:hdl_path>
-            </spirit:vendorExtensions>
           </spirit:field>
           <spirit:field>
             <spirit:name>f0</spirit:name>
-            <spirit:description/>
+            <spirit:description></spirit:description>
             <spirit:bitOffset>0</spirit:bitOffset>
             <spirit:bitWidth>2</spirit:bitWidth>
             <spirit:access>read-write</spirit:access>
             <spirit:parameters>
               <spirit:parameter>
                 <spirit:name>_hdlPath_</spirit:name>
-                <spirit:value>ISYNTH.f0</spirit:value>
+                <spirit:value>am0.rf1.f0</spirit:value>
               </spirit:parameter>
             </spirit:parameters>
-            <spirit:vendorExtensions>
-              <vendorExtensions:hdl_path xmlns:vendorExtensions="$UVM_RGM_HOME/builder/ipxact/schema">ISYNTH.f0</vendorExtensions:hdl_path>
-            </spirit:vendorExtensions>
           </spirit:field>
         </spirit:register>
         <spirit:register>
           <spirit:name>reg3</spirit:name>
-          <spirit:description/>
+          <spirit:description></spirit:description>
           <spirit:addressOffset>0x3</spirit:addressOffset>
           <spirit:size>8</spirit:size>
           <spirit:access>read-write</spirit:access>
@@ -735,24 +627,21 @@
           </spirit:reset>
           <spirit:field>
             <spirit:name>f0</spirit:name>
-            <spirit:description/>
+            <spirit:description></spirit:description>
             <spirit:bitOffset>3</spirit:bitOffset>
             <spirit:bitWidth>3</spirit:bitWidth>
             <spirit:access>read-write</spirit:access>
             <spirit:parameters>
               <spirit:parameter>
                 <spirit:name>_hdlPath_</spirit:name>
-                <spirit:value>ISYNTH.f0</spirit:value>
+                <spirit:value>am0.rf1.f0</spirit:value>
               </spirit:parameter>
             </spirit:parameters>
-            <spirit:vendorExtensions>
-              <vendorExtensions:hdl_path xmlns:vendorExtensions="$UVM_RGM_HOME/builder/ipxact/schema">ISYNTH.f0</vendorExtensions:hdl_path>
-            </spirit:vendorExtensions>
           </spirit:field>
         </spirit:register>
         <spirit:register>
           <spirit:name>reg4</spirit:name>
-          <spirit:description/>
+          <spirit:description></spirit:description>
           <spirit:addressOffset>0x4</spirit:addressOffset>
           <spirit:size>8</spirit:size>
           <spirit:access>read-write</spirit:access>
@@ -762,88 +651,73 @@
           </spirit:reset>
           <spirit:field>
             <spirit:name>rsv</spirit:name>
-            <spirit:description/>
+            <spirit:description></spirit:description>
             <spirit:bitOffset>6</spirit:bitOffset>
             <spirit:bitWidth>2</spirit:bitWidth>
             <spirit:access>read-write</spirit:access>
             <spirit:parameters>
               <spirit:parameter>
                 <spirit:name>_hdlPath_</spirit:name>
-                <spirit:value>ISYNTH.rsv</spirit:value>
+                <spirit:value>am0.rf1.rsv</spirit:value>
               </spirit:parameter>
             </spirit:parameters>
-            <spirit:vendorExtensions>
-              <vendorExtensions:hdl_path xmlns:vendorExtensions="$UVM_RGM_HOME/builder/ipxact/schema">ISYNTH.rsv</vendorExtensions:hdl_path>
-            </spirit:vendorExtensions>
           </spirit:field>
           <spirit:field>
             <spirit:name>more_dirs</spirit:name>
-            <spirit:description/>
+            <spirit:description></spirit:description>
             <spirit:bitOffset>4</spirit:bitOffset>
             <spirit:bitWidth>2</spirit:bitWidth>
             <spirit:access>read-only</spirit:access>
             <spirit:parameters>
               <spirit:parameter>
                 <spirit:name>_hdlPath_</spirit:name>
-                <spirit:value>ISYNTH.more_dirs</spirit:value>
+                <spirit:value>am0.rf1.more_dirs</spirit:value>
               </spirit:parameter>
             </spirit:parameters>
-            <spirit:vendorExtensions>
-              <vendorExtensions:hdl_path xmlns:vendorExtensions="$UVM_RGM_HOME/builder/ipxact/schema">ISYNTH.more_dirs</vendorExtensions:hdl_path>
-            </spirit:vendorExtensions>
           </spirit:field>
           <spirit:field>
             <spirit:name>dirs</spirit:name>
-            <spirit:description/>
+            <spirit:description></spirit:description>
             <spirit:bitOffset>2</spirit:bitOffset>
             <spirit:bitWidth>2</spirit:bitWidth>
             <spirit:access>write-only</spirit:access>
             <spirit:parameters>
               <spirit:parameter>
                 <spirit:name>_hdlPath_</spirit:name>
-                <spirit:value>ISYNTH.dirs</spirit:value>
+                <spirit:value>am0.rf1.dirs</spirit:value>
               </spirit:parameter>
             </spirit:parameters>
-            <spirit:vendorExtensions>
-              <vendorExtensions:hdl_path xmlns:vendorExtensions="$UVM_RGM_HOME/builder/ipxact/schema">ISYNTH.dirs</vendorExtensions:hdl_path>
-            </spirit:vendorExtensions>
           </spirit:field>
           <spirit:field>
             <spirit:name>f1</spirit:name>
-            <spirit:description/>
+            <spirit:description></spirit:description>
             <spirit:bitOffset>1</spirit:bitOffset>
             <spirit:bitWidth>1</spirit:bitWidth>
             <spirit:access>read-write</spirit:access>
             <spirit:parameters>
               <spirit:parameter>
                 <spirit:name>_hdlPath_</spirit:name>
-                <spirit:value>ISYNTH.f1</spirit:value>
+                <spirit:value>am0.rf1.f1</spirit:value>
               </spirit:parameter>
             </spirit:parameters>
-            <spirit:vendorExtensions>
-              <vendorExtensions:hdl_path xmlns:vendorExtensions="$UVM_RGM_HOME/builder/ipxact/schema">ISYNTH.f1</vendorExtensions:hdl_path>
-            </spirit:vendorExtensions>
           </spirit:field>
           <spirit:field>
             <spirit:name>f0</spirit:name>
-            <spirit:description/>
+            <spirit:description></spirit:description>
             <spirit:bitOffset>0</spirit:bitOffset>
             <spirit:bitWidth>1</spirit:bitWidth>
             <spirit:access>read-write</spirit:access>
             <spirit:parameters>
               <spirit:parameter>
                 <spirit:name>_hdlPath_</spirit:name>
-                <spirit:value>ISYNTH.f0</spirit:value>
+                <spirit:value>am0.rf1.f0</spirit:value>
               </spirit:parameter>
             </spirit:parameters>
-            <spirit:vendorExtensions>
-              <vendorExtensions:hdl_path xmlns:vendorExtensions="$UVM_RGM_HOME/builder/ipxact/schema">ISYNTH.f0</vendorExtensions:hdl_path>
-            </spirit:vendorExtensions>
           </spirit:field>
         </spirit:register>
         <spirit:register>
           <spirit:name>reg5</spirit:name>
-          <spirit:description/>
+          <spirit:description></spirit:description>
           <spirit:addressOffset>0x5</spirit:addressOffset>
           <spirit:size>8</spirit:size>
           <spirit:access>read-write</spirit:access>
@@ -853,40 +727,34 @@
           </spirit:reset>
           <spirit:field>
             <spirit:name>rsv</spirit:name>
-            <spirit:description/>
+            <spirit:description></spirit:description>
             <spirit:bitOffset>4</spirit:bitOffset>
             <spirit:bitWidth>4</spirit:bitWidth>
             <spirit:access>read-write</spirit:access>
             <spirit:parameters>
               <spirit:parameter>
                 <spirit:name>_hdlPath_</spirit:name>
-                <spirit:value>ISYNTH.rsv</spirit:value>
+                <spirit:value>am0.rf1.rsv</spirit:value>
               </spirit:parameter>
             </spirit:parameters>
-            <spirit:vendorExtensions>
-              <vendorExtensions:hdl_path xmlns:vendorExtensions="$UVM_RGM_HOME/builder/ipxact/schema">ISYNTH.rsv</vendorExtensions:hdl_path>
-            </spirit:vendorExtensions>
           </spirit:field>
           <spirit:field>
             <spirit:name>dirs</spirit:name>
-            <spirit:description/>
+            <spirit:description></spirit:description>
             <spirit:bitOffset>2</spirit:bitOffset>
             <spirit:bitWidth>2</spirit:bitWidth>
             <spirit:access>read-write</spirit:access>
             <spirit:parameters>
               <spirit:parameter>
                 <spirit:name>_hdlPath_</spirit:name>
-                <spirit:value>ISYNTH.dirs</spirit:value>
+                <spirit:value>am0.rf1.dirs</spirit:value>
               </spirit:parameter>
             </spirit:parameters>
-            <spirit:vendorExtensions>
-              <vendorExtensions:hdl_path xmlns:vendorExtensions="$UVM_RGM_HOME/builder/ipxact/schema">ISYNTH.dirs</vendorExtensions:hdl_path>
-            </spirit:vendorExtensions>
           </spirit:field>
         </spirit:register>
         <spirit:register>
           <spirit:name>reg6</spirit:name>
-          <spirit:description/>
+          <spirit:description></spirit:description>
           <spirit:addressOffset>0x6</spirit:addressOffset>
           <spirit:size>8</spirit:size>
           <spirit:access>read-only</spirit:access>
@@ -896,35 +764,29 @@
           </spirit:reset>
           <spirit:field>
             <spirit:name>rsv</spirit:name>
-            <spirit:description/>
+            <spirit:description></spirit:description>
             <spirit:bitOffset>2</spirit:bitOffset>
             <spirit:bitWidth>6</spirit:bitWidth>
             <spirit:access>read-only</spirit:access>
             <spirit:parameters>
               <spirit:parameter>
                 <spirit:name>_hdlPath_</spirit:name>
-                <spirit:value>ISYNTH.rsv</spirit:value>
+                <spirit:value>am0.rf1.rsv</spirit:value>
               </spirit:parameter>
             </spirit:parameters>
-            <spirit:vendorExtensions>
-              <vendorExtensions:hdl_path xmlns:vendorExtensions="$UVM_RGM_HOME/builder/ipxact/schema">ISYNTH.rsv</vendorExtensions:hdl_path>
-            </spirit:vendorExtensions>
           </spirit:field>
           <spirit:field>
             <spirit:name>more_dirs</spirit:name>
-            <spirit:description/>
+            <spirit:description></spirit:description>
             <spirit:bitOffset>0</spirit:bitOffset>
             <spirit:bitWidth>2</spirit:bitWidth>
             <spirit:access>read-only</spirit:access>
             <spirit:parameters>
               <spirit:parameter>
                 <spirit:name>_hdlPath_</spirit:name>
-                <spirit:value>ISYNTH.more_dirs</spirit:value>
+                <spirit:value>am0.rf1.more_dirs</spirit:value>
               </spirit:parameter>
             </spirit:parameters>
-            <spirit:vendorExtensions>
-              <vendorExtensions:hdl_path xmlns:vendorExtensions="$UVM_RGM_HOME/builder/ipxact/schema">ISYNTH.more_dirs</vendorExtensions:hdl_path>
-            </spirit:vendorExtensions>
           </spirit:field>
         </spirit:register>
       </spirit:addressBlock>
@@ -935,7 +797,7 @@
         <spirit:width>32</spirit:width>
         <spirit:register>
           <spirit:name>reg0</spirit:name>
-          <spirit:description/>
+          <spirit:description></spirit:description>
           <spirit:addressOffset>0x0</spirit:addressOffset>
           <spirit:size>8</spirit:size>
           <spirit:access>read-write</spirit:access>
@@ -945,38 +807,33 @@
           </spirit:reset>
           <spirit:field>
             <spirit:name>f1</spirit:name>
-            <spirit:description/>
+            <spirit:description></spirit:description>
             <spirit:bitOffset>4</spirit:bitOffset>
             <spirit:bitWidth>4</spirit:bitWidth>
             <spirit:access>read-write</spirit:access>
             <spirit:parameters>
               <spirit:parameter>
                 <spirit:name>_hdlPath_</spirit:name>
-                <spirit:value>ISYNTH.f1</spirit:value>
+                <spirit:value>am0.rf2.f1</spirit:value>
               </spirit:parameter>
             </spirit:parameters>
-            <spirit:vendorExtensions>
-              <vendorExtensions:hdl_path xmlns:vendorExtensions="$UVM_RGM_HOME/builder/ipxact/schema">ISYNTH.f1</vendorExtensions:hdl_path>
-            </spirit:vendorExtensions>
           </spirit:field>
           <spirit:field>
             <spirit:name>f0</spirit:name>
-            <spirit:description/>
+            <spirit:description></spirit:description>
             <spirit:bitOffset>0</spirit:bitOffset>
             <spirit:bitWidth>4</spirit:bitWidth>
             <spirit:access>read-write</spirit:access>
             <spirit:parameters>
               <spirit:parameter>
                 <spirit:name>_hdlPath_</spirit:name>
-                <spirit:value>ISYNTH.f0</spirit:value>
+                <spirit:value>am0.rf2.f0</spirit:value>
               </spirit:parameter>
             </spirit:parameters>
-            <spirit:vendorExtensions>
-              <vendorExtensions:hdl_path xmlns:vendorExtensions="$UVM_RGM_HOME/builder/ipxact/schema">ISYNTH.f0</vendorExtensions:hdl_path>
-            </spirit:vendorExtensions>
           </spirit:field>
         </spirit:register>
       </spirit:addressBlock>
+      <spirit:addressUnitBits>8</spirit:addressUnitBits>
     </spirit:memoryMap>
   </spirit:memoryMaps>
 </spirit:component>

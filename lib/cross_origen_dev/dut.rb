@@ -19,9 +19,10 @@ module CrossOrigenDev
         bit 1, :second_bit, reset: 1, access: :rw
       end
       # Import some data from IP-XACT
-      cr_import(path: "#{Origen.root}/imports/ipxact.xml", refresh: true)
+      cr_import(path: "#{Origen.root}/imports/ipxact.xml")
     end
 
+    # Import Spirit 1.4 version of ATX
     def add_atx2
       sub_block :atx2, class_name: 'ATX2', base_address: 0x6000_0000
     end
@@ -32,6 +33,20 @@ module CrossOrigenDev
 
       def initialize
         cr_import(path: "#{Origen.root}/approved/ip_xact_sub_block.xml", refresh: true)
+      end
+    end
+
+    # Import 1685-2009 version of ATX
+    def add_atx3
+      sub_block :atx3, class_name: 'ATX3', base_address: 0x7000_0000
+    end
+
+    class ATX3
+      include Origen::Model
+      include CrossOrigen
+
+      def initialize
+        cr_import(path: "#{Origen.root}/approved/ip_xact_sub_block_1685.xml", refresh: true)
       end
     end
 
@@ -52,7 +67,7 @@ module CrossOrigenDev
           # **Oscillator (Hi)** - Clock source selection. (Note that in addition to this firmware-controlled bit, the
           # clock source is also dependent on test and power control discretes).
           #
-          # 0 | Clock is the externally supplied bus clock ipg_clk
+          # 0 | Clock is the externally supplied bus clock bus_clk
           # 1 | Clock is the internal oscillator from the hardblock
           bit 15, :osch, reset: 1, access: :rw
         end

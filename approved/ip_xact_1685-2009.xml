@@ -7,9 +7,9 @@
   <spirit:busInterfaces>
     <spirit:busInterface>
       <spirit:name>Slave</spirit:name>
-      <spirit:busType spirit:vendor="origen-sdk.org" spirit:library="amba3" spirit:name="APB3" spirit:version="1.0"/>
+      <spirit:busType spirit:vendor="origen-sdk.org" spirit:library="amba3" spirit:name="APB3" spirit:version="1.0"></spirit:busType>
       <spirit:slave>
-        <spirit:memoryMapRef spirit:memoryMapRef="test"/>
+        <spirit:memoryMapRef spirit:memoryMapRef="test"></spirit:memoryMapRef>
       </spirit:slave>
     </spirit:busInterface>
   </spirit:busInterfaces>
@@ -176,7 +176,7 @@
             <spirit:description/>
             <spirit:bitOffset>29</spirit:bitOffset>
             <spirit:bitWidth>1</spirit:bitWidth>
-            <spirit:access>read-write</spirit:access>
+            <spirit:access>read-only</spirit:access>
             <spirit:readAction>clear</spirit:readAction>
             <spirit:parameters>
               <spirit:parameter>
@@ -190,7 +190,7 @@
             <spirit:description/>
             <spirit:bitOffset>28</spirit:bitOffset>
             <spirit:bitWidth>1</spirit:bitWidth>
-            <spirit:access>read-write</spirit:access>
+            <spirit:access>read-only</spirit:access>
             <spirit:readAction>set</spirit:readAction>
             <spirit:parameters>
               <spirit:parameter>
@@ -447,7 +447,7 @@
             <spirit:description/>
             <spirit:bitOffset>10</spirit:bitOffset>
             <spirit:bitWidth>1</spirit:bitWidth>
-            <spirit:access>read-write</spirit:access>
+            <spirit:access>write-only</spirit:access>
             <spirit:modifiedWriteValue>clear</spirit:modifiedWriteValue>
             <spirit:parameters>
               <spirit:parameter>
@@ -474,7 +474,7 @@
             <spirit:description/>
             <spirit:bitOffset>8</spirit:bitOffset>
             <spirit:bitWidth>1</spirit:bitWidth>
-            <spirit:access>read-write</spirit:access>
+            <spirit:access>write-only</spirit:access>
             <spirit:modifiedWriteValue>set</spirit:modifiedWriteValue>
             <spirit:parameters>
               <spirit:parameter>
@@ -501,7 +501,7 @@
             <spirit:description/>
             <spirit:bitOffset>6</spirit:bitOffset>
             <spirit:bitWidth>1</spirit:bitWidth>
-            <spirit:access>read-write</spirit:access>
+            <spirit:access>writeOnce</spirit:access>
             <spirit:parameters>
               <spirit:parameter>
                 <spirit:name>_hdlPath_</spirit:name>
@@ -527,7 +527,7 @@
             <spirit:description/>
             <spirit:bitOffset>4</spirit:bitOffset>
             <spirit:bitWidth>1</spirit:bitWidth>
-            <spirit:access>read-write</spirit:access>
+            <spirit:access>read-only</spirit:access>
             <spirit:readAction>clear</spirit:readAction>
             <spirit:parameters>
               <spirit:parameter>

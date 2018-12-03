@@ -104,9 +104,8 @@ describe 'IP-XACT' do
       $dut.atx3.registermap.mclkdiv.osch.bit_value_descriptions[1].should == "Clock is the internal oscillator from the hardblock"
       $dut.atx3.registermap.access_types.readonly.access.should == :ro
       $dut.atx3.registermap.access_types.readwrite.access.should == :rw
-      # These must be disabled until Origen core is updated to correct them as read-only
-      # $dut.atx3.registermap.access_types.readclear.access.should == :rc
-      # $dut.atx3.registermap.access_types.readset.access.should == :rs
+      $dut.atx3.registermap.access_types.readclear.access.should == :rc
+      $dut.atx3.registermap.access_types.readset.access.should == :rs
       $dut.atx3.registermap.access_types.writablereadclear.access.should == :wrc
       $dut.atx3.registermap.access_types.writeclear.access.should == :wc
       $dut.atx3.registermap.access_types.writeset.access.should == :ws
@@ -121,14 +120,13 @@ describe 'IP-XACT' do
       $dut.atx3.registermap.access_types.write1toclearreadset.access.should == :w1crs
       $dut.atx3.registermap.access_types.write0tosetreadclear.access.should == :w0src
       $dut.atx3.registermap.access_types.writeonly.access.should == :wo
-      # These must be disabled until Origen core is updated to correct them as write-only
-      # $dut.atx3.registermap.access_types.writeonlyclear.access.should == :woc
+      $dut.atx3.registermap.access_types.writeonlyclear.access.should == :woc
+      # This cannot be differentiated from :wo, so skip checking it on import
       # $dut.atx3.registermap.access_types.writeonlyreadzero.access.should == :worz
-      # $dut.atx3.registermap.access_types.writeonlyset.access.should == :wos
+      $dut.atx3.registermap.access_types.writeonlyset.access.should == :wos
       $dut.atx3.registermap.access_types.writeonce.access.should == :w1
-      # These must be disabled until Origen core is updated to correct it as read-only
-      # $dut.atx3.registermap.access_types.writeonlyonce.access.should == :wo1
-      # This cannot be differntiated from :rw, so skip checking it in import.
+      $dut.atx3.registermap.access_types.writeonlyonce.access.should == :wo1
+      # This cannot be differentiated from :rw, so skip checking it in import.
       # $dut.atx3.registermap.access_types.readwritenocheck.access.should == :dc
       # $dut.atx3.registermap.access_types.readonlyclearafter.access.should == :rowz
     end

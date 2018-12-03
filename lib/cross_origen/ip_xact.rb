@@ -6,38 +6,8 @@ module CrossOrigen
 
     AddressBlock = Struct.new(:name, :base_address, :range, :width)
 
-    # Modified access type hash used in 1685-2009 (and 2014) schema
-    # NOTE: It is not possible to differentiate :rw from :dc on IP-XACT import.
-    @@access_hash = {
-      ro:    { base: 'read-only',       write: nil,             read: nil },
-      rw:    { base: 'read-write',      write: nil,             read: nil },
-      rc:    { base: 'read-only',       write: nil,             read: 'clear' },
-      rs:    { base: 'read-only',       write: nil,             read: 'set' },
-      wrc:   { base: 'read-write',      write: nil,             read: 'clear' },
-      wrs:   { base: 'read-write',      write: nil,             read: 'set' },
-      wc:    { base: 'read-write',      write: 'clear',         read: nil },
-      ws:    { base: 'read-write',      write: 'set',           read: nil },
-      wsrc:  { base: 'read-write',      write: 'set',           read: 'clear' },
-      wcrs:  { base: 'read-write',      write: 'clear',         read: 'set' },
-      w1c:   { base: 'read-write',      write: 'oneToClear',    read: nil },
-      w1s:   { base: 'read-write',      write: 'oneToSet',      read: nil },
-      w1t:   { base: 'read-write',      write: 'oneToToggle',   read: nil },
-      w0c:   { base: 'read-write',      write: 'zeroToClear',   read: nil },
-      w0s:   { base: 'read-write',      write: 'zeroToSet',     read: nil },
-      w0t:   { base: 'read-write',      write: 'zeroToToggle',  read: nil },
-      w1src: { base: 'read-write',      write: 'oneToSet',      read: 'clear' },
-      w1crs: { base: 'read-write',      write: 'oneToClear',    read: 'set' },
-      w0src: { base: 'read-write',      write: 'zeroToSet',     read: 'clear' },
-      w0crs: { base: 'read-write',      write: 'zeroToClear',   read: 'set' },
-      wo:    { base: 'write-only',      write: nil,             read: nil },
-      woc:   { base: 'write-only',      write: 'clear',         read: nil },
-      worz:  { base: 'write-only',      write: nil,             read: nil },
-      wos:   { base: 'write-only',      write: 'set',           read: nil },
-      w1:    { base: 'read-writeOnce',  write: nil,             read: nil },
-      wo1:   { base: 'writeOnce',       write: nil,             read: nil },
-      dc:    { base: 'read-write',      write: nil,             read: nil },
-      rowz:  { base: 'read-only',       write: nil,             read: 'clear' }
-    }
+    # Create a shorthand way to reference Origen Core's Bit ACCESS_CODES
+    @@access_hash = Origen::Registers::Bit.const_get(:ACCESS_CODES)
 
     # Import/reader that currently only supports creating registers and bit fields
     def import(file, options = {}) # rubocop:disable CyclomaticComplexity
@@ -431,7 +401,15 @@ xsi:schemaLocation="$REGMEM_HOME/builder/ipxact/schema/ipxact
           end
         end
       end
-      builder.to_xml
+      # When testing with 'origen examples', travis_ci (bash) will end up with empty tags -
+      # '<spirit:description/>' that do not appear on some user's tshell environments.  To
+      # prevent false errors for this issue, force Nokogiri to use self-closing tags
+      # ('<spirit:description></spirit:description>'), but keep the XML formatted for readability.
+      # All tags with no content will appear as '<spirit:tag_name></spirit:tag_name>'.
+      #
+      builder.to_xml(save_with: Nokogiri::XML::Node::SaveOptions::NO_EMPTY_TAGS |
+                                Nokogiri::XML::Node::SaveOptions::FORMAT)
+      # builder.to_xml
     end
 
     private

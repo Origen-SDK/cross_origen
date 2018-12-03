@@ -53,12 +53,12 @@ system  {
                 reset 'b0;
             }
             field readclear ([29]) {
-                access rw;
+                access ro;
                 bits 1;
                 reset 'b0;
             }
             field readset ([28]) {
-                access rw;
+                access ro;
                 bits 1;
                 reset 'b0;
             }
@@ -148,7 +148,7 @@ system  {
                 reset 'b0;
             }
             field writeonlyclear ([10]) {
-                access rw;
+                access wo;
                 bits 1;
                 reset 'b0;
             }
@@ -158,7 +158,7 @@ system  {
                 reset 'b0;
             }
             field writeonlyset ([8]) {
-                access rw;
+                access wo;
                 bits 1;
                 reset 'b0;
             }
@@ -168,7 +168,7 @@ system  {
                 reset 'b0;
             }
             field writeonlyonce ([6]) {
-                access rw;
+                access wo;
                 bits 1;
                 reset 'b0;
             }
@@ -178,7 +178,7 @@ system  {
                 reset 'b0;
             }
             field readonlyclearafter ([4]) {
-                access rw;
+                access ro;
                 bits 1;
                 reset 'b0;
             }

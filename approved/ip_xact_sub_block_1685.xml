@@ -3,12 +3,12 @@
   <spirit:vendor>origen-sdk.org</spirit:vendor>
   <spirit:library>id</spirit:library>
   <spirit:name>d_ip_ana_test_annex_syn</spirit:name>
-  <spirit:version/>
+  <spirit:version></spirit:version>
   <spirit:memoryMaps>
     <spirit:memoryMap>
       <spirit:name>RegisterMap</spirit:name>
       <spirit:addressBlock>
-        <spirit:name/>
+        <spirit:name></spirit:name>
         <spirit:baseAddress>0x40000000</spirit:baseAddress>
         <spirit:range>8</spirit:range>
         <spirit:width>32</spirit:width>
@@ -58,7 +58,7 @@
           </spirit:reset>
           <spirit:field>
             <spirit:name>readonly</spirit:name>
-            <spirit:description/>
+            <spirit:description></spirit:description>
             <spirit:bitOffset>31</spirit:bitOffset>
             <spirit:bitWidth>1</spirit:bitWidth>
             <spirit:access>read-only</spirit:access>
@@ -71,7 +71,7 @@
           </spirit:field>
           <spirit:field>
             <spirit:name>readwrite</spirit:name>
-            <spirit:description/>
+            <spirit:description></spirit:description>
             <spirit:bitOffset>30</spirit:bitOffset>
             <spirit:bitWidth>1</spirit:bitWidth>
             <spirit:access>read-write</spirit:access>
@@ -84,7 +84,7 @@
           </spirit:field>
           <spirit:field>
             <spirit:name>readclear</spirit:name>
-            <spirit:description/>
+            <spirit:description></spirit:description>
             <spirit:bitOffset>29</spirit:bitOffset>
             <spirit:bitWidth>1</spirit:bitWidth>
             <spirit:access>read-only</spirit:access>
@@ -98,7 +98,7 @@
           </spirit:field>
           <spirit:field>
             <spirit:name>readset</spirit:name>
-            <spirit:description/>
+            <spirit:description></spirit:description>
             <spirit:bitOffset>28</spirit:bitOffset>
             <spirit:bitWidth>1</spirit:bitWidth>
             <spirit:access>read-only</spirit:access>
@@ -112,7 +112,7 @@
           </spirit:field>
           <spirit:field>
             <spirit:name>writablereadclear</spirit:name>
-            <spirit:description/>
+            <spirit:description></spirit:description>
             <spirit:bitOffset>27</spirit:bitOffset>
             <spirit:bitWidth>1</spirit:bitWidth>
             <spirit:access>read-write</spirit:access>
@@ -126,7 +126,7 @@
           </spirit:field>
           <spirit:field>
             <spirit:name>writablereadset</spirit:name>
-            <spirit:description/>
+            <spirit:description></spirit:description>
             <spirit:bitOffset>26</spirit:bitOffset>
             <spirit:bitWidth>1</spirit:bitWidth>
             <spirit:access>read-write</spirit:access>
@@ -140,7 +140,7 @@
           </spirit:field>
           <spirit:field>
             <spirit:name>writeclear</spirit:name>
-            <spirit:description/>
+            <spirit:description></spirit:description>
             <spirit:bitOffset>25</spirit:bitOffset>
             <spirit:bitWidth>1</spirit:bitWidth>
             <spirit:access>read-write</spirit:access>
@@ -154,7 +154,7 @@
           </spirit:field>
           <spirit:field>
             <spirit:name>writeset</spirit:name>
-            <spirit:description/>
+            <spirit:description></spirit:description>
             <spirit:bitOffset>24</spirit:bitOffset>
             <spirit:bitWidth>1</spirit:bitWidth>
             <spirit:access>read-write</spirit:access>
@@ -168,7 +168,7 @@
           </spirit:field>
           <spirit:field>
             <spirit:name>writesetreadclear</spirit:name>
-            <spirit:description/>
+            <spirit:description></spirit:description>
             <spirit:bitOffset>23</spirit:bitOffset>
             <spirit:bitWidth>1</spirit:bitWidth>
             <spirit:access>read-write</spirit:access>
@@ -183,7 +183,7 @@
           </spirit:field>
           <spirit:field>
             <spirit:name>writeclearreadset</spirit:name>
-            <spirit:description/>
+            <spirit:description></spirit:description>
             <spirit:bitOffset>22</spirit:bitOffset>
             <spirit:bitWidth>1</spirit:bitWidth>
             <spirit:access>read-write</spirit:access>
@@ -198,7 +198,7 @@
           </spirit:field>
           <spirit:field>
             <spirit:name>write1toclear</spirit:name>
-            <spirit:description/>
+            <spirit:description></spirit:description>
             <spirit:bitOffset>21</spirit:bitOffset>
             <spirit:bitWidth>1</spirit:bitWidth>
             <spirit:access>read-write</spirit:access>
@@ -212,7 +212,7 @@
           </spirit:field>
           <spirit:field>
             <spirit:name>write1toset</spirit:name>
-            <spirit:description/>
+            <spirit:description></spirit:description>
             <spirit:bitOffset>20</spirit:bitOffset>
             <spirit:bitWidth>1</spirit:bitWidth>
             <spirit:access>read-write</spirit:access>
@@ -226,7 +226,7 @@
           </spirit:field>
           <spirit:field>
             <spirit:name>write1totoggle</spirit:name>
-            <spirit:description/>
+            <spirit:description></spirit:description>
             <spirit:bitOffset>19</spirit:bitOffset>
             <spirit:bitWidth>1</spirit:bitWidth>
             <spirit:access>read-write</spirit:access>
@@ -240,7 +240,7 @@
           </spirit:field>
           <spirit:field>
             <spirit:name>write0toclear</spirit:name>
-            <spirit:description/>
+            <spirit:description></spirit:description>
             <spirit:bitOffset>18</spirit:bitOffset>
             <spirit:bitWidth>1</spirit:bitWidth>
             <spirit:access>read-write</spirit:access>
@@ -254,7 +254,7 @@
           </spirit:field>
           <spirit:field>
             <spirit:name>write0toset</spirit:name>
-            <spirit:description/>
+            <spirit:description></spirit:description>
             <spirit:bitOffset>17</spirit:bitOffset>
             <spirit:bitWidth>1</spirit:bitWidth>
             <spirit:access>read-write</spirit:access>
@@ -268,7 +268,7 @@
           </spirit:field>
           <spirit:field>
             <spirit:name>write0totoggle</spirit:name>
-            <spirit:description/>
+            <spirit:description></spirit:description>
             <spirit:bitOffset>16</spirit:bitOffset>
             <spirit:bitWidth>1</spirit:bitWidth>
             <spirit:access>read-write</spirit:access>
@@ -282,7 +282,7 @@
           </spirit:field>
           <spirit:field>
             <spirit:name>write1tosetreadclear</spirit:name>
-            <spirit:description/>
+            <spirit:description></spirit:description>
             <spirit:bitOffset>15</spirit:bitOffset>
             <spirit:bitWidth>1</spirit:bitWidth>
             <spirit:access>read-write</spirit:access>
@@ -297,7 +297,7 @@
           </spirit:field>
           <spirit:field>
             <spirit:name>write1toclearreadset</spirit:name>
-            <spirit:description/>
+            <spirit:description></spirit:description>
             <spirit:bitOffset>14</spirit:bitOffset>
             <spirit:bitWidth>1</spirit:bitWidth>
             <spirit:access>read-write</spirit:access>
@@ -312,7 +312,7 @@
           </spirit:field>
           <spirit:field>
             <spirit:name>write0tosetreadclear</spirit:name>
-            <spirit:description/>
+            <spirit:description></spirit:description>
             <spirit:bitOffset>13</spirit:bitOffset>
             <spirit:bitWidth>1</spirit:bitWidth>
             <spirit:access>read-write</spirit:access>
@@ -327,7 +327,7 @@
           </spirit:field>
           <spirit:field>
             <spirit:name>write0toclearreadset</spirit:name>
-            <spirit:description/>
+            <spirit:description></spirit:description>
             <spirit:bitOffset>12</spirit:bitOffset>
             <spirit:bitWidth>1</spirit:bitWidth>
             <spirit:access>read-write</spirit:access>
@@ -342,7 +342,7 @@
           </spirit:field>
           <spirit:field>
             <spirit:name>writeonly</spirit:name>
-            <spirit:description/>
+            <spirit:description></spirit:description>
             <spirit:bitOffset>11</spirit:bitOffset>
             <spirit:bitWidth>1</spirit:bitWidth>
             <spirit:access>write-only</spirit:access>
@@ -355,7 +355,7 @@
           </spirit:field>
           <spirit:field>
             <spirit:name>writeonlyclear</spirit:name>
-            <spirit:description/>
+            <spirit:description></spirit:description>
             <spirit:bitOffset>10</spirit:bitOffset>
             <spirit:bitWidth>1</spirit:bitWidth>
             <spirit:access>write-only</spirit:access>
@@ -369,7 +369,7 @@
           </spirit:field>
           <spirit:field>
             <spirit:name>writeonlyreadzero</spirit:name>
-            <spirit:description/>
+            <spirit:description></spirit:description>
             <spirit:bitOffset>9</spirit:bitOffset>
             <spirit:bitWidth>1</spirit:bitWidth>
             <spirit:access>write-only</spirit:access>
@@ -382,7 +382,7 @@
           </spirit:field>
           <spirit:field>
             <spirit:name>writeonlyset</spirit:name>
-            <spirit:description/>
+            <spirit:description></spirit:description>
             <spirit:bitOffset>8</spirit:bitOffset>
             <spirit:bitWidth>1</spirit:bitWidth>
             <spirit:access>write-only</spirit:access>
@@ -396,7 +396,7 @@
           </spirit:field>
           <spirit:field>
             <spirit:name>writeonce</spirit:name>
-            <spirit:description/>
+            <spirit:description></spirit:description>
             <spirit:bitOffset>7</spirit:bitOffset>
             <spirit:bitWidth>1</spirit:bitWidth>
             <spirit:access>read-writeOnce</spirit:access>
@@ -409,7 +409,7 @@
           </spirit:field>
           <spirit:field>
             <spirit:name>writeonlyonce</spirit:name>
-            <spirit:description/>
+            <spirit:description></spirit:description>
             <spirit:bitOffset>6</spirit:bitOffset>
             <spirit:bitWidth>1</spirit:bitWidth>
             <spirit:access>writeOnce</spirit:access>
@@ -422,7 +422,7 @@
           </spirit:field>
           <spirit:field>
             <spirit:name>readwritenocheck</spirit:name>
-            <spirit:description/>
+            <spirit:description></spirit:description>
             <spirit:bitOffset>5</spirit:bitOffset>
             <spirit:bitWidth>1</spirit:bitWidth>
             <spirit:access>read-write</spirit:access>
@@ -435,7 +435,7 @@
           </spirit:field>
           <spirit:field>
             <spirit:name>readonlyclearafter</spirit:name>
-            <spirit:description/>
+            <spirit:description></spirit:description>
             <spirit:bitOffset>4</spirit:bitOffset>
             <spirit:bitWidth>1</spirit:bitWidth>
             <spirit:access>read-only</spirit:access>

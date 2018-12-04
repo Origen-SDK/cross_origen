@@ -6,6 +6,9 @@ module CrossOrigen
 
     AddressBlock = Struct.new(:name, :base_address, :range, :width)
 
+    # Create a shorthand way to reference Origen Core's Bit ACCESS_CODES
+    @@access_hash = Origen::Registers::Bit.const_get(:ACCESS_CODES)
+
     # Import/reader that currently only supports creating registers and bit fields
     def import(file, options = {}) # rubocop:disable CyclomaticComplexity
       require 'kramdown'
@@ -66,15 +69,42 @@ module CrossOrigen
                 # Do a logical bitwise AND with the reset value and mask
                 reset_value = reset_value & reset_mask
               end
+              # Future expansion: pull in HDL path as abs_path in Origen.
               addr_block_obj.reg name, addr_offset, size: size, access: access, description: reg_description(register) do |reg|
                 register.xpath('spirit:field').each do |field|
                   name = fetch field.at_xpath('spirit:name'), downcase: true, to_sym: true, get_text: true
                   bit_offset = fetch field.at_xpath('spirit:bitOffset'), get_text: true, to_i: true
                   bit_width = fetch field.at_xpath('spirit:bitWidth'), get_text: true, to_i: true
-                  access = fetch field.at_xpath('spirit:access'), get_text: true
-                  if access =~ /\S+\-\S+/
-                    access = access[/^(\S)/, 1] + access[/\-(\S)\S+$/, 1]
-                    access = access.downcase.to_sym
+                  xml_access = fetch field.at_xpath('spirit:access'), get_text: true
+                  # Newer IP-XACT standards list access as < read or write>-< descriptor >, such as
+                  # "read-write", "read-only", or "read-writeOnce"
+                  if xml_access =~ /\S+\-\S+/ || xml_access == 'writeOnce'
+                    # This filter alone is not capable of interpreting the 1685-2009 (and 2014).  Therefore
+                    # must reverse-interpret the content of access_hash (see top of file).
+                    #
+                    # First get the base access type, ie: read-write, read-only, etc.
+                    # base_access = fetch field.at_xpath('spirit:access'), get_text: true
+                    base_access = xml_access
+                    # Next grab any modified write values or read actions
+                    mod_write = fetch field.at_xpath('spirit:modifiedWriteValue'), get_text: true
+                    read_action = fetch field.at_xpath('spirit:readAction'), get_text: true
+                    # Using base_access, mod_write, and read_action, look up the corresponding access
+                    # acronym from access_hash, noting it is not possible to differentiate write-only
+                    # from write-only, read zero and read-write from dc.
+                    #
+                    # Matched needs to be tracked, as there is no way to differentiate :rw and :dc in IP-XACT.
+                    # Everything imported will default to :rw, never :dc.
+                    matched = false
+                    @@access_hash.each_key do |key|
+                      if @@access_hash[key][:base] == base_access && @@access_hash[key][:write] == mod_write && @@access_hash[key][:read] == read_action && !matched
+                        access = key.to_sym
+                        matched = true
+                      end
+                    end
+                  # Older IP-XACT standards appear to also accept short acronyms like "ro", "w1c", "rw",
+                  # etc.
+                  elsif xml_access =~ /\S+/
+                    access = xml_access.downcase.to_sym
                   else
                     # default to read-write if access is not specified
                     access = :rw
@@ -117,6 +147,13 @@ xsi:schemaLocation="$REGMEM_HOME/builder/ipxact/schema/ipxact
     end
 
     # Returns a string representing the owner object in IP-XACT XML
+    # Usable / Available options:
+    #   :vendor             = Company name/web address, ex: 'nxp.com'
+    #   :library            = IP Library
+    #   :schema             = '1685-2009' or default of Spirit 1.4 (when no :schema option passed)
+    #   :bus_interface      = only 'AMBA3' supported at this time
+    #   :mmap_name          = Optionally set the memoryMap name to something other than the module name
+    #   :mmap_ref           = memoryMapRef name, ex: 'UserMap'
     def owner_to_xml(options = {})
       require 'nokogiri'
 
@@ -126,21 +163,43 @@ xsi:schemaLocation="$REGMEM_HOME/builder/ipxact/schema/ipxact
 
       @format = options[:format]
 
-      schemas = [
-        'http://www.spiritconsortium.org/XMLSchema/SPIRIT/1.4',
-        'http://www.spiritconsortium.org/XMLSchema/SPIRIT/1.4/index.xsd'
-      ]
-      if uvm?
+      # Compatible schemas: Spirit 1.4, 1685-2009
+      # Assume Spirit 1.4 if no schema provided
+      if options[:schema] == '1685-2009' # Magillem tool uses alternate schema
+        schemas = [
+          'http://www.spiritconsortium.org/XMLSchema/SPIRIT/1685-2009',
+          'http://www.spiritconsortium.org/XMLSchema/SPIRIT/1685-2009/index.xsd'
+        ]
+      else # Assume Spirit 1.4 if not
+        schemas = [
+          'http://www.spiritconsortium.org/XMLSchema/SPIRIT/1.4',
+          'http://www.spiritconsortium.org/XMLSchema/SPIRIT/1.4/index.xsd'
+        ]
+      end
+
+      if uvm? && !(options[:schema] == '1685-2009')
         schemas << '$IREG_GEN/XMLSchema/SPIRIT/VendorExtensions.xsd'
       end
 
-      headers = {
-        'xmlns:spirit'       => 'http://www.spiritconsortium.org/XMLSchema/SPIRIT/1.4',
-        'xmlns:xsi'          => 'http://www.w3.org/2001/XMLSchema-instance',
-        'xsi:schemaLocation' => schemas.join(' ')
-      }
-      if uvm?
+      if options[:schema] == '1685-2009' # Magillem tool uses alternate schema
+        headers = {
+          'xmlns:spirit'       => 'http://www.spiritconsortium.org/XMLSchema/SPIRIT/1685-2009',
+          'xmlns:xsi'          => 'http://www.w3.org/2001/XMLSchema-instance',
+          'xsi:schemaLocation' => schemas.join(' ')
+        }
+      else # Assume Spirit 1.4 if not
+        headers = {
+          'xmlns:spirit'       => 'http://www.spiritconsortium.org/XMLSchema/SPIRIT/1.4',
+          'xmlns:xsi'          => 'http://www.w3.org/2001/XMLSchema-instance',
+          'xsi:schemaLocation' => schemas.join(' ')
+        }
+      end
+
+      if uvm? && !(options[:schema] == '1685-2009')
         headers['xmlns:vendorExtensions'] = '$IREG_GEN/XMLSchema/SPIRIT'
+        # Else:
+        # Do nothing ?
+        # headers['xmlns:vendorExtensions'] = '$UVM_RGM_HOME/builder/ipxact/schema'
       end
 
       builder = Nokogiri::XML::Builder.new(encoding: 'UTF-8') do |xml|
@@ -151,19 +210,44 @@ xsi:schemaLocation="$REGMEM_HOME/builder/ipxact/schema/ipxact
           # I guess this should really be the register owner's owner's name?
           spirit.name try(:ip_name) || owner.class.to_s.split('::').last
           spirit.version try(:ip_version, :version, :revision)
+          # The 1685-2009 schema allows for a bus interface.  AMBA3 (slave) supported so far.
+          if options[:schema] == '1685-2009'
+            if options[:bus_interface] == 'AMBA3'
+              spirit.busInterfaces do
+                spirit.busInterface do
+                  spirit.name 'Slave'
+                  bustype_header = {
+                    'spirit:vendor'  => options[:vendor] || 'Origen',
+                    'spirit:library' => 'amba3',
+                    'spirit:name'    => 'APB3',
+                    'spirit:version' => '1.0'
+                  }
+                  xml['spirit'].busType bustype_header
+                  spirit.slave do
+                    mmapref_header = {
+                      'spirit:memoryMapRef' => options[:mmap_ref] || 'APB'
+                    }
+                    xml['spirit'].memoryMapRef mmapref_header
+                  end
+                end
+              end
+            end
+          end
           spirit.memoryMaps do
             memory_maps.each do |map_name, _map|
               spirit.memoryMap do
-                spirit.name map_name
+                # Optionally assign memory map name to something other than the module name in Ruby,
+                # default to 'RegisterMap'
+                spirit.name options[:mmap_name] || 'RegisterMap'
                 address_blocks do |domain_name, _domain, sub_block|
                   spirit.addressBlock do
+                    # When registers reside at the top level, do not assign an address block name
                     if sub_block == owner
                       spirit.name nil
-                      spirit.baseAddress 0.to_hex
                     else
                       spirit.name address_block_name(domain_name, sub_block)
-                      spirit.baseAddress sub_block.base_address.to_hex
                     end
+                    spirit.baseAddress sub_block.base_address.to_hex
                     spirit.range range(sub_block)
                     spirit.width width(sub_block)
                     sub_block.regs.each do |name, reg|
@@ -189,7 +273,95 @@ xsi:schemaLocation="$REGMEM_HOME/builder/ipxact/schema/ipxact
                             spirit.description try(bits, :brief_description, :name_full, :full_name)
                             spirit.bitOffset bits.position
                             spirit.bitWidth bits.size
-                            spirit.access bits.access
+                            # When exporting to 1685-2009 schema, need to handle special cases (writeOnce),
+                            # modifiedWriteValue, and readAction fields.
+                            if options[:schema] == '1685-2009'
+                              if bits.writable? && bits.readable?
+                                if bits.access == :w1
+                                  spirit.access 'read-writeOnce'
+                                else
+                                  spirit.access 'read-write'
+                                end
+                              elsif bits.writable?
+                                if bits.access == :wo1
+                                  spirit.access 'writeOnce'
+                                else
+                                  spirit.access 'write-only'
+                                end
+                              elsif bits.readable?
+                                spirit.access 'read-only'
+                              end
+                              if bits.readable?
+                                unless @@access_hash[bits.access][:read].nil?
+                                  spirit.readAction @@access_hash[bits.access][:read]
+                                end
+                              end
+                              if bits.writable?
+                                unless @@access_hash[bits.access][:write].nil?
+                                  spirit.modifiedWriteValue @@access_hash[bits.access][:write]
+                                end
+                              end
+                            else # Assume Spirit 1.4 if not
+                              spirit.access bits.access
+                            end
+                            # HDL paths provide hooks for a testbench to directly manipulate the
+                            # registers without having to go through a bus interface or read/write
+                            # protocol.  Because the hierarchical path to a register block can vary
+                            # greatly between devices, allow the user to provide an abs_path value
+                            # and define "full_reg_path" to assist.
+                            #
+                            # When registers reside at the top level of the memory map, assume "top"
+                            # for the register path name.  (Need to improve this process in the future.)
+                            if reg.owner.top_level? == true
+                              regpath = 'top'
+                            else
+                              regpath = reg.owner.path
+                            end
+                            # If :full_reg_path is defined, the :abs_path metadata for a register will
+                            # be used for regpath.  This can be assigned at an address block (sub-block)
+                            # level.
+                            unless options[:full_reg_path].nil? == true
+                              regpath = reg.path
+                            end
+                            if options[:schema] == '1685-2009'
+                              spirit.parameters do
+                                spirit.parameter do
+                                  spirit.name '_hdlPath_'
+                                  # HDL path needs to be to the declared bit field name, NOT to the bus slice
+                                  # that Origen's "abs_path" will yield.  Ex:
+                                  #
+                                  # ~~~ ruby
+                                  # reg :myreg, 0x0, size: 32 do |reg|
+                                  #   bits 7..4, :bits_high
+                                  #   bits 3..0, :bits_low
+                                  # end
+                                  # ~~~
+                                  #
+                                  # The abs_path to ...regs(:myreg).bits(:bits_low).abs_path will yield
+                                  # "myreg.myreg[3:0]", not "myreg.bits_low".  This is not an understood path
+                                  # in Origen (myreg[3:0] does not exist in either myreg's RegCollection or BitCollection),
+                                  # and does not sync with how RTL would create bits_low[3:0].
+                                  # Therefore, use the path to "myreg"'s owner appended with bits.name (bits_low here).
+                                  #
+                                  # This can be done in a register or sub_blocks definition by defining register
+                                  # metadata for "abs_path".  If the reg owner's path weren't used, but instead the
+                                  # reg's path, that would imply each register was a separate hierarchical path in
+                                  # RTL (ex: "top.myblock.regblock.myreg.myreg_bits"), which is normally not the case.
+                                  # The most likely path would be "top.myblock.regblock.myreg_bits.
+                                  spirit.value "#{regpath}.#{bits.name}"
+                                end
+                              end
+                            end
+                            # C. Hume - Unclear which vendorExtensions should be included by default, if any.
+                            # Future improvment: Allow passing of vendorExtensions enable & value hash/string
+                            # if options[:schema] == '1685-2009'
+                            #   spirit.vendorExtensions do
+                            #     vendorext = { 'xmlns:vendorExtensions' => '$UVM_RGM_HOME/builder/ipxact/schema' }
+                            #     xml['vendorExtensions'].hdl_path vendorext, "#{reg.path}.#{bits.name}"
+                            #   end
+                            # end
+
+                            # Allow optional inclusion of bit field values and descriptions
                             if options[:include_bit_field_values]
                               if bits.bit_value_descriptions[0]
                                 bits.bit_value_descriptions.each do |val, desc|
@@ -201,28 +373,43 @@ xsi:schemaLocation="$REGMEM_HOME/builder/ipxact/schema/ipxact
                                 end
                               end
                             end
-                            if uvm?
+                            if uvm? && !(options[:schema] == '1685-2009')
                               spirit.vendorExtensions do
-                                xml['vendorExtensions'].hdl_path bits.path(relative_to: sub_block)
+                                xml['vendorExtensions'].hdl_path "#{regpath}.#{bits.name}"
                               end
                             end
                           end
                         end
                       end
                     end
-                    if uvm?
-                      spirit.vendorExtensions do
-                        xml['vendorExtensions'].hdl_path sub_block.path(relative_to: owner)
-                      end
-                    end
+                    # Unclear whether addressBlock vendor extensions are supported in Spirit 1.4
+                    # if uvm?
+                    #  spirit.vendorExtensions do
+                    #    xml['vendorExtensions'].hdl_path sub_block.path(relative_to: owner)
+                    #  end
+                    # end
                   end
+                end
+                # Assume byte addressing if not specified
+                if owner.methods.include?(:lau) == false
+                  spirit.addressUnitBits 8
+                else
+                  spirit.addressUnitBits owner.lau
                 end
               end
             end
           end
         end
       end
-      builder.to_xml
+      # When testing with 'origen examples', travis_ci (bash) will end up with empty tags -
+      # '<spirit:description/>' that do not appear on some user's tshell environments.  To
+      # prevent false errors for this issue, force Nokogiri to use self-closing tags
+      # ('<spirit:description></spirit:description>'), but keep the XML formatted for readability.
+      # All tags with no content will appear as '<spirit:tag_name></spirit:tag_name>'.
+      #
+      builder.to_xml(save_with: Nokogiri::XML::Node::SaveOptions::NO_EMPTY_TAGS |
+                                Nokogiri::XML::Node::SaveOptions::FORMAT)
+      # builder.to_xml
     end
 
     private

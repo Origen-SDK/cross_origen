@@ -1,3 +1,38 @@
+<a class="anchor release_tag" name="v1_2_0"></a>
+<h1><a href="#v1_2_0">Tag: v1.2.0</a></h1>
+
+##### Branch: 'master'
+
+##### by Stephen McGinty on 13-Dec-2018 09:35AM
+
+
+Expanded to\_ipxact to include 1685-2009 schema, corrected several export issues, and updated
+import to handle 1685-2009 schema (mainly register R/W access types). Expanded spec tests to
+cover all register access types supported by Origen core and each supported schema. (Chris Hume)
+ 
+Updated to v0.38.0 of Origen core, which includes fixes for read/write-only conditions on
+some register access types and opens the Origen::Registers::Bit.const\_get(ACCESS\_CODES) hash
+up for visibility.
+ 
+When exporting, the default schema is Spirit 1.4, but 1685-2009 can be chosen by adding
+`schema: '1685-2009'` to the 'to\_ipxact' call.  Also added support on IP-XACT export to set a
+memory map name (`:mmap\_name`), vendor (`:vendor`), id, name, memory map reference (`:mmap\_ref`),
+and AMBA3 bus interface declaration (`bus\_interface: 'AMBA3'` is the only supported bus type at
+this time).  An example export template would be:
+ 
+~~~ ruby
+dut.to\_ip\_xact format:        :uvm,
+               schema:        '1685-2009',
+               mmap\_name:     'RegisterMap',
+               vendor:        'origen-sdk.org',
+               library:       'id',
+               name:          'ipxact',
+               mmap\_ref:      'test',
+               bus\_interface: 'AMBA3'
+ 
+~~~
+
+
 <a class="anchor release_tag" name="v1_1_0"></a>
 <h1><a href="#v1_1_0">Tag: v1.1.0</a></h1>
 

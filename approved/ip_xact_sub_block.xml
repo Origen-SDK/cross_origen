@@ -6,15 +6,15 @@
   <spirit:version></spirit:version>
   <spirit:memoryMaps>
     <spirit:memoryMap>
-      <spirit:name></spirit:name>
+      <spirit:name>RegisterMap</spirit:name>
       <spirit:addressBlock>
         <spirit:name></spirit:name>
-        <spirit:baseAddress>0x0</spirit:baseAddress>
-        <spirit:range>4</spirit:range>
+        <spirit:baseAddress>0x40000000</spirit:baseAddress>
+        <spirit:range>8</spirit:range>
         <spirit:width>32</spirit:width>
         <spirit:register>
           <spirit:name>mclkdiv</spirit:name>
-          <spirit:description>MGATE Clock Divider Register</spirit:description>
+          <spirit:description>MPU Clock Divider Register</spirit:description>
           <spirit:addressOffset>0x0</spirit:addressOffset>
           <spirit:size>16</spirit:size>
           <spirit:access>read-write</spirit:access>
@@ -31,16 +31,224 @@
             <spirit:values>
               <spirit:value>0x0</spirit:value>
               <spirit:name>val_0x0</spirit:name>
-              <spirit:description>FMU clock is the externally supplied bus clock ipg_clk</spirit:description>
+              <spirit:description>Clock is the externally supplied bus clock bus_clk</spirit:description>
             </spirit:values>
             <spirit:values>
               <spirit:value>0x1</spirit:value>
               <spirit:name>val_0x1</spirit:name>
-              <spirit:description>FMU clock is the internal oscillator from the TFS hardblock</spirit:description>
+              <spirit:description>Clock is the internal oscillator from the hardblock</spirit:description>
             </spirit:values>
           </spirit:field>
         </spirit:register>
+        <spirit:register>
+          <spirit:name>access_types</spirit:name>
+          <spirit:description>Access Type Test Register</spirit:description>
+          <spirit:addressOffset>0x4</spirit:addressOffset>
+          <spirit:size>32</spirit:size>
+          <spirit:access>read-write</spirit:access>
+          <spirit:reset>
+            <spirit:value>0x0</spirit:value>
+            <spirit:mask>0xFFFFFFFF</spirit:mask>
+          </spirit:reset>
+          <spirit:field>
+            <spirit:name>readonly</spirit:name>
+            <spirit:description></spirit:description>
+            <spirit:bitOffset>31</spirit:bitOffset>
+            <spirit:bitWidth>1</spirit:bitWidth>
+            <spirit:access>ro</spirit:access>
+          </spirit:field>
+          <spirit:field>
+            <spirit:name>readwrite</spirit:name>
+            <spirit:description></spirit:description>
+            <spirit:bitOffset>30</spirit:bitOffset>
+            <spirit:bitWidth>1</spirit:bitWidth>
+            <spirit:access>rw</spirit:access>
+          </spirit:field>
+          <spirit:field>
+            <spirit:name>readclear</spirit:name>
+            <spirit:description></spirit:description>
+            <spirit:bitOffset>29</spirit:bitOffset>
+            <spirit:bitWidth>1</spirit:bitWidth>
+            <spirit:access>rc</spirit:access>
+          </spirit:field>
+          <spirit:field>
+            <spirit:name>readset</spirit:name>
+            <spirit:description></spirit:description>
+            <spirit:bitOffset>28</spirit:bitOffset>
+            <spirit:bitWidth>1</spirit:bitWidth>
+            <spirit:access>rs</spirit:access>
+          </spirit:field>
+          <spirit:field>
+            <spirit:name>writablereadclear</spirit:name>
+            <spirit:description></spirit:description>
+            <spirit:bitOffset>27</spirit:bitOffset>
+            <spirit:bitWidth>1</spirit:bitWidth>
+            <spirit:access>wrc</spirit:access>
+          </spirit:field>
+          <spirit:field>
+            <spirit:name>writablereadset</spirit:name>
+            <spirit:description></spirit:description>
+            <spirit:bitOffset>26</spirit:bitOffset>
+            <spirit:bitWidth>1</spirit:bitWidth>
+            <spirit:access>wrs</spirit:access>
+          </spirit:field>
+          <spirit:field>
+            <spirit:name>writeclear</spirit:name>
+            <spirit:description></spirit:description>
+            <spirit:bitOffset>25</spirit:bitOffset>
+            <spirit:bitWidth>1</spirit:bitWidth>
+            <spirit:access>wc</spirit:access>
+          </spirit:field>
+          <spirit:field>
+            <spirit:name>writeset</spirit:name>
+            <spirit:description></spirit:description>
+            <spirit:bitOffset>24</spirit:bitOffset>
+            <spirit:bitWidth>1</spirit:bitWidth>
+            <spirit:access>ws</spirit:access>
+          </spirit:field>
+          <spirit:field>
+            <spirit:name>writesetreadclear</spirit:name>
+            <spirit:description></spirit:description>
+            <spirit:bitOffset>23</spirit:bitOffset>
+            <spirit:bitWidth>1</spirit:bitWidth>
+            <spirit:access>wsrc</spirit:access>
+          </spirit:field>
+          <spirit:field>
+            <spirit:name>writeclearreadset</spirit:name>
+            <spirit:description></spirit:description>
+            <spirit:bitOffset>22</spirit:bitOffset>
+            <spirit:bitWidth>1</spirit:bitWidth>
+            <spirit:access>wcrs</spirit:access>
+          </spirit:field>
+          <spirit:field>
+            <spirit:name>write1toclear</spirit:name>
+            <spirit:description></spirit:description>
+            <spirit:bitOffset>21</spirit:bitOffset>
+            <spirit:bitWidth>1</spirit:bitWidth>
+            <spirit:access>w1c</spirit:access>
+          </spirit:field>
+          <spirit:field>
+            <spirit:name>write1toset</spirit:name>
+            <spirit:description></spirit:description>
+            <spirit:bitOffset>20</spirit:bitOffset>
+            <spirit:bitWidth>1</spirit:bitWidth>
+            <spirit:access>w1s</spirit:access>
+          </spirit:field>
+          <spirit:field>
+            <spirit:name>write1totoggle</spirit:name>
+            <spirit:description></spirit:description>
+            <spirit:bitOffset>19</spirit:bitOffset>
+            <spirit:bitWidth>1</spirit:bitWidth>
+            <spirit:access>w1t</spirit:access>
+          </spirit:field>
+          <spirit:field>
+            <spirit:name>write0toclear</spirit:name>
+            <spirit:description></spirit:description>
+            <spirit:bitOffset>18</spirit:bitOffset>
+            <spirit:bitWidth>1</spirit:bitWidth>
+            <spirit:access>w0c</spirit:access>
+          </spirit:field>
+          <spirit:field>
+            <spirit:name>write0toset</spirit:name>
+            <spirit:description></spirit:description>
+            <spirit:bitOffset>17</spirit:bitOffset>
+            <spirit:bitWidth>1</spirit:bitWidth>
+            <spirit:access>w0s</spirit:access>
+          </spirit:field>
+          <spirit:field>
+            <spirit:name>write0totoggle</spirit:name>
+            <spirit:description></spirit:description>
+            <spirit:bitOffset>16</spirit:bitOffset>
+            <spirit:bitWidth>1</spirit:bitWidth>
+            <spirit:access>w0t</spirit:access>
+          </spirit:field>
+          <spirit:field>
+            <spirit:name>write1tosetreadclear</spirit:name>
+            <spirit:description></spirit:description>
+            <spirit:bitOffset>15</spirit:bitOffset>
+            <spirit:bitWidth>1</spirit:bitWidth>
+            <spirit:access>w1src</spirit:access>
+          </spirit:field>
+          <spirit:field>
+            <spirit:name>write1toclearreadset</spirit:name>
+            <spirit:description></spirit:description>
+            <spirit:bitOffset>14</spirit:bitOffset>
+            <spirit:bitWidth>1</spirit:bitWidth>
+            <spirit:access>w1crs</spirit:access>
+          </spirit:field>
+          <spirit:field>
+            <spirit:name>write0tosetreadclear</spirit:name>
+            <spirit:description></spirit:description>
+            <spirit:bitOffset>13</spirit:bitOffset>
+            <spirit:bitWidth>1</spirit:bitWidth>
+            <spirit:access>w0src</spirit:access>
+          </spirit:field>
+          <spirit:field>
+            <spirit:name>write0toclearreadset</spirit:name>
+            <spirit:description></spirit:description>
+            <spirit:bitOffset>12</spirit:bitOffset>
+            <spirit:bitWidth>1</spirit:bitWidth>
+            <spirit:access>w0crs</spirit:access>
+          </spirit:field>
+          <spirit:field>
+            <spirit:name>writeonly</spirit:name>
+            <spirit:description></spirit:description>
+            <spirit:bitOffset>11</spirit:bitOffset>
+            <spirit:bitWidth>1</spirit:bitWidth>
+            <spirit:access>wo</spirit:access>
+          </spirit:field>
+          <spirit:field>
+            <spirit:name>writeonlyclear</spirit:name>
+            <spirit:description></spirit:description>
+            <spirit:bitOffset>10</spirit:bitOffset>
+            <spirit:bitWidth>1</spirit:bitWidth>
+            <spirit:access>woc</spirit:access>
+          </spirit:field>
+          <spirit:field>
+            <spirit:name>writeonlyreadzero</spirit:name>
+            <spirit:description></spirit:description>
+            <spirit:bitOffset>9</spirit:bitOffset>
+            <spirit:bitWidth>1</spirit:bitWidth>
+            <spirit:access>worz</spirit:access>
+          </spirit:field>
+          <spirit:field>
+            <spirit:name>writeonlyset</spirit:name>
+            <spirit:description></spirit:description>
+            <spirit:bitOffset>8</spirit:bitOffset>
+            <spirit:bitWidth>1</spirit:bitWidth>
+            <spirit:access>wos</spirit:access>
+          </spirit:field>
+          <spirit:field>
+            <spirit:name>writeonce</spirit:name>
+            <spirit:description></spirit:description>
+            <spirit:bitOffset>7</spirit:bitOffset>
+            <spirit:bitWidth>1</spirit:bitWidth>
+            <spirit:access>w1</spirit:access>
+          </spirit:field>
+          <spirit:field>
+            <spirit:name>writeonlyonce</spirit:name>
+            <spirit:description></spirit:description>
+            <spirit:bitOffset>6</spirit:bitOffset>
+            <spirit:bitWidth>1</spirit:bitWidth>
+            <spirit:access>wo1</spirit:access>
+          </spirit:field>
+          <spirit:field>
+            <spirit:name>readwritenocheck</spirit:name>
+            <spirit:description></spirit:description>
+            <spirit:bitOffset>5</spirit:bitOffset>
+            <spirit:bitWidth>1</spirit:bitWidth>
+            <spirit:access>dc</spirit:access>
+          </spirit:field>
+          <spirit:field>
+            <spirit:name>readonlyclearafter</spirit:name>
+            <spirit:description></spirit:description>
+            <spirit:bitOffset>4</spirit:bitOffset>
+            <spirit:bitWidth>1</spirit:bitWidth>
+            <spirit:access>rowz</spirit:access>
+          </spirit:field>
+        </spirit:register>
       </spirit:addressBlock>
+      <spirit:addressUnitBits>8</spirit:addressUnitBits>
     </spirit:memoryMap>
   </spirit:memoryMaps>
 </spirit:component>

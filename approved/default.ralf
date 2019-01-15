@@ -40,6 +40,150 @@ system  {
             }
         }
 
+        register access_types (access_types) @'h4 {
+            bytes 4;
+            field readonly ([31]) {
+                access ro;
+                bits 1;
+                reset 'b0;
+            }
+            field readwrite ([30]) {
+                access rw;
+                bits 1;
+                reset 'b0;
+            }
+            field readclear ([29]) {
+                access ro;
+                bits 1;
+                reset 'b0;
+            }
+            field readset ([28]) {
+                access ro;
+                bits 1;
+                reset 'b0;
+            }
+            field writablereadclear ([27]) {
+                access rw;
+                bits 1;
+                reset 'b0;
+            }
+            field writablereadset ([26]) {
+                access rw;
+                bits 1;
+                reset 'b0;
+            }
+            field writeclear ([25]) {
+                access rw;
+                bits 1;
+                reset 'b0;
+            }
+            field writeset ([24]) {
+                access rw;
+                bits 1;
+                reset 'b0;
+            }
+            field writesetreadclear ([23]) {
+                access rw;
+                bits 1;
+                reset 'b0;
+            }
+            field writeclearreadset ([22]) {
+                access rw;
+                bits 1;
+                reset 'b0;
+            }
+            field write1toclear ([21]) {
+                access rw;
+                bits 1;
+                reset 'b0;
+            }
+            field write1toset ([20]) {
+                access rw;
+                bits 1;
+                reset 'b0;
+            }
+            field write1totoggle ([19]) {
+                access rw;
+                bits 1;
+                reset 'b0;
+            }
+            field write0toclear ([18]) {
+                access rw;
+                bits 1;
+                reset 'b0;
+            }
+            field write0toset ([17]) {
+                access rw;
+                bits 1;
+                reset 'b0;
+            }
+            field write0totoggle ([16]) {
+                access rw;
+                bits 1;
+                reset 'b0;
+            }
+            field write1tosetreadclear ([15]) {
+                access rw;
+                bits 1;
+                reset 'b0;
+            }
+            field write1toclearreadset ([14]) {
+                access rw;
+                bits 1;
+                reset 'b0;
+            }
+            field write0tosetreadclear ([13]) {
+                access rw;
+                bits 1;
+                reset 'b0;
+            }
+            field write0toclearreadset ([12]) {
+                access rw;
+                bits 1;
+                reset 'b0;
+            }
+            field writeonly ([11]) {
+                access wo;
+                bits 1;
+                reset 'b0;
+            }
+            field writeonlyclear ([10]) {
+                access wo;
+                bits 1;
+                reset 'b0;
+            }
+            field writeonlyreadzero ([9]) {
+                access wo;
+                bits 1;
+                reset 'b0;
+            }
+            field writeonlyset ([8]) {
+                access wo;
+                bits 1;
+                reset 'b0;
+            }
+            field writeonce ([7]) {
+                access rw;
+                bits 1;
+                reset 'b0;
+            }
+            field writeonlyonce ([6]) {
+                access wo;
+                bits 1;
+                reset 'b0;
+            }
+            field readwritenocheck ([5]) {
+                access rw;
+                bits 1;
+                reset 'b0;
+            }
+            field readonlyclearafter ([4]) {
+                access ro;
+                bits 1;
+                reset 'b0;
+            }
+        }
+
     }
 
     block am0 (am0) @'h0 {

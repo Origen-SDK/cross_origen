@@ -57,14 +57,28 @@ module CrossOrigen
               size = fetch register.at_xpath('spirit:size'), get_text: true, to_i: true
               addr_offset = fetch register.at_xpath('spirit:addressOffset'), get_text: true, to_dec: true
               access = fetch register.at_xpath('spirit:access'), get_text: true
-              reset_value = fetch register.at_xpath('spirit:reset/spirit:value'), get_text: true, to_dec: true
-              reset_mask = fetch register.at_xpath('spirit:reset/spirit:mask'), get_text: true, to_dec: true
-              if [reset_value, reset_mask].include? nil
-                # Set default values for some register attributes
-                reset_value, reset_mask = 0, 0
+              # Determine if a reset is defined for the register
+              if register.at_xpath('spirit:reset').nil?
+                # If a reset does not exist, need to set the reset_value to 0, as Origen does not (yet) have a concept
+                # of a register without a reset.
+                reset_value = 0
               else
-                # Do a logical bitwise AND with the reset value and mask
-                reset_value = reset_value & reset_mask
+                # If a reset exists, determine the reset_value (required) and reset_mask (if defined)
+                reset_value = fetch register.at_xpath('spirit:reset/spirit:value'), get_text: true, to_dec: true
+                reset_mask = fetch register.at_xpath('spirit:reset/spirit:mask'), get_text: true, to_dec: true
+                # Issue #8 fix - reset_mask is optional, keep reset value as imported when a mask is not defined.
+                # Only perform AND-ing if mask is defined.  Only zero-out the reset_value if reset_value was nil.
+                if reset_value.nil?
+                  # Set default for reset_value attribute if none was provided and issue a warning.
+                  reset_value = 0
+                  Origen.log.warning "Register #{name.upcase} was defined as having a reset, but did not have a defined reset value.  This is not compliant with IP-XACT standard."
+                  Origen.log.warning "The reset value for #{name.upcase} has been defined as 0x0 as a result."
+                elsif reset_mask.nil?
+                  # If mask is undefined, leave reset_value alone.
+                else
+                  # Do a logical bitwise AND with the reset value and mask
+                  reset_value = reset_value & reset_mask
+                end
               end
               addr_block_obj.reg name, addr_offset, size: size, access: access, description: reg_description(register) do |reg|
                 register.xpath('spirit:field').each do |field|

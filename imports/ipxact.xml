@@ -319,6 +319,26 @@ xsi:schemaLocation="$REGMEM_HOME/builder/ipxact/schema/ipxact
 						<spirit:bitWidth>4</spirit:bitWidth>
 					</spirit:field>
 				</spirit:register>
+				<spirit:register>
+					<spirit:name>reg1</spirit:name>
+					<spirit:description>register without reset mask to test CrossOrigen import process.
+					</spirit:description>
+					<spirit:addressOffset>0x4</spirit:addressOffset>
+					<spirit:size>8</spirit:size>
+					<spirit:reset>
+						<spirit:value>0x5a</spirit:value>
+					</spirit:reset>
+					<spirit:field>
+						<spirit:name>f0</spirit:name>
+						<spirit:bitOffset>0</spirit:bitOffset>
+						<spirit:bitWidth>4</spirit:bitWidth>
+					</spirit:field>
+					<spirit:field>
+						<spirit:name>f1</spirit:name>
+						<spirit:bitOffset>4</spirit:bitOffset>
+						<spirit:bitWidth>4</spirit:bitWidth>
+					</spirit:field>
+				</spirit:register>
 			</spirit:addressBlock>
 		</spirit:memoryMap>
 	</spirit:memoryMaps>

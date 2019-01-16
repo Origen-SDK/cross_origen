@@ -669,7 +669,7 @@
             <spirit:bitWidth>4</spirit:bitWidth>
             <spirit:access>rw</spirit:access>
             <spirit:vendorExtensions>
-              <vendorExtensions:hdl_path>reg1[7:4]</vendorExtensions:hdl_path>
+              <vendorExtensions:hdl_path>am0.rf2.f1</vendorExtensions:hdl_path>
             </spirit:vendorExtensions>
           </spirit:field>
           <spirit:field>
@@ -679,13 +679,10 @@
             <spirit:bitWidth>4</spirit:bitWidth>
             <spirit:access>rw</spirit:access>
             <spirit:vendorExtensions>
-              <vendorExtensions:hdl_path>reg1[3:0]</vendorExtensions:hdl_path>
+              <vendorExtensions:hdl_path>am0.rf2.f0</vendorExtensions:hdl_path>
             </spirit:vendorExtensions>
           </spirit:field>
         </spirit:register>
-        <spirit:vendorExtensions>
-          <vendorExtensions:hdl_path>am0.rf2</vendorExtensions:hdl_path>
-        </spirit:vendorExtensions>
       </spirit:addressBlock>
       <spirit:addressUnitBits>8</spirit:addressUnitBits>
     </spirit:memoryMap>

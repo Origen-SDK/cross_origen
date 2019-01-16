@@ -22,7 +22,7 @@ describe 'IP-XACT' do
 
     it 'imports all registers' do
       $dut.am0.rf1.regs.size.should == 7
-      $dut.am0.rf2.regs.size.should == 1
+      $dut.am0.rf2.regs.size.should == 2
     end
 
     it 'pulls the register address' do
@@ -55,6 +55,10 @@ describe 'IP-XACT' do
 
     it 'extracts register path correctly' do
       $dut.am0.rf1.reg4.dirs.path.should == 'am0.rf1.reg4[3:2]'
+    end
+    
+    it 'extracts register reset value correctly when no reset mask is defined' do
+      $dut.am0.rf2.reg1.reset_value.should == 0x5a
     end
 
     it 'extracts an IP-level file correctly' do

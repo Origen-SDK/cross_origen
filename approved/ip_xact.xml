@@ -619,7 +619,7 @@
       <spirit:addressBlock>
         <spirit:name>rf2</spirit:name>
         <spirit:baseAddress>0x2000</spirit:baseAddress>
-        <spirit:range>4</spirit:range>
+        <spirit:range>8</spirit:range>
         <spirit:width>32</spirit:width>
         <spirit:register>
           <spirit:name>reg0</spirit:name>
@@ -629,6 +629,37 @@
           <spirit:access>read-write</spirit:access>
           <spirit:reset>
             <spirit:value>0xCC</spirit:value>
+            <spirit:mask>0xFF</spirit:mask>
+          </spirit:reset>
+          <spirit:field>
+            <spirit:name>f1</spirit:name>
+            <spirit:description></spirit:description>
+            <spirit:bitOffset>4</spirit:bitOffset>
+            <spirit:bitWidth>4</spirit:bitWidth>
+            <spirit:access>rw</spirit:access>
+            <spirit:vendorExtensions>
+              <vendorExtensions:hdl_path>am0.rf2.f1</vendorExtensions:hdl_path>
+            </spirit:vendorExtensions>
+          </spirit:field>
+          <spirit:field>
+            <spirit:name>f0</spirit:name>
+            <spirit:description></spirit:description>
+            <spirit:bitOffset>0</spirit:bitOffset>
+            <spirit:bitWidth>4</spirit:bitWidth>
+            <spirit:access>rw</spirit:access>
+            <spirit:vendorExtensions>
+              <vendorExtensions:hdl_path>am0.rf2.f0</vendorExtensions:hdl_path>
+            </spirit:vendorExtensions>
+          </spirit:field>
+        </spirit:register>
+        <spirit:register>
+          <spirit:name>reg1</spirit:name>
+          <spirit:description></spirit:description>
+          <spirit:addressOffset>0x4</spirit:addressOffset>
+          <spirit:size>8</spirit:size>
+          <spirit:access>read-write</spirit:access>
+          <spirit:reset>
+            <spirit:value>0x5A</spirit:value>
             <spirit:mask>0xFF</spirit:mask>
           </spirit:reset>
           <spirit:field>

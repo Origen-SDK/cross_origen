@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    cross_origen (1.2.0)
+    cross_origen (1.2.1)
       origen (>= 0.38)
       sanitize (~> 4.0)
 

@@ -1,3 +1,15 @@
+<a class="anchor release_tag" name="v1_2_1"></a>
+<h1><a href="#v1_2_1">Tag: v1.2.1</a></h1>
+
+##### Branch: 'master'
+
+##### by Chris Hume on 16-Jan-2019 09:21AM
+
+
+Fixed Issue #8 - IP-XACT import now correctly imports a register's reset value from XML if
+no reset mask is defined.  Added a test case to specs to cover this scenario and issue a
+warning if a reset is defined without an accompanying reset value.
+
 <a class="anchor release_tag" name="v1_2_0"></a>
 <h1><a href="#v1_2_0">Tag: v1.2.0</a></h1>
 

@@ -168,6 +168,7 @@ xsi:schemaLocation="$REGMEM_HOME/builder/ipxact/schema/ipxact
     #   :bus_interface      = only 'AMBA3' supported at this time
     #   :mmap_name          = Optionally set the memoryMap name to something other than the module name
     #   :mmap_ref           = memoryMapRef name, ex: 'UserMap'
+    #   :addr_block_name    = addressBlock -> Name, ex: 'ATX'
     def owner_to_xml(options = {})
       require 'nokogiri'
 
@@ -257,7 +258,11 @@ xsi:schemaLocation="$REGMEM_HOME/builder/ipxact/schema/ipxact
                   spirit.addressBlock do
                     # When registers reside at the top level, do not assign an address block name
                     if sub_block == owner
-                      spirit.name nil
+                      if options[:addr_block_name].nil?
+                        spirit.name nil
+                      else
+                        spirit.name options[:addr_block_name]
+                      end
                     else
                       spirit.name address_block_name(domain_name, sub_block)
                     end
@@ -324,9 +329,8 @@ xsi:schemaLocation="$REGMEM_HOME/builder/ipxact/schema/ipxact
                             # greatly between devices, allow the user to provide an abs_path value
                             # and define "full_reg_path" to assist.
                             #
-                            # When registers reside at the top level of the memory map, assume "top"
-                            # for the register path name.  (Need to improve this process in the future.)
-                            if reg.owner.top_level? == true
+                            # When registers reside at the top level without a specified path, use 'top'.
+                            if reg.owner.path.nil? || reg.owner.path.empty?
                               regpath = 'top'
                             else
                               regpath = reg.owner.path
@@ -406,7 +410,11 @@ xsi:schemaLocation="$REGMEM_HOME/builder/ipxact/schema/ipxact
                 end
                 # Assume byte addressing if not specified
                 if owner.methods.include?(:lau) == false
-                  spirit.addressUnitBits 8
+                  if methods.include?(:lau) == true
+                    spirit.addressUnitBits lau
+                  else
+                    spirit.addressUnitBits 8
+                  end
                 else
                   spirit.addressUnitBits owner.lau
                 end
@@ -423,7 +431,6 @@ xsi:schemaLocation="$REGMEM_HOME/builder/ipxact/schema/ipxact
       #
       builder.to_xml(save_with: Nokogiri::XML::Node::SaveOptions::NO_EMPTY_TAGS |
                                 Nokogiri::XML::Node::SaveOptions::FORMAT)
-      # builder.to_xml
     end
 
     private

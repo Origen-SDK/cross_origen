@@ -33,6 +33,11 @@ system  {
         bytes 8;
         register mclkdiv (mclkdiv) @'h0 {
             bytes 2;
+            field div ([3:0]) {
+                access rw;
+                bits 4;
+                reset 'b0;
+            }
             field osch ([15]) {
                 access rw;
                 bits 1;

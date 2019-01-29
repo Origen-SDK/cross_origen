@@ -70,6 +70,10 @@ module CrossOrigenDev
           # 0 | Clock is the externally supplied bus clock bus_clk
           # 1 | Clock is the internal oscillator from the hardblock
           bit 15, :osch, reset: 1, access: :rw
+          # **Divider Value**
+          #
+          # Used to set clock divider value and test multi-bit import in CrossOrigen
+          bits 3..0, :div
         end
 
         # **Access Type Test Register**

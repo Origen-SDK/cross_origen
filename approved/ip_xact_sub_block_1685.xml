@@ -23,6 +23,19 @@
             <spirit:mask>0xFFFF</spirit:mask>
           </spirit:reset>
           <spirit:field>
+            <spirit:name>div</spirit:name>
+            <spirit:description>Divider Value</spirit:description>
+            <spirit:bitOffset>0</spirit:bitOffset>
+            <spirit:bitWidth>4</spirit:bitWidth>
+            <spirit:access>read-write</spirit:access>
+            <spirit:parameters>
+              <spirit:parameter>
+                <spirit:name>_hdlPath_</spirit:name>
+                <spirit:value>atx.div</spirit:value>
+              </spirit:parameter>
+            </spirit:parameters>
+          </spirit:field>
+          <spirit:field>
             <spirit:name>osch</spirit:name>
             <spirit:description>Oscillator (Hi)</spirit:description>
             <spirit:bitOffset>15</spirit:bitOffset>

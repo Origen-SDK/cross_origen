@@ -1,3 +1,16 @@
+<a class="anchor release_tag" name="v1_2_2"></a>
+<h1><a href="#v1_2_2">Tag: v1.2.2</a></h1>
+
+##### Branch: 'master'
+
+##### by Chris Hume on 13-Feb-2019 09:53AM
+
+
+Updated to\_ipxact to allow for proper export of top-level registers (ex: models with no
+sub-blocks).  Added :addr\_block\_name to options hash to allow setting an addressBlock name
+in the XML output for this scenario.  Also added a multi-bit :div reg to MCLKDIV register
+in dut.rb to improve testing coverage.
+
 <a class="anchor release_tag" name="v1_2_1"></a>
 <h1><a href="#v1_2_1">Tag: v1.2.1</a></h1>
 

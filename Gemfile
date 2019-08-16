@@ -3,7 +3,6 @@ source 'https://rubygems.org'
 # Development dependencies
 gem 'byebug', '<9.1.0' # This version restriction required if you need Ruby < 2.2, otherwise you can remove it
 gem "origen_doc_helpers"
-gem "origen_updater"
 gem 'coveralls', require: false
 gem 'nokogiri', '>= 1.8.5'
 

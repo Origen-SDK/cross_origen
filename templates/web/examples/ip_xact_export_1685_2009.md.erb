@@ -1,0 +1,32 @@
+% render "layouts/basic.html", tab: :examples do
+
+## IP-XACT Export (IEEE 1685-2009)
+
+This page shows IEEE 1685-2009 IP-XACT formatted XML that has been generated from an Origen
+representation of a module.
+
+The exporter has the following options:
+
+* **:format** - nil by default, can be set to :uvm to include the associated vendor
+  extentions
+* **:include_bit_field_values** - true by default, when false the bit field values 
+  fields will not be output
+* **:schema** - nil by default, which assumes a Spirit 1.4 format. '1685-2009' is also supported.
+* **:mmap_name** - nil by default, can be set to any string name for the memory map name.
+* **:mmap_ref** - nil by default, can be set to any string name for the memory map reference used by a downstream tool.
+* **:vendor** - nil by default, can be set to any string name for the company name.
+* **:library** - nil by default, can be set to any string name for the library used by a downstream tool (ex: Magillem XML -> UVM conversion)
+%#* **:name** - nil by default, can be set to any string name for the an overall device/model name.
+%#* **:bus_interface** - nil by default, can be set to 'AMBA3' for an AMBA3 bus interface.
+
+For this example, targeting CrossOrigen's target/debug.rb, the code to generate this page is:
+
+~~~eruby
+<%= "<" + "%= $dut.to_ip_xact :format => :uvm, :schema=> '1685-2009', :mmap_name => 'RegisterMap', :vendor => 'origen-sdk.org', :library => 'id', :mmap_ref => 'test' %" + ">" %>
+~~~
+
+~~~xml
+<%= $dut.to_ip_xact :format => :uvm, :schema=> '1685-2009', :mmap_name => 'RegisterMap', :vendor => 'origen-sdk.org', :library => 'id', :mmap_ref => 'test' %>
+~~~
+
+% end

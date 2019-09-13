@@ -83,8 +83,6 @@ GEM
       yard (~> 0.8)
     origen_doc_helpers (0.8.2)
       origen (>= 0.7.15)
-    origen_updater (0.7.0)
-      origen
     parser (2.6.3.0)
       ast (~> 2.4.0)
     powerpack (0.1.2)
@@ -144,7 +142,6 @@ DEPENDENCIES
   cross_origen!
   nokogiri (>= 1.8.5)
   origen_doc_helpers
-  origen_updater
 
 BUNDLED WITH
    1.17.1

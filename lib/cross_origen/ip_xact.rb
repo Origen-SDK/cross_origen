@@ -223,7 +223,7 @@ xsi:schemaLocation="$REGMEM_HOME/builder/ipxact/schema/ipxact
           spirit.vendor options[:vendor] || 'Origen'
           spirit.library options[:library] || 'Origen'
           # I guess this should really be the register owner's owner's name?
-          spirit.name try(:ip_name) || owner.class.to_s.split('::').last
+          spirit.name options[:name] || try(:ip_name) || owner.class.to_s.split('::').last
           spirit.version options[:version] || try(:ip_version, :version, :revision)
           # The 1685-2009 schema allows for a bus interface.  AMBA3 (slave) supported so far.
           if options[:schema] == '1685-2009'

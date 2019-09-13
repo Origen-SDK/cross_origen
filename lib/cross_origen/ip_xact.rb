@@ -220,8 +220,8 @@ xsi:schemaLocation="$REGMEM_HOME/builder/ipxact/schema/ipxact
       builder = Nokogiri::XML::Builder.new(encoding: 'UTF-8') do |xml|
         spirit = xml['spirit']
         spirit.component(headers) do
-          spirit.vendor options[:vendor] || 'Origen'
-          spirit.library options[:library] || 'Origen'
+          spirit.vendor options[:vendor] || 'origen-sdk.org'
+          spirit.library options[:library] || 'id'
           # I guess this should really be the register owner's owner's name?
           spirit.name options[:name] || try(:ip_name) || owner.class.to_s.split('::').last
           spirit.version options[:version] || try(:ip_version, :version, :revision)

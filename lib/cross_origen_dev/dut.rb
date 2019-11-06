@@ -19,7 +19,7 @@ module CrossOrigenDev
         bit 1, :second_bit, reset: 1, access: :rw
       end
       # Import some data from IP-XACT
-      cr_import(path: "#{Origen.root}/imports/ipxact.xml")
+      cr_import(path: "#{Origen.root}/imports/ipxact.xml", refresh: true)
     end
 
     # Import Spirit 1.4 version of ATX

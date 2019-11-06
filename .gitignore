@@ -13,7 +13,6 @@
 /environment/.default
 /release_note.txt
 /pkg
-/lbin
 /.bin
 /list/referenced.list
 /tags
@@ -33,6 +32,7 @@
 /.pdm/pi_attributes.txt
 /.irb_history
 /.byebug_history
+/tmp
 
 # Cruft from other revision control systems
 .SYNC

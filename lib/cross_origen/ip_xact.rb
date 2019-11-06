@@ -220,11 +220,11 @@ xsi:schemaLocation="$REGMEM_HOME/builder/ipxact/schema/ipxact
       builder = Nokogiri::XML::Builder.new(encoding: 'UTF-8') do |xml|
         spirit = xml['spirit']
         spirit.component(headers) do
-          spirit.vendor options[:vendor] || 'Origen'
-          spirit.library options[:library] || 'Origen'
+          spirit.vendor options[:vendor] || 'origen-sdk.org'
+          spirit.library options[:library] || 'id'
           # I guess this should really be the register owner's owner's name?
-          spirit.name try(:ip_name) || owner.class.to_s.split('::').last
-          spirit.version try(:ip_version, :version, :revision)
+          spirit.name options[:name] || try(:ip_name) || owner.class.to_s.split('::').last
+          spirit.version options[:version] || try(:ip_version, :version, :revision)
           # The 1685-2009 schema allows for a bus interface.  AMBA3 (slave) supported so far.
           if options[:schema] == '1685-2009'
             if options[:bus_interface] == 'AMBA3'
@@ -258,11 +258,7 @@ xsi:schemaLocation="$REGMEM_HOME/builder/ipxact/schema/ipxact
                   spirit.addressBlock do
                     # When registers reside at the top level, do not assign an address block name
                     if sub_block == owner
-                      if options[:addr_block_name].nil?
-                        spirit.name nil
-                      else
-                        spirit.name options[:addr_block_name]
-                      end
+                      spirit.name options[:addr_block_name]
                     else
                       spirit.name address_block_name(domain_name, sub_block)
                     end
@@ -273,7 +269,7 @@ xsi:schemaLocation="$REGMEM_HOME/builder/ipxact/schema/ipxact
                       # Required for now to ensure that the current value is the reset value
                       reg.reset
                       spirit.register do
-                        spirit.name name
+                        spirit.name options[:upcase_reg_names] ? name.to_s.upcase : name
                         spirit.description try(reg, :name_full, :full_name)
                         spirit.addressOffset reg.offset.to_hex
                         spirit.size reg.size
@@ -288,7 +284,7 @@ xsi:schemaLocation="$REGMEM_HOME/builder/ipxact/schema/ipxact
                         end
                         reg.named_bits do |name, bits|
                           spirit.field do
-                            spirit.name name
+                            spirit.name options[:upcase_bit_names] ? name.to_s.upcase : name
                             spirit.description try(bits, :brief_description, :name_full, :full_name)
                             spirit.bitOffset bits.position
                             spirit.bitWidth bits.size

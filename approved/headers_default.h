@@ -8,8 +8,8 @@
 // dut Registers Bit Definition
 //---------------------------------------------------------------------------------------------
 // DUT_TOP_LEVEL_REG
-#define DUT_TOP_LEVEL_REG_SECOND_BIT           (BIT14)
-#define DUT_TOP_LEVEL_REG_PLS_WORK             (BIT15)
+#define DUT_TOP_LEVEL_REG_SECOND_BIT           (BIT17)
+#define DUT_TOP_LEVEL_REG_PLS_WORK             (BIT16)
 
 // DUT_TOP_LEVEL_REG_NUMBER_TWO
 #define DUT_TOP_LEVEL_REG_NUMBER_TWO_SECOND_BIT         (BIT1)

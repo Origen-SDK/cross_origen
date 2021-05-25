@@ -28,13 +28,13 @@
           <spirit:size>32</spirit:size>
           <spirit:access>read-write</spirit:access>
           <spirit:reset>
-            <spirit:value>0x8000</spirit:value>
+            <spirit:value>0x10000</spirit:value>
             <spirit:mask>0xFFFFFFFF</spirit:mask>
           </spirit:reset>
           <spirit:field>
             <spirit:name>second_bit</spirit:name>
             <spirit:description></spirit:description>
-            <spirit:bitOffset>14</spirit:bitOffset>
+            <spirit:bitOffset>17</spirit:bitOffset>
             <spirit:bitWidth>1</spirit:bitWidth>
             <spirit:access>read-write</spirit:access>
             <spirit:parameters>
@@ -47,7 +47,7 @@
           <spirit:field>
             <spirit:name>pls_work</spirit:name>
             <spirit:description></spirit:description>
-            <spirit:bitOffset>15</spirit:bitOffset>
+            <spirit:bitOffset>16</spirit:bitOffset>
             <spirit:bitWidth>1</spirit:bitWidth>
             <spirit:access>read-write</spirit:access>
             <spirit:parameters>
@@ -112,19 +112,6 @@
             <spirit:mask>0xFFFF</spirit:mask>
           </spirit:reset>
           <spirit:field>
-            <spirit:name>div</spirit:name>
-            <spirit:description>Divider Value</spirit:description>
-            <spirit:bitOffset>0</spirit:bitOffset>
-            <spirit:bitWidth>4</spirit:bitWidth>
-            <spirit:access>read-write</spirit:access>
-            <spirit:parameters>
-              <spirit:parameter>
-                <spirit:name>_hdlPath_</spirit:name>
-                <spirit:value>atx.div</spirit:value>
-              </spirit:parameter>
-            </spirit:parameters>
-          </spirit:field>
-          <spirit:field>
             <spirit:name>osch</spirit:name>
             <spirit:description>Oscillator (Hi)</spirit:description>
             <spirit:bitOffset>15</spirit:bitOffset>
@@ -146,6 +133,19 @@
               <spirit:name>val_0x1</spirit:name>
               <spirit:description>Clock is the internal oscillator from the hardblock</spirit:description>
             </spirit:values>
+          </spirit:field>
+          <spirit:field>
+            <spirit:name>div</spirit:name>
+            <spirit:description>Divider Value</spirit:description>
+            <spirit:bitOffset>0</spirit:bitOffset>
+            <spirit:bitWidth>4</spirit:bitWidth>
+            <spirit:access>read-write</spirit:access>
+            <spirit:parameters>
+              <spirit:parameter>
+                <spirit:name>_hdlPath_</spirit:name>
+                <spirit:value>atx.div</spirit:value>
+              </spirit:parameter>
+            </spirit:parameters>
           </spirit:field>
         </spirit:register>
         <spirit:register>

@@ -137,7 +137,7 @@ module CrossOrigen
         end
       end
       model.export(filename, include_timestamp: CrossOrigen.include_timestamp?)
-      owner.import(filename)
+      owner.import(filename, options)
     end
 
     def doc(path, options = {})
